@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ site.title }}</title>
+    <link href="http://{{ domain }}/"/>
+    <link href="http://{{ domain }}/feed" rel="self" />
+    <id>{{ domain }}</id>
+    {% if posts %}
+    <updated>{{ posts[0]['create_time'].strftime('%Y-%m-%dT%H:%M:%SZ')}}</updated>
+    {% endif %}
+
+    {% for post in posts %}
+    <entry>
+        <title>{{ post.title }}</title>
+        <link href="{{ post.url }}" rel="alternate"></link>
+        <updated>{{ post.create_time.strftime('%Y-%m-%dT%H:%M:%SZ')}}</updated>
+        <id>{{ url }}</id>
+        <author>
+            <name>{{ site.author }}</name>
+        </author>
+        <summary type="html">{{ post.content | escape }}</summary>
+    </entry>
+    {% endfor %}
+</feed>

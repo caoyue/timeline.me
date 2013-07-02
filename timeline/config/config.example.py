@@ -7,20 +7,23 @@ DB_NAME = ""
 DB_USR = ""
 DB_PSW = ""
 
+# login hash salt
+SALT = "thequickbrownfoxjumpsoverthelazydog"
+
 # site
 SITE = {
-    "domain": "",
-    "title": u"",
-    "description": u"",
-    "author": ""
+    "domain": "http://example.com",
+    "title": u"site title",
+    "description": u"site description",
+    "author": u"a name"
 }
 
 # my links
 LINKS = [
     {
-        "name": "",
-        "title": "",
-        "link": ""
+        "name": "example",
+        "title": "An example",
+        "link": "http://example.com/XXXX"
     },
     {
         "name": "",
@@ -62,7 +65,8 @@ CATEGORY_DICT = {
 
 # feeds
 FEEDS_DICT = {
-    "blog": ""
+    "blog": "http://blog.example.com/feed",
+    "example": "http://www.example.com/feed"
 }
 
 # oauth

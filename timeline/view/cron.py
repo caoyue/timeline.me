@@ -2,9 +2,10 @@
 #-*- coding: utf-8 -*-
 
 from cronjob.jobs import run_jobs
+from .base import LoginBase
 
 
-class jobs(object):
+class jobs(LoginBase):
 
     def GET(self):
         ex = None
@@ -15,5 +16,5 @@ class jobs(object):
         else:
             return "Success!"
 
-if __name__ == '__main__':
-    run_jobs()
+# if __name__ == '__main__':
+#     run_jobs()

@@ -13,6 +13,10 @@ class WeiboOauth(Oauth):
             self._client.set_access_token(
                 weibo_access["access_token"], weibo_access["expires_in"])
 
+    def get_user_info(self):
+        uid = self._client.account.get_uid.get()
+        return self._client.users.show.get(uid=uid["uid"])
+
     def get_authorize_url(self):
         return self._client.get_authorize_url()
 

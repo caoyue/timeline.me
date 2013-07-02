@@ -1,6 +1,6 @@
 # install packages
 pip install web.py
-pip isntall jinja2
+pip install jinja2
 pip install gunicorn
 pip install mysql-python
 pip isntall tweepy

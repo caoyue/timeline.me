@@ -17,5 +17,7 @@ urls = (
     '/weibo/test', CONTROLLER + 'weibo.test',
     '/twitter/signin', CONTROLLER + 'twitter.signin',
     '/twitter/callback', CONTROLLER + 'twitter.callback',
-    '/cronjob', CONTROLLER + 'cron.jobs'
+    '/cronjob', CONTROLLER + 'cron.jobs',
+    '/login', CONTROLLER + 'login.index',
+    '/update', CONTROLLER + 'update.index'
 )

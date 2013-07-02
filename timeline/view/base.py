@@ -1,6 +1,8 @@
 #-*- coding: utf-8 -*-
 
+import web
 from web.contrib.template import render_jinja
+from model.login import Login
 from config import config
 
 
@@ -13,3 +15,10 @@ class Base(object):
         links=config.LINKS,
         source=config.FEEDS_DICT.keys() + config.OAUTH_DICT.keys()
     )
+
+
+class LoginBase(Base):
+
+    def __init__(self):
+        if not Login.is_logged():
+            raise web.seeother("/login")

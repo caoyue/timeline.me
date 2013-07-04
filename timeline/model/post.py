@@ -2,7 +2,7 @@
 
 import re
 import json
-from datetime import datetime
+import datetime
 from config import config
 
 
@@ -18,6 +18,7 @@ class Post(object):
         self.content = content
         self.create_time = create_time
         self.orgin_data = orgin_data
+        self._pure_title = self._generate_pure_title()
 
     @classmethod
     def replace_url(cls, content):
@@ -30,6 +31,31 @@ class Post(object):
                 content = content.replace(
                     m, """<a href="%s" target="_blank">%s</a>""" % (m, m))
         return content
+
+    def _generate_pure_title(self):
+        """去掉链接获得纯文本"""
+        content = self.title
+        pattern = re.compile(
+            """[a-zA-Z]+:\/\/[a-zA-Z0-9.]+\.[a-zA-Z0-9.\/]+""")
+        matchs = pattern.findall(content)
+        if matchs:
+            for m in matchs:
+                content = content.replace(
+                    m, "")
+        return content.strip()
+
+    def is_duplicate(self, compare):
+        """
+        判断是否重复
+        条件是在一天之内且除链接外标题内容相同
+        只判断了同步的微博类信息，不考虑 RSS 的相似性
+        """
+        if self.category == "oauth" \
+            and compare.category == "oauth" \
+            and abs(self.create_time.day - compare.create_time.day) == 0 \
+                and self._pure_title == compare._pure_title:
+            return True
+        return False
 
     @classmethod
     def status_to_post(cls, status, source):
@@ -44,7 +70,7 @@ class RssPost(Post):
 
     @classmethod
     def get_datetime(cls, create_time):
-        return datetime(*create_time[:6])
+        return datetime.datetime(*create_time[:6])
 
     @classmethod
     def json_handle(cls, obj):
@@ -122,7 +148,7 @@ class WeiboPost(Post):
 
     @classmethod
     def get_datetime(cls, create_time):
-        return datetime.strptime(create_time, '%a %b %d %H:%M:%S +0800 %Y')
+        return datetime.datetime.strptime(create_time, '%a %b %d %H:%M:%S +0800 %Y') + datetime.timedelta(seconds=(config.TIMEZONE - 8) * 3600)
 
     @classmethod
     def status_to_post(cls, status, source=None):
@@ -154,7 +180,7 @@ class TwitterPost(Post):
 
     @classmethod
     def get_datetime(cls, create_time):
-        return datetime.strptime(create_time, '%a %b %d %H:%M:%S +0000 %Y')
+        return datetime.datetime.strptime(create_time, '%a %b %d %H:%M:%S +0000 %Y') + datetime.timedelta(seconds=config.TIMEZONE * 3600)
 
     @classmethod
     def status_to_post(cls, status, source=None):

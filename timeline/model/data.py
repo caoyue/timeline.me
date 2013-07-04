@@ -116,7 +116,7 @@ class PostData(object):
         row = None
         try:
             cursor = cls._db.execute(
-                """select * from posts where title = %s and create_time = %s""", (post.title, post.create_time))
+                """select * from posts where orgin_id = %s and create_time = %s""", (post.orgin_id, post.create_time))
             row = cursor.fetchall()
         except Exception, e:
             print "excute fail : %s" % e

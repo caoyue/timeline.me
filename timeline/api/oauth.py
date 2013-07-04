@@ -3,6 +3,9 @@
 
 class Oauth(object):
 
+    def get_user_info():
+        return None
+
     def get_authorize_url(self):
         return None
 

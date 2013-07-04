@@ -12,7 +12,13 @@ class TwitterOauth(Oauth):
         if access_token:
             self._auth.set_access_token(
                 access_token["access_token"], access_token["access_token_secret"])
-            self._client = tweepy.API(self._auth, parser=RawJsonParser())
+            self._client = tweepy.API(
+                self._auth, parser=tweepy.parsers.JSONParser())
+
+    def get_user_info(self):
+        self._client = tweepy.API(
+            self._auth, parser=tweepy.parsers.JSONParser())
+        return self._client.me()
 
     def get_authorize_url(self):
         return self._auth.get_authorization_url()
@@ -33,7 +39,8 @@ class TwitterOauth(Oauth):
     def set_access_token(self, access_token):
         self._auth.set_access_token(
             access_token["access_token"], access_token["access_token_secret"])
-        self._client = tweepy.API(self._auth, parser=RawJsonParser())
+        self._client = tweepy.API(
+            self._auth, parser=tweepy.parsers.JSONParser())
 
     def get_user_timeline(self, count=20, since_id=None, max_id=None):
         return self._client.user_timeline(count=count, since_id=since_id, max_id=max_id)
@@ -43,14 +50,3 @@ class TwitterOauth(Oauth):
 
     def refresh_token(self):
         pass
-
-
-# hack tweepy to return row json by add new parser
-import json
-from tweepy.parsers import Parser
-
-
-class RawJsonParser(Parser):
-
-    def parse(self, method, payload):
-        return json.loads(payload)

@@ -35,9 +35,13 @@ class callback(Base):
         except Exception, e:
             return "Error! Message: %s" % e
 
-        user_config = ConfigData.get_config_value("weibo_user")
-        if user_config and user_info["id"] != user_config["id"]:
+        user_id = ConfigData.get_config_value("weibo_user_id")
+        if not user_id:
+            ConfigData.set_config_value("weibo_user_id", user_info["id"])
+        elif str(user_id) != str(user_info["id"]):
+            Login.logout()
             return "User Forbiden!"
+
         ConfigData.set_config_value(
             "weibo_access_token", json.dumps(config_value))
         Login.login()

@@ -10,6 +10,7 @@ from model.post import TwitterPost
 from model.data import PostData
 from model.data import ConfigData
 from utils.logger import logging
+from utils.mytime import get_time_now as now
 
 log = logging.getLogger(__file__)
 
@@ -17,7 +18,7 @@ log = logging.getLogger(__file__)
 def twitter_sync(twitter_config):
     """获取 tweets 并保存到数据库"""
 
-    print ">> Twitter Sync Start ...... "
+    print ">> [%s]Twitter Sync Start ...... " % now()
 
     config_string = ConfigData.get_config_value("twitter_access_token")
     twitter_access = None
@@ -31,7 +32,7 @@ def twitter_sync(twitter_config):
             return
     else:
         print ">> [error] twitter config is null, task break"
-        print ">> Twitter Sync End."
+        print ">> [%s]Twitter Sync End." % now()
         return
 
     try:
@@ -40,10 +41,10 @@ def twitter_sync(twitter_config):
     except Exception, e:
         print ">> [error] get timeline failed , task break"
         log.warning("%s" % e)
-        print ">> Twitter Sync End."
+        print ">> [%s]Twitter Sync End." % now()
         return
 
     for s in status:
         PostData.save_post(TwitterPost.status_to_post(s))
 
-    print ">> Twitter Sync End."
+    print ">> [%s]Twitter Sync End." % now()

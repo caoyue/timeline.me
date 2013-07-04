@@ -19,7 +19,17 @@ class index(Base):
         pager = Pager(PostData.get_posts_count(), config.PAGESIZE, _p, "/")
         if not posts and pager.posts_count:
             raise web.seeother("/1")
-        return self.render.index(posts=posts, pager=pager, title=config.SITE["title"])
+
+        new_posts = []
+        for post in posts:
+            post.source += "|"
+            post.duplicate = False
+            for new in new_posts:
+                if post.is_duplicate(new):
+                    new.source += post.source + "|"
+                    post.duplicate = True
+            new_posts.append(post)
+        return self.render.index(posts=new_posts, pager=pager, title=config.SITE["title"])
 
 
 class source(Base):

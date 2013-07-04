@@ -1,7 +1,7 @@
 # install packages
+pip install mysql-python
 pip install web.py
 pip install jinja2
 pip install gunicorn
-pip install mysql-python
 pip isntall tweepy
 pip install feedparser

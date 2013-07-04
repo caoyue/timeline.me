@@ -1,5 +1,8 @@
 #-*- coding: utf-8 -*-
 
+# timezone
+TIMEZONE = 8
+
 # mysql setting
 DB_HOST = ""
 DB_PORT = 3306

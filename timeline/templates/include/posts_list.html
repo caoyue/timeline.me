@@ -1,16 +1,20 @@
 {% for post in posts %}
-<div class="entry">
-	<div class='title'>
-		<span class="info"><a href="/{{ post.source }}">{{ post.source }}</a></span>
-		<a href="{{ post.url }}">{{ post.title }}</a>
+	{% if not post.duplicate %}
+	<div class="entry">
+		<div class='title'>
+			{% for source in post.source.strip("|").split("|") %}
+			<span class="info"><a href="/{{ source }}">{{ source }}</a></span>
+			{% endfor %}
+			<a href="{{ post.url }}">{{ post.title }}</a>
+		</div>
+		<div class="content">
+			{{  post.content }}
+		</div>
+		<div class="info">
+			<span>Posted on {{ post.create_time }}</span>
+		</div>
 	</div>
-	<div class="content">
-		{{  post.content }}
-	</div>
-	<div class="info">
-		<span>Posted on {{ post.create_time }}</span>
-	</div>
-</div>
+	{% endif %}
 {% endfor %}
 <div class="pager">
 	{% if pager.previous_page %}

@@ -10,6 +10,7 @@ from model.post import WeiboPost
 from model.data import PostData
 from model.data import ConfigData
 from utils.logger import logging
+from utils.mytime import get_time_now as now
 
 log = logging.getLogger(__file__)
 
@@ -17,7 +18,7 @@ log = logging.getLogger(__file__)
 def weibo_sync(weibo_config):
         """获取 weibo 并保存到数据库"""
 
-        print ">> Weibo Sync Start ...... "
+        print ">> [%s]Weibo Sync Start ...... " % now()
 
         config_string = ConfigData.get_config_value("weibo_access_token")
         weibo_access = None
@@ -27,11 +28,11 @@ def weibo_sync(weibo_config):
             except Exception, e:
                 print ">> [error] decode config value failed ,task break"
                 log.warning("%s" % e)
-                print ">> Weibo Sync End."
+                print ">> [%s]Weibo Sync End." % now()
                 return
         else:
             print ">> [error] weibo config is null, task break"
-            print ">> Weibo Sync End."
+            print ">> [%s]Weibo Sync End." % now()
             return
 
         try:
@@ -40,10 +41,10 @@ def weibo_sync(weibo_config):
         except Exception, e:
             print ">> [error] get timeline failed , task break"
             log.warning("%s" % e)
-            print ">> Weibo Sync End."
+            print ">> [%s]Weibo Sync End." % now()
             return
 
         for s in status.statuses:
             PostData.save_post(WeiboPost.status_to_post(s))
 
-        print ">> Weibo Sync End."
+        print ">> [%s]Weibo Sync End." % now()

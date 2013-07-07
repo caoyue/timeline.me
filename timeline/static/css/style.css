@@ -5,7 +5,7 @@ body{
     font-family:'Segoe UI',Verdana,Arial,'Hiragino Sans GB','Microsoft YaHei';
 }
 
-code,pre,blockquote{
+.content > code,.content > pre,.content > blockquote{
     font-family: "Deja Vu Sans Mono",Consolas,Monaco,"Courier New",Courier,monospace;
     padding:1px 10px;
     line-height:1.8;
@@ -17,12 +17,12 @@ code,pre,blockquote{
 }
 
 .wrap{
-    width:95%;
+    width:800px;
     margin:0 auto;
+    padding:0;
 }
 
 a{
-    width:100%;
     color: rgba(0, 130, 135, .6);
     text-decoration:none;
 }
@@ -39,31 +39,10 @@ a:hover{
     color: rgba(37, 187, 196, .5);
 }
 
-ul{
-    list-style:none;
-    margin:0;
-    padding:0 0 0 20px;
-}
-
-li{
-    margin: 0 0 5px 0;
-    padding:5px 3px;
-}
-
-li:hover{
-    color:white;
-    background-color:rgba(20, 145, 152, .4);
-}
-li a{
-    display: block;
-}
-
-li:hover a{
-    color:white;
-}
-
 .header{
-    margin:12px 5px;
+    margin:1.5% 0.7%;
+    margin-left: -15%;
+    padding-left: 2.5%;
     font-size:28pt;
     font-weight:normal;
 }
@@ -81,34 +60,50 @@ li:hover a{
 }
 
 .left{
-    width:10%;
+    width:15%;
+    margin-left:-15%;
     float: left;
+}
+
+.left ul{
+    list-style:none;
+    margin:0;
+    padding-left:30%;
+}
+
+.left li{
+    margin: 0 0 5px 0;
+    padding:5px 3px;
+}
+
+.left li:hover{
+    color:white;
+    background-color:rgba(20, 145, 152, .4);
+}
+.left li a{
+    display: block;
+}
+
+.left li:hover a{
+    color:white;
 }
 
 .right{
-    width:88%;
-    float:right;
-}
-
-.footer{
     float: left;
-    width:100%;
-    margin-top:15px;
-    text-align: center;
-    font-size: 10pt;
 }
 
 .entry{
-    margin:0 0 50px 0;
+    margin:0 3% 50px 3%;
 }
 
-.title{
+.entry > .title{
     font-size:16pt;
     margin:0 0 8px 0;
 }
 
 .content{
     margin:5px 0;
+    padding-left: 3px;
 }
 
 .info{
@@ -146,13 +141,66 @@ li:hover a{
     width:61%;
 }
 
-/* For Mobile */
-@media screen and (max-width: 800px) {
+.footer{
+    float: left;
+    width:100%;
+    margin-top:15px;
+    text-align: center;
+    font-size: 10pt;
+}
+
+/* for github rss*/
+.gtihub .gravatar{
+    display:none;
+}
+
+.github .commits ul{
+    list-style:none;
+}
+
+.github img{
+    display:none;
+}
+
+/*wide mode*/
+
+/*.wrap{
+    width:100% !important;
+    margin:0 !important;
+}
+.left{
+    width:13% !important;
+}
+.left, .header{
+    margin-left: 0;
+}
+
+.left .list{
+    margin-right:25% !important;
+}
+.right{
+        width:87% ;
+}
+.right .entry{
+    margin: 0 5% 50px 0;
+}*/
+
+/* For Mobile and small screen*/
+@media screen and (max-width: 900px) {
     .header,.left,.footer{
         display: none;
     }
+    .wrap{
+        width:100% ;
+        margin:0;
+    }
+    .right{
+        width: 100% !important;
+    }
+    .right .entry{
+        margin-left: 3% !important;
+    }
 }
-
 
 
 

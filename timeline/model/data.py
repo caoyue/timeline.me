@@ -3,6 +3,9 @@
 import MySQLdb
 from post import Post
 from config import config
+from utils.logger import logging
+
+log = logging.getLogger(__file__)
 
 
 class MySqlData(object):
@@ -18,7 +21,21 @@ class MySqlData(object):
                 use_unicode=True,
                 charset="utf8")
         except Exception, e:
-            print "connect db fail : %s" % e
+            log.warning("connect db fail : %s" % e)
+            self._conn = None
+
+    def _reconnect(self):
+        try:
+            self._conn = MySQLdb.connect(
+                host=config.DB_HOST,
+                port=config.DB_PORT,
+                user=config.DB_USR,
+                passwd=config.DB_PSW,
+                db=config.DB_NAME,
+                use_unicode=True,
+                charset="utf8")
+        except Exception, e:
+            log.warning("reconnect fail : %s" % e)
             self._conn = None
 
     def execute(self, *sql, **param):
@@ -26,8 +43,12 @@ class MySqlData(object):
         try:
             cursor = cursor or self._conn.cursor()
             cursor.execute(*sql, **param)
-        except Exception, e:
-            print "excute fail : %s" % e
+        except MySQLdb.Error, e:
+            log.warning("excute [%s] fail : %s" % (sql, e))
+            if e.args[0] == 2006:
+                cursor.close() if cursor else cursor
+                self._reconnect()
+                self.execute(*sql, **param)
         return cursor
 
     def commit(self):
@@ -57,8 +78,8 @@ class PostData(object):
             else:
                 cursor = cls._db.execute("""select count(id) from posts""")
                 count = cursor.fetchone()
-        except Exception, e:
-            print "execute fail : %s" % e
+        except MySQLdb.Error, e:
+            print "MySQL Error %d: %s" % (e.args[0], e.args[1])
         finally:
             cursor.close() if cursor else cursor
         return int(count[0]) if count else 0
@@ -71,8 +92,8 @@ class PostData(object):
             cursor = cls._db.execute(
                 """select * from posts order by create_time desc limit %s,%s""", ((page - 1) * pagesize, pagesize))
             rows = cursor.fetchall()
-        except Exception, e:
-            print "execute fail : %s" % e
+        except MySQLdb.Error, e:
+            print "MySQL Error %d: %s" % (e.args[0], e.args[1])
         finally:
             cursor.close() if cursor else cursor
         if rows:
@@ -87,8 +108,8 @@ class PostData(object):
             cursor = cls._db.execute("""select * from posts where source = %s order by create_time desc limit %s,%s""", (
                 source, (page - 1) * pagesize, pagesize))
             rows = cursor.fetchall()
-        except Exception, e:
-            print "excute fail : %s" % e
+        except MySQLdb.Error, e:
+            print "MySQL Error %d: %s" % (e.args[0], e.args[1])
         finally:
             cursor.close() if cursor else cursor
         if rows:
@@ -102,8 +123,8 @@ class PostData(object):
             cursor = cls._db.execute(
                 """select * from posts where source = %s order by create_time desc limit 0,1""", source)
             row = cursor.fetchone()
-        except Exception, e:
-            print "execute fail : %s" % e
+        except MySQLdb.Error, e:
+            print "MySQL Error %d: %s" % (e.args[0], e.args[1])
         finally:
             cursor.close() if cursor else cursor
         if row:
@@ -118,8 +139,8 @@ class PostData(object):
             cursor = cls._db.execute(
                 """select * from posts where orgin_id = %s and create_time = %s""", (post.orgin_id, post.create_time))
             row = cursor.fetchall()
-        except Exception, e:
-            print "excute fail : %s" % e
+        except MySQLdb.Error, e:
+            print "MySQL Error %d: %s" % (e.args[0], e.args[1])
         finally:
             cursor.close() if cursor else cursor
         return row
@@ -132,8 +153,8 @@ class PostData(object):
                 cursor = cls._db.execute(
                     """insert into posts (source, category, orgin_id, url, title, content, create_time, orgin_data) values (%s,%s,%s,%s,%s,%s,%s,%s)""", (post.source, post.category, post.orgin_id, post.url, post.title, post.content, post.create_time, post.orgin_data))
                 cls._db.commit()
-            except Exception, e:
-                print "log : %s" % e
+            except MySQLdb.Error, e:
+                print "MySQL Error %d: %s" % (e.args[0], e.args[1])
                 cls._db.rollback()
             finally:
                 cursor.close() if cursor else cursor
@@ -151,8 +172,8 @@ class ConfigData(object):
             cursor = cls._db.execute(
                 """select * from configs where config_name = %s""", config_name)
             row = cursor.fetchone()
-        except Exception, e:
-            print "execute fail : %s" % e
+        except MySQLdb.Error, e:
+            print "MySQL Error %d: %s" % (e.args[0], e.args[1])
         finally:
             cursor.close() if cursor else cursor
         if row:
@@ -173,8 +194,8 @@ class ConfigData(object):
                 cursor = cls._db.execute(
                     """insert into configs (config_name, config_value) values (%s,%s)""", (config_name, config_value))
                 cls._db.commit()
-        except Exception, e:
-            print "execute fail : %s" % e
+        except MySQLdb.Error, e:
+            print "MySQL Error %d: %s" % (e.args[0], e.args[1])
             cls._db.rollback()
         finally:
             cursor.close() if cursor else cursor

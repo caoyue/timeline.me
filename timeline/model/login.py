@@ -2,7 +2,6 @@
 
 import web
 import hashlib
-from data import ConfigData
 from config import config
 
 

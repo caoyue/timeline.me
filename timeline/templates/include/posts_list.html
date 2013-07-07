@@ -7,7 +7,7 @@
 			{% endfor %}
 			<a href="{{ post.url }}">{{ post.title }}</a>
 		</div>
-		<div class="content">
+		<div class="content {{ " ".join(post.source.strip("|").split("|")) }}">
 			{{  post.content }}
 		</div>
 		<div class="info">

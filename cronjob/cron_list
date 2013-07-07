@@ -1,2 +1,2 @@
 ##sync timeline
-0 * * * * cd /home/project/MyTimeline/cronjob/;python sync_timeline.py >> /home/project/MyTimeline/cronjob/sync_timeline.log 2>&1
+0 * * * * cd /home/project/MyTimeline/cronjob/;python sync_timeline.py >> /home/project/MyTimeline/cronjob.log 2>&1

@@ -13,7 +13,7 @@ class index(Base):
         _p = 1
         try:
             _p = int(page[0])
-        except Exception, e:
+        except Exception:
             _p = 1
         posts = PostData.get_posts(_p, config.PAGESIZE)
         pager = Pager(PostData.get_posts_count(), config.PAGESIZE, _p, "/")
@@ -38,7 +38,7 @@ class source(Base):
         _p = 1
         try:
             _p = int(page[0])
-        except Exception, e:
+        except Exception:
             _p = 1
         posts = PostData.get_source_posts(source, _p, config.PAGESIZE)
         pager = Pager(PostData.get_posts_count(

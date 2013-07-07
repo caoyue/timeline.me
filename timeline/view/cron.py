@@ -8,13 +8,9 @@ from .base import LoginBase
 class jobs(LoginBase):
 
     def GET(self):
-        ex = None
         try:
             run_jobs()
-        except Exception, e:
-            return ex
+        except Exception:
+            return "Failed!"
         else:
             return "Success!"
-
-# if __name__ == '__main__':
-#     run_jobs()

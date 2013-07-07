@@ -6,6 +6,30 @@
 	<link rel='alternate' type='application/rss+xml' title='atom 1.0' href='/feed' />
 	<link rel="icon" type="image/png" href="/static/img/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<script type="text/javascript">
+		function ChangeStyle(){
+		    var doc=document;
+		    var style=doc.createElement("style");
+		    style.setAttribute("type", "text/css");
+		    cssString = ".wrap{width:100% !important;margin:0 !important;}" +
+						".left{width:13% !important;}"+
+						".left, .header{margin-left: 0;}" +
+						".right{width:87% ;}.right .entry{margin: 0 5% 50px 0;}";
+
+		    if(style.styleSheet){ // IE
+		        style.styleSheet.cssText = cssString;
+		    } else {
+		        var cssText = doc.createTextNode(cssString);
+		        style.appendChild(cssText);
+		    }
+
+		    var heads = doc.getElementsByTagName("head");
+		    if(heads.length)
+		        heads[0].appendChild(style);
+		    else
+		        doc.documentElement.appendChild(style);
+		}
+	</script>
 </head>
 <body>
 	<div class="wrap">
@@ -30,7 +54,7 @@
 		</div>
 
 		<div class="footer">
-			©2013 <a href="{{ site['domain'] }}">{{ site["title"] }}</a>. Designed by <a href="http://caoyue.me" target="_blank">caoyue</a>, Project <a href="https://github.com/caoyue/mytimeline" target="_blank">MyTimeline</a>.
+			©2013 <a href="{{ site['domain'] }}">{{ site["title"] }}</a>. Designed by <a href="http://caoyue.me" target="_blank">caoyue</a>, Project <a href="https://github.com/caoyue/mytimeline" target="_blank">MyTimeline</a>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="ChangeStyle()">wide view</a>
 		</div>
 	</div>
 </body>

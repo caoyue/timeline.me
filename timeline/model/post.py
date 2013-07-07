@@ -20,18 +20,6 @@ class Post(object):
         self.orgin_data = orgin_data
         self._pure_title = self._generate_pure_title()
 
-    @classmethod
-    def replace_url(cls, content):
-        """将内容中的链接文本替换成链接形式"""
-        pattern = re.compile(
-            """[a-zA-Z]+:\/\/[a-zA-Z0-9.]+\.[a-zA-Z0-9.\/]+""")
-        matchs = pattern.findall(content)
-        if matchs:
-            for m in matchs:
-                content = content.replace(
-                    m, """<a href="%s" target="_blank">%s</a>""" % (m, m))
-        return content
-
     def _generate_pure_title(self):
         """去掉链接获得纯文本"""
         content = self.title
@@ -56,6 +44,18 @@ class Post(object):
                 and self._pure_title == compare._pure_title:
             return True
         return False
+
+    @classmethod
+    def replace_url(cls, content):
+        """将内容中的链接文本替换成链接形式"""
+        pattern = re.compile(
+            """[a-zA-Z]+:\/\/[a-zA-Z0-9.]+\.[a-zA-Z0-9.\/]+""")
+        matchs = pattern.findall(content)
+        if matchs:
+            for m in matchs:
+                content = content.replace(
+                    m, """<a href="%s" target="_blank">%s</a>""" % (m, m))
+        return content
 
     @classmethod
     def status_to_post(cls, status, source):

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}{{ "Update" }} - {{ site["title"] }}{% endblock %}
+
+{% block content %}
+<div class="content">
+    <form action="" method="post" class="update">
+        {% if message %}
+        <p class="tips">{{ message }}</p>
+        {% endif %}
+        <p>
+            <textarea rows="5" cols="60" name="status">{{ status }}</textarea>
+        </p>
+        <p>
+            <input type="submit" value="Commit" class="button" />
+            {% if error %}
+            <span class="error">{{ error }}</span>
+            {% endif %}
+        </p>
+    </form>
+</div>
+{% endblock %}

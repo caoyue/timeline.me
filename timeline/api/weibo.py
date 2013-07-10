@@ -2,11 +2,12 @@
 
 from .oauth import Oauth
 from utils.weibo import APIClient
+from config import config
 
 
 class WeiboOauth(Oauth):
 
-    def __init__(self, weibo_config, weibo_access=None):
+    def __init__(self, weibo_config=config.OAUTH_DICT["weibo"], weibo_access=None):
         self._client = APIClient(
             app_key=weibo_config["app_key"], app_secret=weibo_config["app_secret"], redirect_uri=weibo_config["redirect_uri"])
         if weibo_access:
@@ -31,7 +32,7 @@ class WeiboOauth(Oauth):
         return self._client.statuses.user_timeline.get()
 
     def update_status(self, status):
-        self._client.statuses.update.post(status)
+        self._client.statuses.update.post(status=status, visable=1)
 
     def refresh_token(self):
         return ""

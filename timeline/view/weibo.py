@@ -2,7 +2,6 @@
 
 import web
 import json
-from config import config
 from model.data import ConfigData
 from model.login import Login
 from api.weibo import WeiboOauth
@@ -12,14 +11,14 @@ from .base import Base
 class signin(Base):
 
     def GET(self):
-        client = WeiboOauth(config.OAUTH_DICT["weibo"])
+        client = WeiboOauth()
         raise web.seeother(client.get_authorize_url())
 
 
 class callback(Base):
 
     def GET(self):
-        client = WeiboOauth(config.OAUTH_DICT["weibo"])
+        client = WeiboOauth()
         i = web.input()
         r = client.get_access_token(i.code)
         access_token = r.access_token

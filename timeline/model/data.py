@@ -137,7 +137,7 @@ class PostData(object):
         row = None
         try:
             cursor = cls._db.execute(
-                """select * from posts where orgin_id = %s and create_time = %s""", (post.orgin_id, post.create_time))
+                """select id from posts where url = %s""", post.url)
             row = cursor.fetchall()
         except MySQLdb.Error, e:
             print "MySQL Error %d: %s" % (e.args[0], e.args[1])

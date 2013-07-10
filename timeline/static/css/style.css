@@ -9,8 +9,6 @@ body{
     font-family: "Deja Vu Sans Mono",Consolas,Monaco,"Courier New",Courier,monospace;
     padding:1px 10px;
     line-height:1.8;
-    white-space: pre-wrap;
-    word-wrap: break-word;
     background: none repeat scroll 0 0 #F5F5F5;
     border: 1px solid #DADADA;
     overflow-x: auto;
@@ -104,6 +102,7 @@ a:hover{
 .content{
     margin:5px 0;
     padding-left: 3px;
+    line-height: 180%;
 }
 
 .info{
@@ -147,6 +146,47 @@ a:hover{
     margin-top:15px;
     text-align: center;
     font-size: 10pt;
+}
+
+/* for update page*/
+.update{
+    padding-left:40px;
+}
+
+textarea{
+    color:rgba(0,0,0,.6);
+    font-family:'Segoe UI',Verdana,Arial,'Hiragino Sans GB','Microsoft YaHei';
+    border:rgba(37, 187, 196, 0.3) solid 1px;
+    padding:5px;
+}
+
+textarea:focus{
+     border:rgba(37, 187, 196, 0.5) solid 1px;
+}
+
+.button{
+    cursor: pointer;
+    color:white;
+    font-size: 12pt;
+    font-family:'Segoe UI',Verdana,Arial,'Hiragino Sans GB','Microsoft YaHei';
+    border:none;
+    background-color:rgba(20, 145, 152, 0.4);
+    padding: 3px;
+}
+
+.button:hover{
+    background-color:rgba(37, 187, 196, 0.6);
+}
+
+.error{
+    color:red;
+    padding-left: 10px;
+}
+
+.tips{
+    padding-left:8px;
+    color:white;
+    background-color:rgba(20, 145, 152, 0.4);
 }
 
 /* for github rss*/

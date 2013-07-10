@@ -2,11 +2,12 @@
 
 import tweepy
 from .oauth import Oauth
+from config import config
 
 
 class TwitterOauth(Oauth):
 
-    def __init__(self, twitter_config, access_token=None):
+    def __init__(self, twitter_config=config.OAUTH_DICT["twitter"], access_token=None):
         self._auth = tweepy.OAuthHandler(
             twitter_config["consumer_key"], twitter_config["consumer_secret"], twitter_config["redirect_uri"])
         if access_token:

@@ -6,7 +6,6 @@ sys.setdefaultencoding('utf8')
 
 import web
 import json
-from config import config
 from model.data import ConfigData
 from model.login import Login
 from api.twitter import TwitterOauth
@@ -16,7 +15,7 @@ from .base import Base
 class signin(Base):
 
     def GET(self):
-        client = TwitterOauth(config.OAUTH_DICT["twitter"])
+        client = TwitterOauth()
         request_token = client.get_request_token()
         url = client.get_authorize_url()
         ConfigData.set_config_value(
@@ -27,7 +26,7 @@ class signin(Base):
 class callback(Base):
 
     def GET(self):
-        client = TwitterOauth(config.OAUTH_DICT["twitter"])
+        client = TwitterOauth()
         request_token = ConfigData.get_config_value(
             "twitter_request_token")
         i = web.input()

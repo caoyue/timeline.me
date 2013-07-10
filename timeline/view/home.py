@@ -43,7 +43,7 @@ class source(Base):
         posts = PostData.get_source_posts(source, _p, config.PAGESIZE)
         pager = Pager(PostData.get_posts_count(
             source), config.PAGESIZE, _p, "/%s/" % source)
-        return self.render.index(posts=posts, pager=pager, title=source)
+        return self.render.index(posts=posts, pager=pager, title=source + " - " + config.SITE["title"])
 
 
 class feed(Base):

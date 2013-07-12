@@ -108,10 +108,13 @@ class WeiboPost(Post):
     @classmethod
     def status_to_post(cls, status, source=None):
         content = cls.replace_url(status.text)
+        # 包含图片的 status
         if status.pic_urls:
             for pic in status.pic_urls:
                 content += """  <a href="%s" target="_blank">pic</a>""" % pic[
                     "thumbnail_pic"].replace("thumbnail", "large")
+
+        # 包含转发或评论的 status
         if "retweeted_status" in status:
             retweet_content = cls.replace_url(status.retweeted_status.text)
             if status.retweeted_status.pic_urls:
@@ -140,7 +143,9 @@ class TwitterPost(Post):
     @classmethod
     def status_to_post(cls, status, source=None):
         content = status["text"]
+        # 包含转发的 status
         if "retweeted_status" in status:
             content = "%s <blockquote>@%s:%s</blockquote>" % (
                 status["text"], status["retweeted_status"]["user"]["screen_name"], status["retweeted_status"]["text"])
+
         return cls(None, status["id"], cls.get_url(status["id"], status["user"]["name"]), status["text"], cls.replace_url(content), cls.get_datetime(status["created_at"]), json.dumps(status))

@@ -26,20 +26,25 @@ def weibo_sync(weibo_config):
             try:
                 weibo_access = json.loads(config_string)
             except Exception, e:
-                print ">> [error] decode config value failed ,task break"
+                print ">> [error] decode config value failed ,task break: %s" % e
                 log.warning("%s" % e)
                 print ">> [%s]Weibo Sync End." % now()
                 return
         else:
-            print ">> [error] weibo config is null, task break"
+            print ">> [error] weibo config is null, task break."
             print ">> [%s]Weibo Sync End." % now()
             return
 
+        since_id = None
+        last_post = PostData.get_last_post("weibo")
+        if last_post:
+            since_id = last_post.orgin_id
+
         try:
             client = WeiboOauth(weibo_config, weibo_access)
-            status = client.get_user_timeline()
+            status = client.get_user_timeline(since_id=since_id)
         except Exception, e:
-            print ">> [error] get timeline failed , task break"
+            print ">> [error] get timeline failed , task break：%s" % e
             log.warning("%s" % e)
             print ">> [%s]Weibo Sync End." % now()
             return

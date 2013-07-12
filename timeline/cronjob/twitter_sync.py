@@ -26,20 +26,25 @@ def twitter_sync(twitter_config):
         try:
             twitter_access = json.loads(config_string)
         except Exception, e:
-            print ">> [error] decode config value failed ,task break"
+            print ">> [error] decode config value failed ,task break: %s" % e
             log.warning("%s" % e)
             print ">> Twitter Sync End."
             return
     else:
-        print ">> [error] twitter config is null, task break"
+        print ">> [error] twitter config is null, task break."
         print ">> [%s]Twitter Sync End." % now()
         return
 
+    since_id = None
+    last_post = PostData.get_last_post("twitter")
+    if last_post:
+        since_id = last_post.orgin_id
+
     try:
         client = TwitterOauth(twitter_config, twitter_access)
-        status = client.get_user_timeline()
+        status = client.get_user_timeline(since_id=since_id)
     except Exception, e:
-        print ">> [error] get timeline failed , task break"
+        print ">> [error] get timeline failed , task break: %s" % e
         log.warning("%s" % e)
         print ">> [%s]Twitter Sync End." % now()
         return

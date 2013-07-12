@@ -14,10 +14,6 @@ class WeiboOauth(Oauth):
             self._client.set_access_token(
                 weibo_access["access_token"], weibo_access["expires_in"])
 
-    def get_user_info(self):
-        uid = self._client.account.get_uid.get()
-        return self._client.users.show.get(uid=uid["uid"])
-
     def get_authorize_url(self):
         return self._client.get_authorize_url()
 
@@ -28,11 +24,15 @@ class WeiboOauth(Oauth):
         self._client.set_access_token(
             weibo_access["access_token"], weibo_access["expires_in"])
 
-    def get_user_timeline(self):
-        return self._client.statuses.user_timeline.get()
+    def refresh_token(self):
+        pass
+
+    def get_user_timeline(self, count=20, since_id=None, max_id=None):
+        return self._client.statuses.user_timeline.get(count=count, since_id=since_id, max_id=max_id)
 
     def update_status(self, status):
-        self._client.statuses.update.post(status=status, visable=1)
+        self._client.statuses.update.post(status=status)
 
-    def refresh_token(self):
-        return ""
+    def get_user_info(self):
+        uid = self._client.account.get_uid.get()
+        return self._client.users.show.get(uid=uid["uid"])

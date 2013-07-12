@@ -16,11 +16,6 @@ class TwitterOauth(Oauth):
             self._client = tweepy.API(
                 self._auth, parser=tweepy.parsers.JSONParser())
 
-    def get_user_info(self):
-        self._client = tweepy.API(
-            self._auth, parser=tweepy.parsers.JSONParser())
-        return self._client.me()
-
     def get_authorize_url(self):
         return self._auth.get_authorization_url()
 
@@ -43,11 +38,16 @@ class TwitterOauth(Oauth):
         self._client = tweepy.API(
             self._auth, parser=tweepy.parsers.JSONParser())
 
+    def refresh_token(self):
+        pass
+
     def get_user_timeline(self, count=20, since_id=None, max_id=None):
         return self._client.user_timeline(count=count, since_id=since_id, max_id=max_id)
 
     def update_status(self, status):
         self._client.update_status(status)
 
-    def refresh_token(self):
-        pass
+    def get_user_info(self):
+        self._client = tweepy.API(
+            self._auth, parser=tweepy.parsers.JSONParser())
+        return self._client.me()

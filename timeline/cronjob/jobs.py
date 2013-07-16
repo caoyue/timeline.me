@@ -1,9 +1,4 @@
-#!/usr/bin/env python
 #-*- coding: utf-8 -*-
-
-# import sys
-# reload(sys)
-# sys.setdefaultencoding('utf8')
 
 from config import config
 from rss_sync import rss_sync

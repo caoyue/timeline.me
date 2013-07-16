@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+import datetime
 import MySQLdb
 from post import Post
 from config import config
@@ -136,6 +137,8 @@ class PostData(object):
 
             if cursor:
                 cursor.close()
+            return True
+        return False
 
 
 class ConfigData(object):
@@ -171,3 +174,36 @@ class ConfigData(object):
 
         if cursor:
             cursor.close()
+
+
+class PastData(PostData):
+
+    _db = MySqlData()
+
+    @classmethod
+    def get_id_by_date(cls, start, end):
+        cursor = cls._db.execute(
+            """select * from posts where create_time >= %s and create_time <= %s order by create_time desc""", (start, end))
+        rows = cursor.fetchall()
+
+        if cursor:
+            cursor.close()
+
+        if rows:
+            return [cls.data_to_post(row) for row in rows]
+        return []
+
+    @classmethod
+    def get_history_today(cls, now):
+        def get_time_string(time):
+            return time.strftime("%Y-%m-%d")
+        years = range(now.year - 1, 2005, -1)
+        dates = [("%s-%s" % (y, now.strftime("%m-%d")),
+                  "%s-%s" % (y, (now + datetime.timedelta(days=1)).strftime("%m-%d"))) for y in years]
+        posts_list = [cls.get_id_by_date(d[0], d[1]) for d in dates]
+
+        p = dict()
+        for posts in posts_list:
+            if posts:
+                p[get_time_string(posts[0].create_time)] = posts
+        return p

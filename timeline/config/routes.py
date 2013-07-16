@@ -19,5 +19,8 @@ urls = (
     '/twitter/callback', CONTROLLER + 'twitter.callback',
     '/cronjob', CONTROLLER + 'cron.jobs',
     '/login', CONTROLLER + 'login.index',
-    '/update', CONTROLLER + 'update.index'
+    '/update', CONTROLLER + 'update.index',
+    '/past', CONTROLLER + 'past.index',
+    '/past/([0-9]{4}-[0-9]{2}-[0-9]{2})', CONTROLLER + 'past.index',
+    '/statistic', CONTROLLER + 'statistic.index'
 )

@@ -107,22 +107,30 @@ class WeiboPost(Post):
 
     @classmethod
     def status_to_post(cls, status, source=None):
+        def not_deleted(status):
+            if hasattr(status, "deleted") and status.deleted == "1":
+                return False
+            return True
         content = cls.replace_url(status.text)
         # 包含图片的 status
-        if status.pic_urls:
+        if not_deleted(status) and status.pic_urls:
             for pic in status.pic_urls:
                 content += """  <a href="%s" target="_blank">pic</a>""" % pic[
                     "thumbnail_pic"].replace("thumbnail", "large")
 
         # 包含转发或评论的 status
         if "retweeted_status" in status:
-            retweet_content = cls.replace_url(status.retweeted_status.text)
-            if status.retweeted_status.pic_urls:
-                for pic in status.retweeted_status.pic_urls:
-                    retweet_content += """  <a href="%s" target="_blank">pic</a>""" % pic[
-                        "thumbnail_pic"].replace("thumbnail", "large")
-            content += " <blockquote>@%s:%s</blockquote>" % (
-                status.retweeted_status.user.screen_name, retweet_content)
+            # 原微博已被删除
+            if not_deleted(status.retweeted_status):
+                retweet_content = cls.replace_url(status.retweeted_status.text)
+                if status.retweeted_status.pic_urls:
+                    for pic in status.retweeted_status.pic_urls:
+                        retweet_content += """  <a href="%s" target="_blank">pic</a>""" % pic[
+                            "thumbnail_pic"].replace("thumbnail", "large")
+                content += " <blockquote>@%s:%s</blockquote>" % (
+                    status.retweeted_status.user.screen_name, retweet_content)
+            else:
+                content += "<blockquote>%s</blockquote>" % status.retweeted_status.text
         return cls(None, status.id, cls.get_url(status.user.id, status.mid), status.text, content, cls.get_datetime(status.created_at), status)
 
 

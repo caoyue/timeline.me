@@ -30,6 +30,10 @@ class WeiboOauth(Oauth):
     def get_user_timeline(self, count=20, since_id=None, max_id=None):
         return self._client.statuses.user_timeline.get(count=count, since_id=since_id, max_id=max_id)
 
+    # 用来获取所有发布的微博
+    def get_user_timeline_by_page(self, count=100, page=1):
+        return self._client.statuses.user_timeline.get(count=count, page=page)
+
     def update_status(self, status):
         self._client.statuses.update.post(status=status)
 

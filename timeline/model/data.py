@@ -67,25 +67,23 @@ class PostData(object):
     def get_posts_count(cls, source=None):
         if source:
             cursor = cls._db.execute(
-                """select count(id) from posts where source = %s""", source)
+                """SELECT count(id) FROM posts WHERE source = %s""", source)
             count = cursor.fetchone()
         else:
-            cursor = cls._db.execute("""select count(id) from posts""")
+            cursor = cls._db.execute("""SELECT count(id) FROM posts""")
             count = cursor.fetchone()
 
-        if cursor:
-            cursor.close()
+        cursor and cursor.close()
 
         return int(count[0]) if count else 0
 
     @classmethod
     def get_posts(cls, page=1, pagesize=10):
         cursor = cls._db.execute(
-            """select * from posts order by create_time desc limit %s,%s""", ((page - 1) * pagesize, pagesize))
+            """SELECT * FROM posts ORDER BY create_time DESC LIMIT %s,%s""", ((page - 1) * pagesize, pagesize))
         rows = cursor.fetchall()
 
-        if cursor:
-            cursor.close()
+        cursor and cursor.close()
 
         if rows:
             return [cls.data_to_post(row) for row in rows]
@@ -93,12 +91,11 @@ class PostData(object):
 
     @classmethod
     def get_source_posts(cls, source, page=1, pagesize=10):
-        cursor = cls._db.execute("""select * from posts where source = %s order by create_time desc limit %s,%s""", (
+        cursor = cls._db.execute("""SELECT * FROM posts WHERE source = %s ORDER BY create_time DESC LIMIT %s,%s""", (
             source, (page - 1) * pagesize, pagesize))
         rows = cursor.fetchall()
 
-        if cursor:
-            cursor.close()
+        cursor and cursor.close()
 
         if rows:
             return [cls.data_to_post(row) for row in rows]
@@ -107,11 +104,10 @@ class PostData(object):
     @classmethod
     def get_last_post(cls, source):
         cursor = cls._db.execute(
-            """select * from posts where source = %s order by orgin_id desc limit 0,1""", source)
+            """SELECT * FROM posts WHERE source = %s ORDER BY orgin_id DESC LIMIT 0,1""", source)
         row = cursor.fetchone()
 
-        if cursor:
-            cursor.close()
+        cursor and cursor.close()
 
         if row:
             return cls.data_to_post(row)
@@ -120,11 +116,10 @@ class PostData(object):
     @classmethod
     def is_in_database(cls, post):
         cursor = cls._db.execute(
-            """select id from posts where url = %s""", post.url)
+            """SELECT id FROM posts WHERE url = %s""", post.url)
         row = cursor.fetchall()
 
-        if cursor:
-            cursor.close()
+        cursor and cursor.close()
 
         return row
 
@@ -132,11 +127,10 @@ class PostData(object):
     def save_post(cls, post):
         if not cls.is_in_database(post):
             cursor = cls._db.execute(
-                """insert into posts (source, category, orgin_id, url, title, content, create_time, orgin_data) values (%s,%s,%s,%s,%s,%s,%s,%s)""", (post.source, post.category, post.orgin_id, post.url, post.title, post.content, post.create_time, post.orgin_data))
+                """INSERT INTO posts (source, category, orgin_id, url, title, content, create_time, orgin_data) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""", (post.source, post.category, post.orgin_id, post.url, post.title, post.content, post.create_time, post.orgin_data))
             cls._db.commit()
 
-            if cursor:
-                cursor.close()
+            cursor and cursor.close()
             return True
         return False
 
@@ -148,11 +142,10 @@ class ConfigData(object):
     @classmethod
     def get_config_value(cls, config_name):
         cursor = cls._db.execute(
-            """select * from configs where config_name = %s""", config_name)
+            """SELECT * FROM configs WHERE config_name = %s""", config_name)
         row = cursor.fetchone()
 
-        if cursor:
-            cursor.close()
+        cursor and cursor.close()
 
         if row:
             return row[2]
@@ -161,19 +154,18 @@ class ConfigData(object):
     @classmethod
     def set_config_value(cls, config_name, config_value):
         cursor = cls._db.execute(
-            """select * from configs where config_name = %s""", config_name)
+            """SELECT * FROM configs WHERE config_name = %s""", config_name)
         row = cursor.fetchall()
 
         if row:
             cursor = cls._db.execute(
-                """update configs set config_value = %s where config_name = %s""", (config_value, config_name))
+                """UPDATE configs SET config_value = %s WHERE config_name = %s""", (config_value, config_name))
         else:
             cursor = cls._db.execute(
-                """insert into configs (config_name, config_value) values (%s,%s)""", (config_name, config_value))
+                """INSERT INTO configs (config_name, config_value) VALUES (%s,%s)""", (config_name, config_value))
             cls._db.commit()
 
-        if cursor:
-            cursor.close()
+        cursor and cursor.close()
 
 
 class PastData(PostData):
@@ -183,11 +175,10 @@ class PastData(PostData):
     @classmethod
     def get_id_by_date(cls, start, end):
         cursor = cls._db.execute(
-            """select * from posts where create_time >= %s and create_time <= %s order by create_time desc""", (start, end))
+            """SELECT * FROM posts WHERE create_time >= %s AND create_time <= %s ORDER BY create_time DESC""", (start, end))
         rows = cursor.fetchall()
 
-        if cursor:
-            cursor.close()
+        cursor and cursor.close()
 
         if rows:
             return [cls.data_to_post(row) for row in rows]
@@ -202,7 +193,7 @@ class PastData(PostData):
                   "%s-%s" % (y, (now + datetime.timedelta(days=1)).strftime("%m-%d"))) for y in years]
         posts_list = [cls.get_id_by_date(d[0], d[1]) for d in dates]
 
-        p = dict()
+        p = {}
         for posts in posts_list:
             if posts:
                 p[get_time_string(posts[0].create_time)] = posts

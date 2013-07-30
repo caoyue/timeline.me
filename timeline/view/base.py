@@ -8,6 +8,8 @@ from config import config
 
 class Base(object):
 
+    site = config.SITE
+
     render = render_jinja(config.RENDER_PATH,  encoding='utf-8')
 
     render._lookup.globals.update(

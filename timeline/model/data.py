@@ -37,7 +37,7 @@ class MySqlData(object):
     def execute(self, *sql, **param):
         cursor = None
         try:
-            cursor = cursor or self._conn.cursor()
+            cursor = self._conn.cursor()
             cursor.execute(*sql, **param)
         except MySQLdb.Error, e:
             log.warning("excute [%s] fail : %s" % (sql, e))
@@ -104,7 +104,7 @@ class PostData(object):
     @classmethod
     def get_last_post(cls, source):
         cursor = cls._db.execute(
-            """SELECT * FROM posts WHERE source = %s ORDER BY orgin_id DESC LIMIT 0,1""", source)
+            """SELECT * FROM posts WHERE source = %s ORDER BY create_time DESC LIMIT 0,1""", source)
         row = cursor.fetchone()
 
         cursor and cursor.close()

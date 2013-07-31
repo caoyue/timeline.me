@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from .base import Base
-from model.statistic import Statistic
+from model.statistic import StatisticData
 from utils import mytime
 
 
@@ -10,9 +10,10 @@ class index(Base):
     def GET(self, *year):
         if year:
             year = year[0]
-        hour_count = Statistic.get_hour_count(year)
-        month_count = Statistic.get_month_count(year)
-        source_count = Statistic.get_source_count(year)
+
+        hour_count = StatisticData.get_statistic("hour", year)
+        month_count = StatisticData.get_statistic("month", year)
+        source_count = StatisticData.get_statistic("source", year)
 
         now = mytime.get_time().year
         year_list = reversed(range(now - 3, now + 1))

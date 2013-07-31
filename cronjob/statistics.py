@@ -2,11 +2,9 @@
 #-*- coding: utf-8 -*-
 
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-
 sys.path.append("../timeline/")
-from cronjob.sync_timeline import sync_timeline
+
+from cronjob.statistics import statistics
 
 if __name__ == '__main__':
-    sync_timeline()
+    statistics()

@@ -20,6 +20,17 @@ code, pre, blockquote{
     padding:0;
 }
 
+hr{
+    margin: 38px 0;
+    border: none;
+    border-bottom: 1px dashed #dcdcdc;
+    color: #dcdcdc;
+    height: 1px;
+    line-height:1px;
+    font-size:1px;
+    overflow: hidden;
+}
+
 a{
     color: rgba(0, 130, 135, .6);
     text-decoration:none;

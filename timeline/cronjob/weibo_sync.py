@@ -52,4 +52,6 @@ def weibo_sync(weibo_config):
         for s in status.statuses:
             PostData.save_post(WeiboPost.status_to_post(s))
 
+        print ">> [%s]Get %s statuses" % (now(), len(status.statuses))
         print ">> [%s]Weibo Sync End." % now()
+        print "---------------"

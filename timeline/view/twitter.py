@@ -16,8 +16,8 @@ class signin(Base):
 
     def GET(self):
         client = TwitterOauth()
-        request_token = client.get_request_token()
         url = client.get_authorize_url()
+        request_token = client.get_request_token()
         ConfigData.set_config_value(
             "twitter_request_token", json.dumps(request_token))
         raise web.seeother(url)

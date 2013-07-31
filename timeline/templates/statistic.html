@@ -11,10 +11,10 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(draw_hour);
-      google.setOnLoadCallback(draw_month);
-      google.setOnLoadCallback(draw_source);
 
+
+    </script>
+    <script type="text/javascript">
       function draw_hour() {
         var data = google.visualization.arrayToDataTable(
           {{ hour_count }}
@@ -27,7 +27,11 @@
         var chart = new google.visualization.LineChart(document.getElementById('chart_hour'));
         chart.draw(data, options);
       }
+    </script>
 
+    <div id="chart_hour" style="width:900px;height:500px;"></div>
+
+    <script type="text/javascript">
       function draw_month() {
         var data = google.visualization.arrayToDataTable(
           {{ month_count }}
@@ -40,27 +44,27 @@
         var chart = new google.visualization.LineChart(document.getElementById('chart_month'));
         chart.draw(data, options);
       }
-
-      function draw_source() {
-        var data = google.visualization.arrayToDataTable([
-          ['Source', 'Count'],
-          {% for r in source_count %}
-          ['{{ r[0] }}',{{ r[1] }}],
-          {% endfor %}
-        ]);
-
-        var options = {
-          title: 'Source - {{ year }}'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('chart_source'));
-        chart.draw(data, options);
-      }
-
     </script>
-
-    <div id="chart_hour" style="width:900px;height:500px;"></div>
     <div id="chart_month" style="width:900px;height:400px;"></div>
-    <div id="chart_source" style="width:900px;height:400px;"></div>
 
+    <script type="text/javascript">
+      function draw_source() {
+          var data = google.visualization.arrayToDataTable(
+            {{ source_count if source_count else "" }}
+            );
+
+          var options = {
+            title: 'Source - {{ year }}'
+          };
+
+          var chart = new google.visualization.PieChart(document.getElementById('chart_source'));
+          chart.draw(data, options);
+        }
+    </script>
+    <div id="chart_source" style="width:900px;height:400px;"></div>
+    <script type="text/javascript">
+      google.setOnLoadCallback(draw_hour);
+      google.setOnLoadCallback(draw_month);
+      google.setOnLoadCallback(draw_source);
+    </script>
 {% endblock %}

@@ -24,3 +24,4 @@ def rss_sync(rss_list):
                 PostData.save_post(RssPost.status_to_post(entry, k))
 
         print ">> [%s]Rss Sync End." % now()
+        print "---------------"

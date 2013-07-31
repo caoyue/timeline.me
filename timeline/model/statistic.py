@@ -1,6 +1,8 @@
 #-*- coding: utf-8 -*-
 
+import json
 from model.data import MySqlData
+from model.data import ConfigData
 from config import config
 
 
@@ -28,9 +30,9 @@ class Statistic(object):
             r[row[2]][row[1]] = row[0]
 
         result = []
-        result.append(['Hour'])
+        result.append(["Hour"])
         for x in xrange(0, 24):
-            result.append([str(x)])
+            result.append(["%dh" % x])
             for s in config.SOURCE:
                 if not x:
                     result[0].append(s)
@@ -60,10 +62,12 @@ class Statistic(object):
                 r[row[2]] = {}
             r[row[2]][row[1]] = row[0]
 
+        month_name = ["Jan", "Feb", "Mar", "Apr", "May",
+                      "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         result = []
-        result.append(['Month'])
+        result.append(["Month"])
         for x in xrange(1, 13):
-            result.append([str(x)])
+            result.append([month_name[x - 1]])
             for s in config.SOURCE:
                 if x == 1:
                     result[0].append(s)
@@ -87,4 +91,34 @@ class Statistic(object):
         rows = cursor.fetchall()
         cursor and cursor.close()
 
-        return rows
+        if rows:
+            result = [[str(r[0]), int(r[1])] for r in rows]
+            return [["Source", "Count"]] + list(result)
+        return [["Source", "Count"]]
+
+
+class StatisticData(ConfigData):
+
+    @classmethod
+    def get_statistic(cls, type, year=None):
+        config_name = "statistic_%s_%s" % (type, year if year else "all")
+        value = cls.get_config_value(config_name)
+
+        result = None
+        if value:
+            result = value
+        else:
+            data = getattr(Statistic, "get_%s_count" % type)(year)
+            result = repr(data)
+
+            from datetime import datetime
+            if year and 2009 <= int(year) <= datetime.now().year:
+                cls.set_config_value(config_name, json.dumps(data))
+
+        return result
+
+    @classmethod
+    def set_statistic(cls, type, year=None):
+        config_name = "statistic_%s_%s" % (type, year if year else "all")
+        result = getattr(Statistic, "get_%s_count" % type)(year)
+        cls.set_config_value(config_name, json.dumps(result))

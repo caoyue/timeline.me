@@ -52,4 +52,6 @@ def twitter_sync(twitter_config):
     for s in status:
         PostData.save_post(TwitterPost.status_to_post(s))
 
+    print ">> [%s]Get %s tweets" % (now(), len(status))
     print ">> [%s]Twitter Sync End." % now()
+    print "---------------"

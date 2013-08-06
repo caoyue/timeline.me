@@ -28,12 +28,12 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `source` varchar(50) NOT NULL,
   `category` varchar(50) NOT NULL,
-  `orgin_id` varchar(100) DEFAULT NULL,
+  `origin_id` varchar(100) DEFAULT NULL,
   `url` varchar(100) NOT NULL,
   `title` varchar(500) NOT NULL,
   `content` text NOT NULL,
   `create_time` datetime NOT NULL,
-  `orgin_data` text,
+  `origin_data` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

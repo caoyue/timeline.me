@@ -2,10 +2,12 @@
 #-*- coding: utf-8 -*-
 
 import web
-import config.routes
+from config import routes
 
-app = web.application(config.routes.urls, globals())
-# application = app.wsgifunc()
+from view.error import Error
 
-if __name__ == '__main__':
-    app.run()
+
+app = web.application(routes.urls, globals())
+app.notfound = Error.notfound
+
+application = app.wsgifunc()

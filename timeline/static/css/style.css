@@ -75,7 +75,6 @@ a:hover{
 }
 
 .left ul{
-    list-style:none;
     margin:0;
     padding-left:30%;
 }
@@ -83,6 +82,7 @@ a:hover{
 .left li{
     margin: 0 0 5px 0;
     padding:5px 3px;
+    list-style:none;
 }
 
 .left li:hover{
@@ -224,6 +224,24 @@ textarea:focus{
 
 .github img{
     display:none;
+}
+
+.github li{
+    list-style: none;
+}
+
+mark , .match{
+    font-weight: bold;
+    color:rgba(20, 145, 152, 0.99);
+    background: none;
+}
+
+#search input{
+    color: rgba(0,130,135,.5);
+    font:inherit;
+    font-size: 14pt;
+    border:none;
+    margin-bottom: 2.5px;
 }
 
 /*wide mode*/

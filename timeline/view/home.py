@@ -29,7 +29,7 @@ class index(Base):
                     new.source += post.source + "|"
                     post.duplicate = True
             new_posts.append(post)
-        return self.render.index(posts=new_posts, pager=pager, title=config.SITE["title"])
+        return self.render.index(posts=new_posts, pager=pager, title=config.SITE["title"], index=True)
 
 
 class source(Base):

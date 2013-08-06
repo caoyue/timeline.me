@@ -38,7 +38,7 @@ def weibo_sync(weibo_config):
         since_id = None
         last_post = PostData.get_last_post("weibo")
         if last_post:
-            since_id = last_post.orgin_id
+            since_id = last_post.origin_id
 
         try:
             client = WeiboOauth(weibo_config, weibo_access)

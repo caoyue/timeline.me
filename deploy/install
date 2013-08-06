@@ -5,3 +5,5 @@ pip install jinja2
 pip install gunicorn
 pip isntall tweepy
 pip install feedparser
+pip install whoosh
+pip install jieba

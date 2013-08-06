@@ -38,7 +38,7 @@ def twitter_sync(twitter_config):
     since_id = None
     last_post = PostData.get_last_post("twitter")
     if last_post:
-        since_id = last_post.orgin_id
+        since_id = last_post.origin_id
 
     try:
         client = TwitterOauth(twitter_config, twitter_access)

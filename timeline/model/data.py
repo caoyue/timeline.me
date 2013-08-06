@@ -78,9 +78,20 @@ class PostData(object):
         return int(count[0]) if count else 0
 
     @classmethod
-    def get_posts(cls, page=1, pagesize=10):
+    def get_posts(cls, page=1, pagesize=10, orderby='create_time'):
         cursor = cls._db.execute(
-            """SELECT * FROM posts ORDER BY create_time DESC LIMIT %s,%s""", ((page - 1) * pagesize, pagesize))
+            """SELECT * FROM posts ORDER BY %s DESC LIMIT %%s,%%s""" % orderby, ((page - 1) * pagesize, pagesize))
+        rows = cursor.fetchall()
+
+        cursor and cursor.close()
+        if rows:
+            return [cls.data_to_post(row) for row in rows]
+        return []
+
+    @classmethod
+    def get_posts_since(cls, since_id):
+        cursor = cls._db.execute(
+            """SELECT * FROM posts WHERE id > %s""", since_id)
         rows = cursor.fetchall()
 
         cursor and cursor.close()
@@ -127,7 +138,7 @@ class PostData(object):
     def save_post(cls, post):
         if not cls.is_in_database(post):
             cursor = cls._db.execute(
-                """INSERT INTO posts (source, category, orgin_id, url, title, content, create_time, orgin_data) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""", (post.source, post.category, post.orgin_id, post.url, post.title, post.content, post.create_time, post.orgin_data))
+                """INSERT INTO posts (source, category, origin_id, url, title, content, create_time, origin_data) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""", (post.source, post.category, post.origin_id, post.url, post.title, post.content, post.create_time, post.origin_data))
             cls._db.commit()
 
             cursor and cursor.close()

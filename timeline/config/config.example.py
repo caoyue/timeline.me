@@ -54,6 +54,9 @@ LINKS = [
 # pagesize
 PAGESIZE = 10
 
+# search index ABSOLUTE PATH
+SEARCH_INDEX_PATH = "INDEX"
+
 # template render
 RENDER_PATH = "templates"
 
@@ -91,4 +94,5 @@ OAUTH_DICT = {
     }
 }
 
+SOURCE = FEEDS_DICT.keys() + OAUTH_DICT.keys()
 source_filter = '|'.join(FEEDS_DICT.keys() + OAUTH_DICT.keys())

@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock %}
-
+{% if search %}
+    {% block script %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/highlightRegex.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        $('.entry').highlightRegex( /({{ terms }})/i, {
+          tagType:   'mark'
+        });
+    });
+    </script>
+    {% endblock %}
+{% endif %}
 {% block content %}
 	{% include 'include/posts_list.html' %}
 {% endblock %}

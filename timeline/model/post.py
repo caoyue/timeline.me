@@ -8,29 +8,36 @@ from config import config
 
 class Post(object):
 
-    def __init__(self, id, source, category, orgin_id, url, title, content, create_time, orgin_data):
+    def __init__(self, id=None, source=None, category=None, origin_id=None, url=None, title=None, content=None, create_time=None, origin_data=None):
         self.id = id
         self.source = source
         self.category = category
-        self.orgin_id = orgin_id
+        self.origin_id = origin_id
         self.url = url
         self.title = title
         self.content = content
         self.create_time = create_time
-        self.orgin_data = orgin_data
+        self.origin_data = origin_data
         self._pure_title = self._generate_pure_title()
+
+    def __repr__(self):
+        return repr(self.__dict__)
+
+    __str__ = __repr__
 
     def _generate_pure_title(self):
         """去掉链接获得纯文本"""
-        content = self.title
-        pattern = re.compile(
-            """[a-zA-Z]+:\/\/[a-zA-Z0-9.]+\.[a-zA-Z0-9.\/]+""")
-        matchs = pattern.findall(content)
-        if matchs:
-            for m in matchs:
-                content = content.replace(
-                    m, "")
-        return content.strip()
+        if self.title:
+            content = self.title
+            pattern = re.compile(
+                """[a-zA-Z]+:\/\/[a-zA-Z0-9.]+\.[a-zA-Z0-9.\/]+""")
+            matchs = pattern.findall(content)
+            if matchs:
+                for m in matchs:
+                    content = content.replace(
+                        m, "")
+            return content.strip()
+        return self.title
 
     def is_duplicate(self, compare):
         """
@@ -38,6 +45,7 @@ class Post(object):
         条件是在一天之内且除链接外标题内容相同
         只判断了同步的微博类信息，不考虑 RSS 的相似性
         """
+        self._pure_title = self._generate_pure_title()
         if self.category == "oauth" \
             and compare.category == "oauth" \
             and abs(self.create_time.day - compare.create_time.day) == 0 \
@@ -64,9 +72,9 @@ class Post(object):
 
 class RssPost(Post):
 
-    def __init__(self, id, source, orgin_id, url, title, content, create_time, orgin_data):
+    def __init__(self, id=None, source=None, origin_id=None, url=None, title=None, content=None, create_time=None, origin_data=None):
         super(RssPost, self).__init__(id, source, "rss",
-                                      orgin_id, url, title, content, create_time, orgin_data)
+                                      origin_id, url, title, content, create_time, origin_data)
 
     @classmethod
     def get_datetime(cls, create_time):
@@ -80,9 +88,9 @@ class RssPost(Post):
 
 class WeiboPost(Post):
 
-    def __init__(self, id, orgin_id, url, title, content, create_time, orgin_data):
+    def __init__(self, id=None, origin_id=None, url=None, title=None, content=None, create_time=None, origin_data=None):
         super(WeiboPost, self).__init__(id, "weibo", "oauth",
-                                        orgin_id, url, title, content, create_time, orgin_data)
+                                        origin_id, url, title, content, create_time, origin_data)
 
     @classmethod
     def get_url(cls, uid, mid):
@@ -136,9 +144,9 @@ class WeiboPost(Post):
 
 class TwitterPost(Post):
 
-    def __init__(self, id, orgin_id, url, title, content, create_time, orgin_data):
+    def __init__(self, id=None, origin_id=None, url=None, title=None, content=None, create_time=None, origin_data=None):
         super(TwitterPost, self).__init__(id, "twitter", "oauth",
-                                          orgin_id, url, title, content, create_time, orgin_data)
+                                          origin_id, url, title, content, create_time, origin_data)
 
     @classmethod
     def get_url(cls, status_id, name):

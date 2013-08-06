@@ -2,27 +2,30 @@
 
 import config
 
-CONTROLLER = 'view.'
+VIEW = 'view.'
 
 # routes
 urls = (
-    '/', CONTROLLER + 'home.index',
-    '/(\d+)', CONTROLLER + 'home.index',
-    '/(%s)' % config.source_filter, CONTROLLER + 'home.source',
-    '/(%s)/' % config.source_filter, CONTROLLER + 'home.source',
-    '/(%s)/(\d+)' % config.source_filter, CONTROLLER + 'home.source',
-    '/feed', CONTROLLER + "home.feed",
-    '/weibo/signin', CONTROLLER + 'weibo.signin',
-    '/weibo/callback', CONTROLLER + 'weibo.callback',
-    '/weibo/test', CONTROLLER + 'weibo.test',
-    '/twitter/signin', CONTROLLER + 'twitter.signin',
-    '/twitter/callback', CONTROLLER + 'twitter.callback',
-    '/cron', CONTROLLER + 'cron.index',
-    '/cron/(timeline|statistic)', CONTROLLER + 'cron.index',
-    '/login', CONTROLLER + 'login.index',
-    '/update', CONTROLLER + 'update.index',
-    '/past', CONTROLLER + 'past.index',
-    '/past/([0-9]{4}-[0-9]{2}-[0-9]{2})', CONTROLLER + 'past.index',
-    '/statistic', CONTROLLER + 'statistic.index',
-    '/statistic/([0-9]{4})', CONTROLLER + 'statistic.index'
+    '/', VIEW + 'home.index',
+    '/(\d+)', VIEW + 'home.index',
+    '/(%s)' % config.source_filter, VIEW + 'home.source',
+    '/(%s)/' % config.source_filter, VIEW + 'home.source',
+    '/(%s)/(\d+)' % config.source_filter, VIEW + 'home.source',
+    '/feed', VIEW + "home.feed",
+    '/weibo/signin', VIEW + 'weibo.signin',
+    '/weibo/callback', VIEW + 'weibo.callback',
+    '/weibo/test', VIEW + 'weibo.test',
+    '/twitter/signin', VIEW + 'twitter.signin',
+    '/twitter/callback', VIEW + 'twitter.callback',
+    '/cron', VIEW + 'cron.index',
+    '/cron/(timeline|statistic)', VIEW + 'cron.index',
+    '/login', VIEW + 'login.index',
+    '/update', VIEW + 'update.index',
+    '/past', VIEW + 'past.index',
+    '/past/([0-9]{4}-[0-9]{2}-[0-9]{2})', VIEW + 'past.index',
+    '/statistic', VIEW + 'statistic.index',
+    '/statistic/([0-9]{4})', VIEW + 'statistic.index',
+    '/search', VIEW + 'ssearch.index',
+    '/search/([^\/]+)', VIEW + 'ssearch.index',
+    '/search/([^\/]+)/(\d+)', VIEW + 'ssearch.index'
 )

@@ -16,9 +16,10 @@ class index(Base):
         except Exception:
             _p = 1
         posts = PostData.get_posts(_p, config.PAGESIZE)
-        pager = Pager(PostData.get_posts_count(), config.PAGESIZE, _p, "/")
+        pager = Pager(
+            PostData.get_posts_count(), config.PAGESIZE, _p, "/index/")
         if not posts and pager.posts_count:
-            raise web.seeother("/1")
+            raise web.seeother("/")
 
         new_posts = []
         for post in posts:

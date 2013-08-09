@@ -56,6 +56,8 @@ PAGESIZE = 10
 
 # search index ABSOLUTE PATH
 SEARCH_INDEX_PATH = "INDEX"
+# use default if dict path is empty
+SEARCH_DICT_PATH = ""
 
 # template render
 RENDER_PATH = "templates"

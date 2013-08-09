@@ -1,7 +1,7 @@
 body{
     color:rgba(0,0,0,.6);
     margin:0;
-    font-size:12pt;
+    font-size:16px;
     font-family:'Segoe UI',Verdana,Arial,'Hiragino Sans GB','Microsoft YaHei';
 }
 
@@ -52,7 +52,7 @@ a:hover{
     margin:1.5% 0.7%;
     margin-left: -15%;
     padding-left: 2.5%;
-    font-size:28pt;
+    font-size:36px;
     font-weight:normal;
 }
 
@@ -65,7 +65,7 @@ a:hover{
 }
 
 .header span{
-    font-size: 16pt;
+    font-size: 22px;
 }
 
 .left{
@@ -99,6 +99,7 @@ a:hover{
 
 .right{
     float: left;
+    min-width: 752px;
 }
 
 .entry{
@@ -106,7 +107,7 @@ a:hover{
 }
 
 .entry > .title{
-    font-size:16pt;
+    font-size:20px;
     margin:0 0 8px 0;
 }
 
@@ -121,7 +122,7 @@ a:hover{
 }
 
 .info a,.info span{
-    font-size: 11pt;
+    font-size: 16px;
     margin:0 10px 0 0;
     padding: 0 5px;
     display: inline;
@@ -133,6 +134,9 @@ a:hover{
     cursor: pointer;
 }
 
+.pager{
+    padding-left: 20px;
+}
 .page{
     width:100%;
     float: left;
@@ -156,7 +160,7 @@ a:hover{
     width:100%;
     margin-top:15px;
     text-align: center;
-    font-size: 10pt;
+    font-size: 14px;
 }
 
 /* for update page*/
@@ -178,7 +182,7 @@ textarea:focus{
 .button{
     cursor: pointer;
     color:white;
-    font-size: 12pt;
+    font-size: 16px;
     font-family:'Segoe UI',Verdana,Arial,'Hiragino Sans GB','Microsoft YaHei';
     border:none;
     background-color:rgba(20, 145, 152, 0.4);
@@ -230,6 +234,7 @@ textarea:focus{
     list-style: none;
 }
 
+/* search */
 mark , .match{
     font-weight: bold;
     color:rgba(20, 145, 152, 0.99);
@@ -239,10 +244,23 @@ mark , .match{
 #search input{
     color: rgba(0,130,135,.5);
     font:inherit;
-    font-size: 14pt;
+    font-size: 18px;
     border:none;
-    margin-bottom: 2.5px;
+    margin-bottom: 2px;
+    padding-left: 5px;
 }
+
+#search form{
+    display: inline;
+}
+
+.time-tips{
+    font-size:16px;
+    line-height: 31px;
+    float: right;
+    padding-right: 5px;
+}
+
 
 /*wide mode*/
 

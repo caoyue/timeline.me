@@ -25,5 +25,5 @@ function ChangeStyle(){
 
 //search
 function Search(){
-    $("#search").toggle();
+    $("#search").toggle(666);
 }

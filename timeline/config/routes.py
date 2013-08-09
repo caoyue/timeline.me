@@ -7,7 +7,7 @@ VIEW = 'view.'
 # routes
 urls = (
     '/', VIEW + 'home.index',
-    '/(\d+)', VIEW + 'home.index',
+    '/index/(\d+)', VIEW + 'home.index',
     '/(%s)' % config.source_filter, VIEW + 'home.source',
     '/(%s)/' % config.source_filter, VIEW + 'home.source',
     '/(%s)/(\d+)' % config.source_filter, VIEW + 'home.source',

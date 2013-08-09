@@ -4,6 +4,7 @@ import os
 from whoosh.index import create_in
 from whoosh.fields import *
 
+import jieba
 from jieba.analyse import ChineseAnalyzer
 
 from model.data import PostData as p
@@ -11,10 +12,14 @@ from model.data import ConfigData as c
 from utils.mytime import get_time_now as now
 
 
-def create_index(index_path, clean=False):
+def create_index(index_path, dict_path=None, clean=False):
 
     print ">> [%s]Indexing......" % now()
     print ">> Index Mode : %s" % ("Clean" if clean else "Incremental")
+
+    if dict_path:
+        jieba.set_dictionary(dict_path)
+
     analyzer = ChineseAnalyzer()
 
     schema = Schema(

@@ -127,7 +127,8 @@ class PostData(object):
     @classmethod
     def is_in_database(cls, post):
         cursor = cls._db.execute(
-            """SELECT id FROM posts WHERE url = %s""", post.url)
+            """SELECT id FROM posts WHERE url = %s or origin_id=%s""", (
+                post.url, post.origin_id))
         row = cursor.fetchall()
 
         cursor and cursor.close()
@@ -139,11 +140,13 @@ class PostData(object):
         if not cls.is_in_database(post):
             cursor = cls._db.execute(
                 """INSERT INTO posts (source, category, origin_id, url, title, content, create_time, origin_data) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""", (post.source, post.category, post.origin_id, post.url, post.title, post.content, post.create_time, post.origin_data))
-            cls._db.commit()
+        elif post.category == "rss":
+            cursor = cls._db.execute(
+                """UPDATE posts SET url=%s, title=%s, content=%s, create_time=%s, origin_data=%s WHERE origin_id=%s""", (post.url, post.title, post.content, post.create_time, post.origin_data, post.origin_id))
 
-            cursor and cursor.close()
-            return True
-        return False
+        cls._db.commit()
+
+        cursor and cursor.close()
 
 
 class ConfigData(object):

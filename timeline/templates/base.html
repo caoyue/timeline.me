@@ -19,15 +19,15 @@
 			<ul class="list">
 				<li><a href="/" title="Home">timeline</a></li>
 				{% for s in source %}
-				<li><a href="/{{ s }}" title="{{ s }}">{{ s }}</a></li>
+				<li><a href="/{{ s }}">{{ s }}</a></li>
 				{% endfor %}
-				<li><a href="/past" title="past">past</a></li>
-				<li><a href="/statistic" title="graphic statistic">graph</a></li>
+				<li><a href="/past">past</a></li>
+				<li><a href="/statistic">graph</a></li>
 				{% if index %}
-				<li><a href="javascript:void(0)" title="search" onclick="Search()">search</a></li>
+				<li><a href="javascript:void(0)" onclick="Search()">search</a></li>
 				{% endif %}
 				{% for l in links %}
-				<li><a href="{{ l['link'] }}" title="{{ l['title'] }}" target="_blank">{{ l['name'] }}</a></li>
+				<li><a href="{{ l['link'] }}" target="_blank">{{ l['name'] }}</a></li>
 				{% endfor %}
 			</ul>
 		</div>

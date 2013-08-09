@@ -1,41 +1,39 @@
 
 <div id="search" class="entry" {{ "" if search else "style=\"display:none\"" }} >
 	<div class='title'>
-		{% if search %}
-		<div class="tips">
-			Search：{{ search }}
-		</div>
-		{% else %}
 		<div class="tips">
 			<form action="/search" method="post">
 				Search：
-				<input type="text" value="" placeholder="search here" name="keyword" />
+				<input type="text" value="{{ search or "" }}" placeholder="search here" name="keyword" />
 			</form>
+			{% if time %}
+			<span class="time-tips">{{ count }} results ({{ "%.2f"|format(time) }} seconds) </span>
+			{% endif %}
 		</div>
-		{% endif %}
 	</div>
 </div>
 
 {% for post in posts %}
-	{% if not post.duplicate %}
-	<div class="entry">
-		<div class='title'>
-			{% for source in post.source.strip("|").split("|") %}
-			<span class="info"><a href="/{{ source }}">{{ source }}</a></span>
-			{% endfor %}
-			<a href="{{ post.url }}">{{ post.title }}</a>
-		</div>
-		<div class="content {{ " ".join(post.source.strip("|").split("|")) }}">
-			{{  post.content }}
-		</div>
-		<div class="info">
-			<span>Posted on {{ post.create_time }}</span>
-		</div>
+{% if not post.duplicate %}
+<div class="entry">
+	<div class='title'>
+		{% for source in post.source.strip("|").split("|") %}
+		<span class="info"><a href="/{{ source }}">{{ source }}</a></span>
+		{% endfor %}
+		<a href="{{ post.url }}">{{ post.title }}</a>
 	</div>
-	{% endif %}
+	<div class="content {{ " ".join(post.source.strip("|").split("|")) }}">
+		{{  post.content }}
+	</div>
+	<div class="info">
+		<span>Posted on {{ post.create_time }}</span>
+	</div>
+</div>
+{% endif %}
 {% endfor %}
+{% if pager %}
 <div class="pager">
-	{% if pager and pager.previous_page %}
+	{% if pager.previous_page %}
 	<a class="pre" href="{{ pager.previous_page_url }}">Previous</a>
 	{% endif %}
 	&nbsp;&nbsp;&nbsp;
@@ -43,3 +41,4 @@
 	<a class="next" href="{{ pager.next_page_url }}">Next</a>
 	{% endif %}
 </div>
+{% endif %}

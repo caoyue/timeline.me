@@ -22,11 +22,12 @@
     - 按月份统计
     - 按分类统计
 
+- 全文搜索
+
 **TODO**
 
-- 其他第三方支持
-- 搜索
-- Other...
+- 更多第三方支持
+- 其他
 
 **Tools**
 
@@ -36,6 +37,7 @@
 - Nginx/Gunicorn
 - MySql
 - Google Chart
+- Whoosh/Jieba
 
 **Demo**
 

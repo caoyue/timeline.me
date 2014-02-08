@@ -15,7 +15,7 @@ class Statistic(object):
         """ group by hour """
         if year:
             cursor = cls._db.execute(
-                """SELECT count(id),DATE_FORMAT(create_time,'%%H'),source FROM posts WHERE DATE_FORMAT(create_time,'%%Y') = %s GROUP BY source,DATE_FORMAT(create_time,'%%H')""", year)
+                """SELECT count(id),DATE_FORMAT(create_time,'%%H'),source FROM posts WHERE DATE_FORMAT(create_time,'%%Y') = %s GROUP BY source,DATE_FORMAT(create_time,'%%H')""", (year,))
         else:
             cursor = cls._db.execute(
                 """SELECT count(id),DATE_FORMAT(create_time,'%H'),source FROM posts GROUP BY source,DATE_FORMAT(create_time,'%H')""")
@@ -49,7 +49,7 @@ class Statistic(object):
         """ group by month and year """
         if year:
             cursor = cls._db.execute(
-                """SELECT count(id),DATE_FORMAT(create_time,'%%m'),source FROM posts WHERE DATE_FORMAT(create_time,'%%Y') = %s GROUP BY source,DATE_FORMAT(create_time,'%%m')""", year)
+                """SELECT count(id),DATE_FORMAT(create_time,'%%m'),source FROM posts WHERE DATE_FORMAT(create_time,'%%Y') = %s GROUP BY source,DATE_FORMAT(create_time,'%%m')""", (year,))
         else:
             cursor = cls._db.execute(
                 """SELECT count(id),DATE_FORMAT(create_time,'%m'),source FROM posts GROUP BY source,DATE_FORMAT(create_time,'%m')""")
@@ -83,7 +83,7 @@ class Statistic(object):
     def get_source_count(cls, year=None):
         if year:
             cursor = cls._db.execute(
-                """SELECT source,count(id) FROM posts WHERE DATE_FORMAT(create_time,'%%Y') = %s GROUP BY source""", year)
+                """SELECT source,count(id) FROM posts WHERE DATE_FORMAT(create_time,'%%Y') = %s GROUP BY source""", (year,))
         else:
             cursor = cls._db.execute(
                 """SELECT source,count(id) FROM posts GROUP BY source""")

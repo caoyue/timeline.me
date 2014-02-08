@@ -67,7 +67,7 @@ class PostData(object):
     def get_posts_count(cls, source=None):
         if source:
             cursor = cls._db.execute(
-                """SELECT count(id) FROM posts WHERE source = %s""", source)
+                """SELECT count(id) FROM posts WHERE source = %s""", (source,))
             count = cursor.fetchone()
         else:
             cursor = cls._db.execute("""SELECT count(id) FROM posts""")
@@ -115,7 +115,7 @@ class PostData(object):
     @classmethod
     def get_last_post(cls, source):
         cursor = cls._db.execute(
-            """SELECT * FROM posts WHERE source = %s ORDER BY create_time DESC LIMIT 0,1""", source)
+            """SELECT * FROM posts WHERE source = %s ORDER BY create_time DESC LIMIT 0,1""", (source,))
         row = cursor.fetchone()
 
         cursor and cursor.close()
@@ -156,7 +156,7 @@ class ConfigData(object):
     @classmethod
     def get_config_value(cls, config_name):
         cursor = cls._db.execute(
-            """SELECT * FROM configs WHERE config_name = %s""", config_name)
+            """SELECT * FROM configs WHERE config_name = %s""", (config_name,))
         row = cursor.fetchone()
 
         cursor and cursor.close()
@@ -168,7 +168,7 @@ class ConfigData(object):
     @classmethod
     def set_config_value(cls, config_name, config_value):
         cursor = cls._db.execute(
-            """SELECT * FROM configs WHERE config_name = %s""", config_name)
+            """SELECT * FROM configs WHERE config_name = %s""", (config_name,))
         row = cursor.fetchall()
 
         if row:

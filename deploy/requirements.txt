@@ -1,0 +1,6 @@
+mysql-python
+tornado
+torndb
+jinja2
+tweepy
+feedparser

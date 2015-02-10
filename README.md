@@ -1,50 +1,30 @@
-﻿MyTimeline
-==========
+timeline.me
+==========================
 
-- 聚合分散在各个网站上的 Timeline
+### About
+```timeline.me``` is a project lets you backup your timeline from multiple source, such as twitter, weibo, github ...
 
-    Support:
-    - Rss Feed
-    - Twitter Oauth
-    - Weibo Oauth
+### How to
+- install requirments
 
-- 同步发送消息到第三方
+    ```shell
+    pip install -r deploy/requirements.txt
+    ```
 
-    Support:
-    - Twitter
-    - Weibo
+- create database
 
-- 按日期查看过往记录
+    ```shell
+    mysql -u USERNAME -p < deploy/init.sql
+    ```
+- start server
 
-- 对所有记录的统计图表
+    ```shell
+    python timeline.py
+    ```
 
-    - 按时段统计
-    - 按月份统计
-    - 按分类统计
+- use nginx<br/>
+     nginx config example is available in ```/deploy/```
 
-- 全文搜索
-
-**TODO**
-
-- 更多第三方支持
-- 其他
-
-**Tools**
-
-- Linux
-- Python
-- Web.py
-- Nginx/Gunicorn
-- MySql
-- Google Chart
-- Whoosh/Jieba
-
-**Demo**
-
-- [Demo](http://i.caoyue.me)
-
-**License**
-
-- MIT
-
-*Feel free to give me some feedback:)*
+- support emoji in MySQL
+    * MySQL server v5.5.3+
+    * set ```CHARSET``` to ```utf8mb4```

@@ -5,12 +5,19 @@
 import tornado.web
 
 from handler.base import BaseHandler
-from config import feeds_dict
+
+
+class FeedHandler(BaseHandler):
+
+    def get(self):
+        posts = self.post.get_posts(1, 20)
+        self.set_header('Content-Type', 'text/xml')
+        return self.render("feed.html", posts=posts)
 
 
 class SyncHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        self.rss_model.sync(feeds_dict)
+        self.rss.sync(self.config.feeds)
         self.write("Done!")

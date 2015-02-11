@@ -26,13 +26,13 @@ class CallbackHandler(BaseHandler):
             self.write("Weibo Oauth Failed!")
             return
 
-        exists_token = self.weibo_model.get_config("weibo")
+        exists_token = self.weibo.get_config("weibo")
 
         if exists_token and access_token.uid != exists_token["uid"]:
             self.raise_error(403)
             return
 
-        self.weibo_model.replace_config(
+        self.weibo.replace_config(
             "weibo", {
                 "access_token": access_token.access_token,
                 "expires_in": access_token.expires_in,
@@ -48,7 +48,7 @@ class SyncHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        access_token = self.weibo_model.get_config("weibo")
+        access_token = self.weibo.get_config("weibo")
         self.weibo_oauth.set_access_token(access_token)
-        self.weibo_model.sync(self.weibo_oauth)
+        self.weibo.sync(self.weibo_oauth)
         self.write("Done!")

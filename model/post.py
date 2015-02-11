@@ -4,7 +4,6 @@
 
 import re
 import json
-import datetime
 
 from model.base import BaseModel
 
@@ -78,7 +77,7 @@ class PostModel(BaseModel):
     # db
 
     def get_posts_count(self, source=None):
-        self.count(
+        return self.count(
             "posts",
             where="source='%s'" % source if source else None
         )
@@ -87,6 +86,7 @@ class PostModel(BaseModel):
         rows = self.query(
             table="posts",
             where="source = '%s'" % source if source else None,
+            orderby=orderby,
             page=page,
             pagesize=pagesize
         )
@@ -95,6 +95,7 @@ class PostModel(BaseModel):
     def get_posts_since(self, since_id):
         rows = self.query(
             table="posts",
+            orderby="create_time",
             where="id > %s" % since_id if since_id else None
         )
         return self._rows_to_posts(rows)
@@ -102,9 +103,30 @@ class PostModel(BaseModel):
     def get_last_post(self, source=None):
         row = self.get(
             table="posts",
+            orderby="create_time",
             where="source = '%s'" % source if source else None,
         )
         return self._row_to_post(row)
+
+    def get_post_by_date(self, start, end):
+        rows = self.query(
+            table="posts",
+            where="create_time >= '%s' AND create_time <= '%s'" % (start, end),
+            orderby="create_time"
+        )
+        return self._rows_to_posts(rows)
+
+    def get_history_today(self, time_obj):
+        import lib.timehelper as th
+
+        dates = th.past_days(time_obj)
+        posts_list = [self.get_post_by_date(d[0], d[1]) for d in dates]
+
+        p = {}
+        for posts in posts_list:
+            if posts:
+                p[str(th.format_time(posts[0].create_time))] = posts
+        return p
 
     def is_in_database(self, post):
         row = self.query(

@@ -34,7 +34,7 @@ class Commander(object):
             ",".join(fields),
             table,
             "WHERE %s" % where if where else "",
-            "ORDER BY '%s'" % orderby if orderby else "",
+            "ORDER BY %s" % orderby if orderby else "",
             "DESC" if desc and orderby else "",
             limit
         )

@@ -32,7 +32,7 @@ class RssModel(PostModel):
     def sync(self, dict):
         """sync Rss feeds"""
 
-        from lib.simpletime import get_time_now as now
+        from lib.timehelper import format_now as now
         print ">> [%s]Rss Sync Start ......" % now()
 
         import feedparser

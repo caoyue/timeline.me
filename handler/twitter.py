@@ -13,7 +13,7 @@ class SigninHandler(BaseHandler):
         url = self.twitter_oauth.get_authorize_url()
         request_token = self.twitter_oauth.get_request_token()
 
-        self.twitter_model.replace_config(
+        self.twitter.replace_config(
             "twitter_request_token", {
                 "oauth_token": request_token["oauth_token"],
                 "oauth_token_secret": request_token["oauth_token_secret"]
@@ -28,7 +28,7 @@ class CallbackHandler(BaseHandler):
 
         access_token = None
         try:
-            request_token = self.twitter_model.get_config(
+            request_token = self.twitter.get_config(
                 "twitter_request_token")
             self.twitter_oauth.set_request_token(request_token)
             access_token = self.twitter_oauth.request_access_token(
@@ -37,7 +37,7 @@ class CallbackHandler(BaseHandler):
             self.write("Twitter Oauth Failed!")
             return
 
-        exists_token = self.twitter_model.get_config("twitter")
+        exists_token = self.twitter.get_config("twitter")
 
         self.twitter_oauth.set_access_token(access_token)
         user_info = self.twitter_oauth.get_user_info()
@@ -47,7 +47,7 @@ class CallbackHandler(BaseHandler):
             self.raise_error(403)
             return
 
-        self.twitter_model.replace_config(
+        self.twitter.replace_config(
             "twitter", {
                 "access_token": access_token["access_token"],
                 "access_token_secret": access_token["access_token_secret"],
@@ -62,7 +62,7 @@ class SyncHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        access_token = self.twitter_model.get_config("twitter")
+        access_token = self.twitter.get_config("twitter")
         self.twitter_oauth.set_access_token(access_token)
-        self.twitter_model.sync_all(self.twitter_oauth)
+        self.twitter.sync_all(self.twitter_oauth)
         self.write("Done!")

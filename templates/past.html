@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}{{ site["title"]}} / {{ title }}{% endblock %}
+
+{% block content %}
+    {% if posts_dict %}
+        {% for k,v in posts_dict.items() %}
+            <div class="past_title">{{ k }}<span class="past_count">{{ v | length }}</span>
+            </div>
+            {% for post in v %}
+            <div class="entry">
+                <div class='title'>
+                    {% for source in post.source.strip("|").split("|") %}
+                    <span class="info"><a href="/{{ source }}">{{ source }}</a></span>
+                    {% endfor %}
+                    <a href="{{ post.url }}">{{ post.title }}</a>
+                </div>
+                <div class="content {{ " ".join(post.source.strip("|").split("|")) }}">
+                    {{  post.content }}
+                </div>
+                <div class="info">
+                    <span>Posted on {{ post.create_time }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="past_title">No past post here.</div>
+    {% endif %}
+
+    <div class="pager">
+        <a class="pre" href="/past/{{ yesterday }}">yesterday</a>
+        &nbsp;&nbsp;&nbsp;
+        <a class="next" href="/past/{{ tomorrow }}">tomorrow</a>
+    </div>
+{% endblock %}
+
+

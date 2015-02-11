@@ -24,12 +24,12 @@ site = {
 secret = "MmMxM2I5NGEyNTk0ODBiM2RmOWRmNGZmMDJhNjdkMTM="
 
 # feeds
-feeds_dict = {
+feeds = {
     "blog": "http://blog.example.me/feed"
 }
 
 # oauth
-oauth_dict = {
+oauth = {
     "weibo": {
         "app_name": "weibo",
         "app_key": "",

@@ -15,6 +15,8 @@ import tornado.web
 from jinja2 import Environment, FileSystemLoader
 
 import handler.index
+import handler.post
+import handler.rss
 import handler.weibo
 import handler.twitter
 
@@ -38,7 +40,9 @@ class Application(tornado.web.Application):
 
         handlers = [
             (r"/", handler.index.IndexHandler),
-            (r"/signin", handler.twitter.SigninHandler),
+            (r"/index/(\d+)", handler.index.IndexHandler),
+            (r"/user", handler.index.UserHandler),
+            (r"/signin", handler.index.SigninHandler),
             (r"/signout", handler.index.SignoutHandler),
             (r"/weibo/signin", handler.weibo.SigninHandler),
             (r"/weibo/callback", handler.weibo.CallbackHandler),
@@ -46,8 +50,14 @@ class Application(tornado.web.Application):
             (r"/twitter/signin", handler.twitter.SigninHandler),
             (r"/twitter/callback", handler.twitter.CallbackHandler),
             (r"/twitter/sync", handler.twitter.SyncHandler),
+            (r"/feed", handler.rss.FeedHandler),
             (r"/rss/sync", handler.rss.SyncHandler),
-            (r"/test", handler.index.TestHandler)
+            (r"/past", handler.post.PastHandler),
+            (r"/past/([0-9]{4}-[0-9]{2}-[0-9]{2})", handler.post.PastHandler),
+            (r"/s/(.*)", handler.post.SourceHandler),
+            (r"/s/(.*)/(\d+)", handler.post.SourceHandler),
+            (r"/ping", handler.index.PingHandler),
+            (r".*", handler.index.NotFoundHandler)
         ]
 
         tornado.web.Application.__init__(self, handlers, **settings)

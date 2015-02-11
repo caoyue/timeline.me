@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}{{ site["title"] }}{{ (" / " + title) if title else "" }}{% endblock %}
+{% block content %}
+	{% include 'include/posts_list.html' %}
+{% endblock %}

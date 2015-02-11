@@ -3,7 +3,7 @@
 
 
 from model.post import Post, PostModel
-from lib.simpletime import get_time_now as now, get_time
+from lib.timehelper import format_now as now, format_time
 
 
 class WeiboModel(PostModel):
@@ -66,7 +66,7 @@ class WeiboModel(PostModel):
             "url": self.get_url(status.user.id, status.mid),
             "title": status.text,
             "content": content,
-            "create_time": str(get_time(
+            "create_time": str(format_time(
                 status.created_at, '%a %b %d %H:%M:%S +0800 %Y', site["timezone"])),
             "origin_data": status
         })

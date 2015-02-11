@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>{% block title %} {% endblock %}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel='alternate' type='application/rss+xml' title='atom 1.0' href='/feed' />
+	<link rel="icon" type="image/png" href="/static/img/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+  	{% block script %} {% endblock %}
+</head>
+<body>
+	<div class="wrap">
+		<div class="header">
+			<a href="/">{{ site["title"] or "Site Title Here" }}</a>
+			<span>{{ site["description"] or "Site Description Here" }}</span>
+		</div>
+		<div class="left">
+			<ul class="list">
+				<li><a href="/" title="Home">timeline</a></li>
+				{% for s in source %}
+				<li><a href="/s/{{ s }}">{{ s }}</a></li>
+				{% endfor %}
+				<li><a href="/past">past</a></li>
+				{% for l in links %}
+				<li><a href="{{ l['link'] }}" target="_blank">{{ l['name'] }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="right">
+			{% block content %}
+    		{% endblock %}
+		</div>
+
+		<div class="footer">
+			©2015 <a href="{{ site['domain'] }}">{{ site["title"] }}</a>. designed by <a href="http://caoyue.me" target="_blank">caoyue</a>. project <a href="https://github.com/caoyue/timeline.me" target="_blank">timeline.me</a>
+		</div>
+	</div>
+</body>
+</html>

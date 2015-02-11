@@ -5,7 +5,7 @@
 import json
 
 from model.post import Post, PostModel
-from lib.simpletime import get_time_now as now, get_time
+from lib.timehelper import format_now as now, format_time
 
 
 class TwitterModel(PostModel):
@@ -34,7 +34,7 @@ class TwitterModel(PostModel):
             "url": self.get_url(status["id"], status["user"]["name"]),
             "title": status["text"],
             "content": self.replace_url(content),
-            "create_time": str(get_time(
+            "create_time": str(format_time(
                 status["created_at"], '%a %b %d %H:%M:%S +0000 %Y', site["timezone"])),
             "origin_data": json.dumps(status)
         })

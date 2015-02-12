@@ -44,17 +44,21 @@ class TwitterModel(PostModel):
 
         print ">> [%s]Twitter Sync Start ...... " % now()
 
-        since_id = None
-        last_post = self.get_last_post("twitter")
-        if last_post:
-            since_id = last_post.origin_id
+        try:
+            since_id = None
+            last_post = self.get_last_post("twitter")
+            if last_post:
+                since_id = last_post.origin_id
 
-        print ">> [%s]Getting tweets since %s ..." % (now(), since_id)
-        status = client.get_user_timeline(since_id=since_id)
+            print ">> [%s]Getting tweets since %s ..." % (now(), since_id)
+            status = client.get_user_timeline(since_id=since_id)
 
-        print ">> [%s]Got %s tweets, saving..." % (now(), len(status))
-        for s in status:
-            self.save_post(self.status_to_post(s))
+            print ">> [%s]Got %s tweets, saving..." % (now(), len(status))
+            for s in status:
+                self.save_post(self.status_to_post(s))
+        except Exception, e:
+            print e
+            print ">> Error!"
 
         print ">> [%s]Twitter Sync End." % now()
         print "---------------"
@@ -66,23 +70,27 @@ class TwitterModel(PostModel):
 
         print ">> [%s]Twitter Sync Start ...... " % now()
 
-        alltweets = []
-        new_tweets = client.get_user_timeline(count=200)
-        alltweets.extend(new_tweets)
-
-        # 保存最大 id - 1
-        oldest = alltweets[-1]["id"] - 1
-
-        while len(new_tweets) > 0:
-            print ">> [%s]Getting tweets since %s ..." % (now(), oldest)
-
-            new_tweets = client.get_user_timeline(count=200, max_id=oldest)
+        try:
+            alltweets = []
+            new_tweets = client.get_user_timeline(count=200)
             alltweets.extend(new_tweets)
-            oldest = alltweets[-1]["id"] - 1
-            print ">> Got %s tweets, saving..." % (len(alltweets))
 
-        for t in alltweets:
-            self.save_post(self.status_to_post(t))
+            # 保存最大 id - 1
+            oldest = alltweets[-1]["id"] - 1
+
+            while len(new_tweets) > 0:
+                print ">> [%s]Getting tweets since %s ..." % (now(), oldest)
+
+                new_tweets = client.get_user_timeline(count=200, max_id=oldest)
+                alltweets.extend(new_tweets)
+                oldest = alltweets[-1]["id"] - 1
+                print ">> Got %s tweets, saving..." % (len(alltweets))
+
+            for t in alltweets:
+                self.save_post(self.status_to_post(t))
+        except Exception, e:
+            print e
+            print ">> Error!"
 
         print ">> [%s]Total tweets count : %s." % (now(), len(alltweets))
         print ">> [%s]Twitter Sync End." % now()

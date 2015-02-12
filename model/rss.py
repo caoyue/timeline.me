@@ -33,13 +33,18 @@ class RssModel(PostModel):
         """sync Rss feeds"""
 
         from lib.timehelper import format_now as now
+        import feedparser
+
         print ">> [%s]Rss Sync Start ......" % now()
 
-        import feedparser
-        for k, v in dict.items():
-            feeds = feedparser.parse(v)
-            for entry in feeds.entries:
-                self.save_post(self.status_to_post(entry, k))
+        try:
+            for k, v in dict.items():
+                feeds = feedparser.parse(v)
+                for entry in feeds.entries:
+                    self.save_post(self.status_to_post(entry, k))
+        except Exception, e:
+            print e
+            print ">> Error!"
 
         print ">> [%s]Rss Sync End." % now()
         print "---------------"

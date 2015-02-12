@@ -14,10 +14,7 @@ class TwitterOauth(object):
         self._client = None
 
         if access:
-            self.set_access_token(
-                access["access_token"], access["access_token_secret"])
-            self._client = tweepy.API(
-                self._auth, parser=tweepy.parsers.JSONParser())
+            self.set_access_token(access)
 
     # oauth
 

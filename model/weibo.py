@@ -76,16 +76,20 @@ class WeiboModel(PostModel):
 
         print ">> [%s]Weibo Sync Start ...... " % now()
 
-        since_id = None
-        last_post = self.get_last_post("weibo")
-        if last_post:
-            since_id = last_post.origin_id
+        try:
+            since_id = None
+            last_post = self.get_last_post("weibo")
+            if last_post:
+                since_id = last_post.origin_id
 
-        status = client.get_user_timeline(since_id=since_id)
-        print ">> [%s]Get %s statuses, saving ..." % (now(), len(status.statuses))
+            status = client.get_user_timeline(since_id=since_id)
+            print ">> [%s]Get %s statuses, saving ..." % (now(), len(status.statuses))
 
-        for s in status.statuses:
-            self.save_post(self.status_to_post(s))
+            for s in status.statuses:
+                self.save_post(self.status_to_post(s))
+        except Exception, e:
+            print e
+            print ">> Error!"
 
         print ">> [%s]Weibo Sync End." % now()
         print "---------------"
@@ -97,19 +101,23 @@ class WeiboModel(PostModel):
 
         print ">> [%s]Weibo Sync Start ...... " % now()
 
-        i = 1
-        count = 0
-        while True:
-            status = client.get_user_timeline_by_page(count=100, page=i)
+        try:
+            i = 1
+            count = 0
+            while True:
+                status = client.get_user_timeline_by_page(count=100, page=i)
 
-            if not status.statuses:
-                break
+                if not status.statuses:
+                    break
 
-            for s in status.statuses:
-                self.save_post(self.status_to_post(s))
+                for s in status.statuses:
+                    self.save_post(self.status_to_post(s))
 
-            count += len(status.statuses)
-            i += 1
+                count += len(status.statuses)
+                i += 1
+        except Exception, e:
+            print e
+            print ">> Error!"
 
         print ">> [%s]Total weibo count %s" % (now(), count)
         print ">> [%s]Weibo Sync End." % now()

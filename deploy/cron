@@ -1,0 +1,2 @@
+## timeline.me cronjobs
+0 * * * * cd /home/project/timeline.me/;python cron.py >> /home/project/timeline.me/cron.log 2>&1

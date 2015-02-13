@@ -3,7 +3,7 @@
 
 {% block content %}
     {% if posts_dict %}
-        {% for k,v in posts_dict.items() %}
+        {% for k,v in posts_dict.items() | sort(reverse=True) %}
             <div class="past_title">{{ k }}<span class="past_count">{{ v | length }}</span>
             </div>
             {% for post in v %}

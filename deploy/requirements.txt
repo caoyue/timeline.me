@@ -4,3 +4,4 @@ torndb
 jinja2
 tweepy
 feedparser
+supervisor

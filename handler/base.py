@@ -44,6 +44,8 @@ class BaseHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         if status_code == 403:
             self.write("403 Forbidden!")
+        if status_code == 404:
+            self.render("404.html")
         else:
             self.write("%s Error!" % status_code)
 
@@ -54,6 +56,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def render_string(self, template_name, **template_vars):
         template_vars["site"] = self.config.site
         template_vars["source"] = self.source
+        template_vars["links"] = self.config.links
 
         template_vars["xsrf_form_html"] = self.xsrf_form_html
         template_vars["current_user"] = self.current_user

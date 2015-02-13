@@ -204,6 +204,10 @@ table tr:nth-child(2n) {
     color: white;
 }
 
+.cur {
+    font-weight: bolder;
+}
+
 .entry {
     margin: 0 3% 50px 3%;
 }

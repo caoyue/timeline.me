@@ -1,7 +1,4 @@
 
--- For emoji character support :
--- 1. MySQL v5.5.3+
--- 2. set CHARSET to utf8mb4
 
 CREATE DATABASE IF NOT EXISTS `timeline`;
 USE `timeline`;

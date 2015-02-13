@@ -17,6 +17,7 @@ site = {
     "title": u"site title",
     "description": u"site description",
     "author": u"",
+    "pagesize": 10,
     "timezone": 8
 }
 
@@ -53,21 +54,6 @@ links = [
         "name": "example",
         "title": "an example",
         "link": "http://example.com/xxxx"
-    },
-    {
-        "name": "",
-        "title": "",
-        "link": ""
-    },
-    {
-        "name": "",
-        "title": "",
-        "link": ""
-    },
-    {
-        "name": "",
-        "title": "",
-        "link": ""
     },
     {
         "name": "",

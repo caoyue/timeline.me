@@ -11,6 +11,7 @@ import os.path
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
+from tornado.options import define, options
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -22,6 +23,8 @@ import handler.twitter
 
 from lib.db import Commander, connect
 import config
+
+define("port", default=80, help="port", type=int)
 
 
 class Application(tornado.web.Application):
@@ -40,7 +43,7 @@ class Application(tornado.web.Application):
 
         handlers = [
             (r"/", handler.index.IndexHandler),
-            (r"/index/(\d+)", handler.index.IndexHandler),
+            (r"/timeline/(\d+)", handler.index.IndexHandler),
             (r"/user", handler.index.UserHandler),
             (r"/signin", handler.index.SigninHandler),
             (r"/signout", handler.index.SignoutHandler),
@@ -54,8 +57,8 @@ class Application(tornado.web.Application):
             (r"/rss/sync", handler.rss.SyncHandler),
             (r"/past", handler.post.PastHandler),
             (r"/past/([0-9]{4}-[0-9]{2}-[0-9]{2})", handler.post.PastHandler),
-            (r"/s/(.*)", handler.post.SourceHandler),
-            (r"/s/(.*)/(\d+)", handler.post.SourceHandler),
+            (r"/s/([^/]+)", handler.post.SourceHandler),
+            (r"/s/([^/]+)/(\d+)", handler.post.SourceHandler),
             (r"/ping", handler.index.PingHandler),
             (r".*", handler.index.NotFoundHandler)
         ]
@@ -67,8 +70,9 @@ class Application(tornado.web.Application):
 
 
 def main():
+    tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application())
-    http_server.listen(8888)
+    http_server.listen(options.port if options.port != 80 else 8888)
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":

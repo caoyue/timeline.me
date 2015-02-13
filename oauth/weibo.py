@@ -13,10 +13,7 @@ class WeiboOauth(object):
             redirect_uri=api["redirect_uri"]
         )
         if access:
-            self.set_access_token(
-                access["access_token"],
-                access["expires_in"]
-            )
+            self.set_access_token(access)
 
     # oauth
 
@@ -26,8 +23,9 @@ class WeiboOauth(object):
     def request_access_token(self, code):
         return self._client.request_access_token(code)
 
-    def set_access_token(self, access_token, expires_in):
-        self._client.set_access_token(access_token, expires_in)
+    def set_access_token(self, access_token):
+        self._client.set_access_token(
+            access_token["access_token"], access_token["expires_in"])
 
     # api
 

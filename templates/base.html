@@ -11,16 +11,16 @@
 <body>
 	<div class="wrap">
 		<div class="header">
-			<a href="/">{{ site["title"] or "Site Title Here" }}</a>
-			<span>{{ site["description"] or "Site Description Here" }}</span>
+			<a href="/">{{ site["title"] }}</a>
+			<span>{{ site["description"] }}</span>
 		</div>
 		<div class="left">
 			<ul class="list">
-				<li><a href="/" title="Home">timeline</a></li>
+				<li><a href="/" title="Home" {{ "class='cur'" if cur == "timeline" else "" }}>timeline</a></li>
 				{% for s in source %}
-				<li><a href="/s/{{ s }}">{{ s }}</a></li>
+				<li><a href="/s/{{ s }}" {{ "class='cur'" if title == s else "" }}>{{ s }}</a></li>
 				{% endfor %}
-				<li><a href="/past">past</a></li>
+				<li><a href="/past" {{ "class='cur'" if title == "past" else "" }}>past</a></li>
 				{% for l in links %}
 				<li><a href="{{ l['link'] }}" target="_blank">{{ l['name'] }}</a></li>
 				{% endfor %}

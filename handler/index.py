@@ -12,10 +12,11 @@ class IndexHandler(BaseHandler):
         from lib.pager import Pager
 
         _p = int(page) if page else 1
-        posts = self.post.get_posts(page=_p)
+        pagesize = self.config.site["pagesize"]
+        posts = self.post.get_posts(page=_p, pagesize=pagesize)
         pager = Pager(
-            self.post.get_posts_count(), 10, _p, "/index/")
-        self.render("index.html", posts=posts, pager=pager)
+            self.post.get_posts_count(), pagesize, _p, "/timeline/")
+        self.render("index.html", posts=posts, pager=pager, cur="timeline")
 
 
 class UserHandler(BaseHandler):
@@ -43,7 +44,7 @@ class SignoutHandler(BaseHandler):
 class PingHandler(BaseHandler):
 
     def get(self):
-        self.write("Pong!")
+        self.write("pong!")
 
 
 class NotFoundHandler(BaseHandler):

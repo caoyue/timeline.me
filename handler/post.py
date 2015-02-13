@@ -13,9 +13,10 @@ class SourceHandler(BaseHandler):
             self.raise_error(404)
 
         _p = int(page) if page else 1
-        posts = self.post.get_posts(page=_p, pagesize=10, source=source)
+        pagesize = self.config.site["pagesize"]
+        posts = self.post.get_posts(page=_p, pagesize=pagesize, source=source)
         pager = Pager(self.post.get_posts_count(
-            source), 10, _p, "/s/%s/" % source)
+            source), pagesize, _p, "/s/%s/" % source)
         self.render("index.html", posts=posts, pager=pager, title=source)
 
 

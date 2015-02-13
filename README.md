@@ -23,13 +23,20 @@ timeline.me
         + set ```CHARSET``` to ```utf8mb4```
 
 3. set config
-    * rename ```config.example.py``` to ```config.py``` and set your config
+    * rename ```config.example.py``` to ```config.py``` and set your configs
 
-4. use nginx
-    * nginx config example is available in ```/deploy/```
+4. nginx
+    * nginx config example is available in ```/deploy/timeline.conf```
 
 5. start server
+    - command
 
-    ```shell
-    python timeline.py
-    ```
+        ```shell
+        python timeline.py --port=8888
+        ```
+    - supervisor
+        * supervisor config example is available in ```/deploy/supervisor.conf```
+
+6. sync your timeline
+    - use cron
+        * cron example is available in ```/deploy/cron```

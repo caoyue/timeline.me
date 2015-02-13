@@ -2,10 +2,6 @@
 # -*- coding: utf-8 -*-
 
 
-import re
-import json
-import datetime
-
 from model.post import Post, PostModel
 
 
@@ -15,6 +11,7 @@ class RssModel(PostModel):
         super(RssModel, self).__init__(db)
 
     def get_datetime(self, create_time):
+        import datetime
         return datetime.datetime(*create_time[:6])
 
     def status_to_post(self, rss, source=None):

@@ -72,7 +72,19 @@ class PostModel(BaseModel):
         return False
 
     def status_to_post(self, status):
-        return status
+        import hashlib
+        import lib.timehelper as th
+
+        return Post({
+            "source": "moments",
+            "category": "moments",
+            "origin_id": hashlib.md5(status).hexdigest().upper(),
+            "url": "",
+            "title": status,
+            "content": status,
+            "create_time": th.format_now(),
+            "origin_data": status
+        })
 
     # db
 
@@ -131,8 +143,7 @@ class PostModel(BaseModel):
     def is_in_database(self, post):
         row = self.query(
             table="posts",
-            where="url = '%s' and origin_id = '%s' " % (
-                post.url, post.origin_id)
+            where="origin_id = '%s' " % post.origin_id
         )
         return True if row else False
 

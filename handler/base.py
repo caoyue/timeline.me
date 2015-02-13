@@ -24,7 +24,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.cmd = self.application.cmd
 
         self.config = config
-        self.post = PostModel(self.db)
+        self.posts = PostModel(self.db)
         self.rss = RssModel(self.db)
         self.twitter = TwitterModel(self.db)
         self.weibo = WeiboModel(self.db)
@@ -34,7 +34,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     @property
     def source(self):
-        return self.config.feeds.keys() + self.config.oauth.keys()
+        return self.config.feeds.keys() + self.config.oauth.keys() + ["moments"]
 
     # override
 
@@ -44,7 +44,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         if status_code == 403:
             self.write("403 Forbidden!")
-        if status_code == 404:
+        elif status_code == 404:
             self.render("404.html")
         else:
             self.write("%s Error!" % status_code)

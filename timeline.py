@@ -20,6 +20,7 @@ import handler.post
 import handler.rss
 import handler.weibo
 import handler.twitter
+import handler.compose
 
 from lib.db import Commander, connect
 import config
@@ -60,6 +61,8 @@ class Application(tornado.web.Application):
             (r"/s/([^/]+)", handler.post.SourceHandler),
             (r"/s/([^/]+)/(\d+)", handler.post.SourceHandler),
             (r"/ping", handler.index.PingHandler),
+            (r"/admin", handler.index.AdminHandler),
+            (r"/compose", handler.compose.ComposeHandler),
             (r".*", handler.index.NotFoundHandler)
         ]
 

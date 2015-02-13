@@ -13,9 +13,9 @@ class IndexHandler(BaseHandler):
 
         _p = int(page) if page else 1
         pagesize = self.config.site["pagesize"]
-        posts = self.post.get_posts(page=_p, pagesize=pagesize)
+        posts = self.posts.get_posts(page=_p, pagesize=pagesize)
         pager = Pager(
-            self.post.get_posts_count(), pagesize, _p, "/timeline/")
+            self.posts.get_posts_count(), pagesize, _p, "/timeline/")
         self.render("index.html", posts=posts, pager=pager, cur="timeline")
 
 
@@ -39,6 +39,13 @@ class SignoutHandler(BaseHandler):
     def get(self):
         self.signout()
         self.redirect("/", permanent=False)
+
+
+class AdminHandler(BaseHandler):
+
+    @tornado.web.authenticated
+    def get(self):
+        self.render("admin.html")
 
 
 class PingHandler(BaseHandler):

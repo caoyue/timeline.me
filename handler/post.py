@@ -14,8 +14,8 @@ class SourceHandler(BaseHandler):
 
         _p = int(page) if page else 1
         pagesize = self.config.site["pagesize"]
-        posts = self.post.get_posts(page=_p, pagesize=pagesize, source=source)
-        pager = Pager(self.post.get_posts_count(
+        posts = self.posts.get_posts(page=_p, pagesize=pagesize, source=source)
+        pager = Pager(self.posts.get_posts_count(
             source), pagesize, _p, "/s/%s/" % source)
         self.render("index.html", posts=posts, pager=pager, title=source)
 
@@ -35,6 +35,6 @@ class PastHandler(BaseHandler):
             t = th.now()
         yesterday = th.format_day_ago(timeobj=t, days=-1)
         tomorrow = th.format_day_ago(timeobj=t, days=1)
-        p = self.post.get_history_today(t)
+        p = self.posts.get_history_today(t)
         self.render(
             "past.html", posts_dict=p, yesterday=yesterday, tomorrow=tomorrow, title="past")

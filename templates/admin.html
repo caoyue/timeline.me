@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{{ site["title"] }} / admin {% endblock %}
+
+{% block content %}
+    <ul class="listing list">
+        <li class="listing-item">
+            <a href="/user">WHO AM I</a>
+        </li>
+        <li class="listing-item">
+            <a href="/compose">compose</a>
+        </li>
+        <li class="listing-item">
+            <a href="/twitter/sync">twitter sync</a>
+        </li>
+        <li class="listing-item">
+            <a href="/weibo/sync">weibo sync</a>
+        </li>
+        <li class="listing-item">
+            <a href="/rss/sync">rss sync</a>
+        </li>
+    </ul>
+{% endblock %}

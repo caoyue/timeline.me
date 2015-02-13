@@ -23,7 +23,7 @@ def format_time(timeobj, format='%Y-%m-%d', timezone=8):
 
 
 def format_now(format='%Y-%m-%d %H:%M:%S'):
-    return format_time(now())
+    return format_time(now(), format=format)
 
 
 def format_timestr(timestr, parse="%Y-%m-%d", format='%Y-%m-%d', parse_timezone=8, timezone=8):

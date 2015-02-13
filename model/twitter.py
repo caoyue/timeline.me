@@ -75,7 +75,6 @@ class TwitterModel(PostModel):
             new_tweets = client.get_user_timeline(count=200)
             alltweets.extend(new_tweets)
 
-            # 保存最大 id - 1
             oldest = alltweets[-1]["id"] - 1
 
             while len(new_tweets) > 0:

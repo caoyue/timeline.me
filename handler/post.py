@@ -16,7 +16,7 @@ class SourceHandler(BaseHandler):
         pagesize = self.config.site["pagesize"]
         posts = self.posts.get_posts(page=_p, pagesize=pagesize, source=source)
         pager = Pager(self.posts.get_posts_count(
-            source), pagesize, _p, "/s/%s/" % source)
+            source), pagesize, _p, "/%s/" % source)
         self.render("index.html", posts=posts, pager=pager, title=source)
 
 

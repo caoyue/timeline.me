@@ -18,9 +18,15 @@
 			<ul class="list">
 				<li><a href="/" title="Home" {{ "class='cur'" if cur == "timeline" else "" }}>timeline</a></li>
 				{% for s in source %}
-				<li><a href="/s/{{ s }}" {{ "class='cur'" if title == s else "" }}>{{ s }}</a></li>
+				<li><a href="/{{ s }}" {{ "class='cur'" if title == s else "" }}>{{ s }}</a></li>
 				{% endfor %}
 				<li><a href="/past" {{ "class='cur'" if title == "past" else "" }}>past</a></li>
+				<li><a href="/chart" {{ "class='cur'" if title == "chart" else "" }}>chart</a></li>
+				{% if current_user %}
+				<li><a href="/admin" {{ "class='cur'" if title == "admin" else "" }}>admin</a></li>
+				{% else %}
+				<li><a href="/signin" {{ "class='cur'" if title == "sign in" else "" }}>signin</a></li>
+				{% endif %}
 				{% for l in links %}
 				<li><a href="{{ l['link'] }}" target="_blank">{{ l['name'] }}</a></li>
 				{% endfor %}

@@ -7,6 +7,7 @@ USE `timeline`;
 CREATE TABLE IF NOT EXISTS `configs` (
     `name` varchar(50) NOT NULL,
     `value` text,
+    `create_time` datetime NOT NULL,
     PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

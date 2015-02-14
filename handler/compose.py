@@ -34,13 +34,13 @@ class ComposeHandler(BaseHandler):
             if access_token:
                 try:
                     self.twitter_oauth.set_access_token(access_token)
-                    self.twitter_client.update_status(status)
+                    self.twitter_oauth.update_status(status)
                 except Exception, e:
                     message += " * update twitter status failed: %s <br/>" % e
                 else:
                     message += " * update twitter status success!<br/>"
             else:
-                message += " * <a href='/twitter/singin'>sign in</a> with twitter first!<br/>"
+                message += " * <a href='/twitter/signin'>sign in</a> with twitter first!<br/>"
 
         # weibo
 
@@ -55,7 +55,7 @@ class ComposeHandler(BaseHandler):
                 else:
                     message += " * update weibo status success!"
             else:
-                message += " * <a href='/weibo/singin'>sign in</a> with weibo first!<br/>"
+                message += " * <a href='/weibo/signin'>sign in</a> with weibo first!<br/>"
 
         # timeline.me
         if checked["moments"]:

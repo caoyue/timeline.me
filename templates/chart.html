@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}{{ site["title"] }} / {{ title }} {% endblock %}
+
+{% block content %}
+    <div class="entry">
+        <span class="info"><a href="/chart">All</a></span>
+        {% for y in year_list %}
+        <span class="info"><a href="/chart/{{ y }}">{{ y }}</a></span>
+        {% endfor %}
+    </div>
+    <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#chart_hour').highcharts({
+                title: {
+                    text: 'posts statistic by hour',
+                    x: -20
+                },
+                subtitle: {
+                    text: '{{ "all posts" if not year else "in " + year }}',
+                    x: 120,
+                    y: 15
+                },
+                xAxis: {
+                    categories: ['0~1h', '1~2h', '2~3h', '3~4h', '4~5h', '5~6h', '6~7h', '7~8h', '8~9h', '9~10h', '10~11h', '11~12h', '12~13h', '13~14h', '14~15h', '15~16h', '16~17h', '17~18h', '18~19h', '19~20h', '20~21h', '21~22h', '22~23h', '23~24h']
+                },
+                yAxis: {
+                    title: {
+                        text: 'posts count'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [
+                    {% for k,v in hour.items() %}
+                        {
+                            name: '{{ k }}',
+                            data: [{{ ",".join(v) }}]
+                        },
+                    {% endfor %}
+                ]
+            });
+            $('#chart_month').highcharts({
+                title: {
+                    text: 'posts statistic by month',
+                    x: -20
+                },
+                subtitle: {
+                    text: '{{ "all posts" if not year else "in " + year }}',
+                    x: 120,
+                    y: 15
+                },
+                xAxis: {
+                    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+                },
+                yAxis: {
+                    title: {
+                        text: 'posts count'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [
+                    {% for k,v in month.items() %}
+                        {
+                            name: '{{ k }}',
+                            data: [{{ ",".join(v) }}]
+                        },
+                    {% endfor %}
+                ]
+            });
+            $('#chart_source').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45,
+                        beta: 0
+                    }
+                },
+                title: {
+                    text: 'posts statistic by source'
+                },
+                subtitle: {
+                    text: '{{ "all posts" if not year else "in " + year }}',
+                    x: 140,
+                    y: 15
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.y}</b><br/>percentage: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 35,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.name}'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'posts count',
+                    data: [
+                        {% for s in sources %}
+                            ['{{ s["source"] }}', {{ s["count"] }}],
+                        {% endfor %}
+                    ]
+                }]
+            });
+        });
+    </script>
+    <div id="chart_hour" class="chart" style="min-width:700px;height:400px;"></div>
+    <div id="chart_month" class="chart" style="width:900px;height:400px;"></div>
+    <div id="chart_source" class="chart" style="width:900px;height:400px;"></div>
+
+{% endblock %}

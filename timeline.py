@@ -21,6 +21,7 @@ import handler.rss
 import handler.weibo
 import handler.twitter
 import handler.compose
+import handler.chart
 
 from lib.db import Commander, connect
 import config
@@ -58,11 +59,13 @@ class Application(tornado.web.Application):
             (r"/rss/sync", handler.rss.SyncHandler),
             (r"/past", handler.post.PastHandler),
             (r"/past/([0-9]{4}-[0-9]{2}-[0-9]{2})", handler.post.PastHandler),
-            (r"/s/([^/]+)", handler.post.SourceHandler),
-            (r"/s/([^/]+)/(\d+)", handler.post.SourceHandler),
             (r"/ping", handler.index.PingHandler),
             (r"/admin", handler.index.AdminHandler),
             (r"/compose", handler.compose.ComposeHandler),
+            (r"/chart", handler.chart.ChartHandler),
+            (r"/chart/([1,2][0-9]{3})", handler.chart.ChartHandler),
+            (r"/([^/]+)", handler.post.SourceHandler),
+            (r"/([^/]+)/(\d+)", handler.post.SourceHandler),
             (r".*", handler.index.NotFoundHandler)
         ]
 

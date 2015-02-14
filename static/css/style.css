@@ -8,6 +8,7 @@ body,html {
 
 body {
     color: rgba(45, 65, 80, 0.9);
+    background-color: rgba(222, 230, 237, 0.06);
     font-size: 16px;
     font-family: 'Segoe UI',Verdana,Arial,'Hiragino Sans GB','Microsoft YaHei';
 }
@@ -349,6 +350,12 @@ mark , .match {
     float: right;
     padding-right: 5px;
 }
+
+/* chart */
+.chart {
+    padding-bottom: 60px;
+}
+
 /* content end */
 
 /*wide mode*/

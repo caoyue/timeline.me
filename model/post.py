@@ -3,7 +3,6 @@
 
 
 import re
-import json
 
 from model.base import BaseModel
 

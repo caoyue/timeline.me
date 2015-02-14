@@ -15,20 +15,33 @@ class BaseModel(Commander):
 
     # function
 
-    def get_config(self, name):
-        config_value = self.get(
+    def get_config_time(self, name):
+        value = self.get(
             table="configs",
-            fields=["value"],
+            fields=["value, create_time"],
             where="name = '%s'" % name
         )
-        if config_value:
-            return json.loads(config_value["value"])
+        if value:
+            return {
+                "value": json.loads(value["value"]),
+                "create_time": value["create_time"]
+            }
 
         return None
 
+    def get_config(self, name):
+        value = self.get_config_time(name)
+        return value["value"] if value else None
+
     def replace_config(self, name, values):
+        from lib.timehelper import format_now
+
         value = json.dumps(values)
         return self.replace(
             table="configs",
-            values={"name": name, "value": value}
+            values={
+                "name": name,
+                "value": value,
+                "create_time": format_now(format="%Y-%m-%d %H:%M:%S")
+            }
         )

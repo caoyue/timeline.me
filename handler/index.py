@@ -30,7 +30,7 @@ class UserHandler(BaseHandler):
 class SigninHandler(BaseHandler):
 
     def get(self):
-        self.render("signin.html")
+        self.render("signin.html", title="sign in")
 
 
 class SignoutHandler(BaseHandler):
@@ -45,7 +45,7 @@ class AdminHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        self.render("admin.html")
+        self.render("admin.html", title="admin")
 
 
 class PingHandler(BaseHandler):

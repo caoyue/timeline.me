@@ -2,8 +2,14 @@ timeline.me
 ==========================
 
 ### About
-- ```timeline.me``` is a project lets you backup your timeline from multiple source, such as twitter, weibo, github ...
-- this is a [demo](http://i.caoyue.me)
+- ```timeline.me``` is a project lets you backup your timeline from multiple source, such as twitter, weibo, and your rss feeds ...
+- a [demo](http://i.caoyue.me)
+
+### features
+- sync your timeline
+- update status, support twitter, weibo and "your own twitter" (something like [moments](http://i.caoyue.me/moments))
+- this day in history posts
+- simple charts about your data, like [this](http://i.caoyue.me/chart)
 
 ### How to
 1. install requirments

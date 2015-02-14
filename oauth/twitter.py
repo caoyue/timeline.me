@@ -46,7 +46,7 @@ class TwitterOauth(object):
         return self._client.user_timeline(count=count, since_id=since_id, max_id=max_id)
 
     def update_status(self, status):
-        self._client.update_status(status)
+        self._client.update_status(status=status)
 
     def get_user_info(self):
         return self._client.me()

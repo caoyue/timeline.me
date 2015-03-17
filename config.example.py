@@ -18,7 +18,7 @@ site = {
     "description": u"site description",
     "author": u"",
     "pagesize": 10,
-    "timezone": 8
+    "tzinfo": 'Asia/Shanghai'
 }
 
 # secret

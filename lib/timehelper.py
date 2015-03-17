@@ -3,34 +3,41 @@
 
 
 import datetime
+from dateutil import parser, tz
+from config import site
 
 
-def now():
-    return datetime.datetime.now()
+def parse_timestr(timestr):
+    return parser.parse(timestr)
 
 
-def parse_timestr(timestr, parse="%Y-%m-%d", timezone=8):
+def now(tzinfo=site["tzinfo"]):
+    return datetime.datetime.now(tz.gettz(tzinfo))
+
+
+def to_local(timeobj, tzinfo=site["tzinfo"]):
+    """convert timeobj to local time
+    if timeobj have no tzinfo, use tzlocal instead
     """
-    china: timezone = 8
-    format: 'Tue May 31 17:46:55 +0800 2011' - '%a %b %d %H:%M:%S +0800 %Y'
-    """
-    return datetime.datetime.strptime(timestr, parse) + \
-        datetime.timedelta(seconds=(timezone - 8) * 3600)
+    t = timeobj
+    if not timeobj.tzinfo:
+        t = timeobj.replace(tzinfo=tz.tzlocal())
+
+    return t.astimezone(tz.gettz(tzinfo))
 
 
-def format_time(timeobj, format='%Y-%m-%d', timezone=8):
-    return (timeobj + datetime.timedelta(seconds=(timezone - 8) * 3600)).strftime(format)
+def format_time(timeobj, format='%Y-%m-%d %H:%M:%S'):
+    return timeobj.strftime(format)
 
 
-def format_now(format='%Y-%m-%d %H:%M:%S'):
-    return format_time(now(), format=format)
+def format_now(format='%Y-%m-%d %H:%M:%S', tzinfo=site["tzinfo"]):
+    return format_time(now(tzinfo), format)
 
 
-def format_timestr(timestr, parse="%Y-%m-%d", format='%Y-%m-%d', parse_timezone=8, timezone=8):
-    return format_time(
-        timeobj=parse_timestr(
-            timestr=timestr, parse=parse, parse_timezone=timezone),
-        format=format, timezone=timezone)
+def format_timestr(timestr, format='%Y-%m-%d %H:%M:%S', tzinfo=site["tzinfo"]):
+    parsed_time = parse_timestr(timestr)
+    local_time = to_local(parsed_time, tzinfo)
+    return format_time(local_time, format=format)
 
 
 def format_day_ago(timeobj=None, days=0, format="%Y-%m-%d"):
@@ -39,7 +46,7 @@ def format_day_ago(timeobj=None, days=0, format="%Y-%m-%d"):
 
 
 def past_days(timeobj=None):
-    timeobj = timeobj if timeobj else now()
+    timeobj = to_local(timeobj) if timeobj else now()
     years = range(timeobj.year - 1, 2005, -1)
     return [("%s-%s" % (y, format_time(timeobj, format="%m-%d")),
              "%s-%s" % (y, format_day_ago(timeobj=timeobj, days=1, format="%m-%d")))

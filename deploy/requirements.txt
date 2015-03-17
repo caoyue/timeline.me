@@ -4,4 +4,5 @@ torndb
 jinja2
 tweepy
 feedparser
+python-dateutil
 supervisor

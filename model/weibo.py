@@ -3,7 +3,7 @@
 
 
 from model.post import Post, PostModel
-from lib.timehelper import format_now as now, format_time
+from lib.timehelper import format_now as now, format_timestr
 
 
 class WeiboModel(PostModel):
@@ -57,8 +57,6 @@ class WeiboModel(PostModel):
             else:
                 content += "<blockquote>%s</blockquote>" % status.retweeted_status.text
 
-        from config import site
-
         return Post({
             "source": "weibo",
             "category": "oauth",
@@ -66,8 +64,7 @@ class WeiboModel(PostModel):
             "url": self.get_url(status.user.id, status.mid),
             "title": status.text,
             "content": content,
-            "create_time": str(format_time(
-                status.created_at, '%a %b %d %H:%M:%S +0800 %Y', site["timezone"])),
+            "create_time": format_timestr(status.created_at),
             "origin_data": status
         })
 

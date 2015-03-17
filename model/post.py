@@ -136,7 +136,8 @@ class PostModel(BaseModel):
         p = {}
         for posts in posts_list:
             if posts:
-                p[str(th.format_time(posts[0].create_time))] = posts
+                p[th.format_time(
+                    timeobj=posts[0].create_time, format='%Y-%m-%d')] = posts
         return p
 
     def is_in_database(self, post):

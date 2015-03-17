@@ -3,6 +3,7 @@
 
 
 from model.post import Post, PostModel
+from lib.timehelper import format_now as now, format_timestr
 
 
 class RssModel(PostModel):
@@ -10,26 +11,22 @@ class RssModel(PostModel):
     def __init__(self, db):
         super(RssModel, self).__init__(db)
 
-    def get_datetime(self, create_time):
-        import datetime
-        return datetime.datetime(*create_time[:6])
-
     def status_to_post(self, rss, source=None):
+
         return Post({
             "source": source,
-            "category": "oauth",
+            "category": "rss",
             "origin_id": str(rss.id),
             "url": rss.link,
             "title": rss.title,
             "content": rss.summary,
-            "create_time": self.get_datetime(rss.updated_parsed),
+            "create_time": format_timestr(rss.updated),
             "origin_data": rss
         })
 
     def sync(self, dict):
         """sync Rss feeds"""
 
-        from lib.timehelper import format_now as now
         import feedparser
 
         print ">> [%s]Rss Sync Start ......" % now()

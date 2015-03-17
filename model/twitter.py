@@ -5,7 +5,7 @@
 import json
 
 from model.post import Post, PostModel
-from lib.timehelper import format_now as now, format_time
+from lib.timehelper import format_now as now, format_timestr
 
 
 class TwitterModel(PostModel):
@@ -25,8 +25,6 @@ class TwitterModel(PostModel):
             content = "%s <blockquote>@%s:%s</blockquote>" % (
                 status["text"], status["retweeted_status"]["user"]["screen_name"], status["retweeted_status"]["text"])
 
-        from config import site
-
         return Post({
             "source": "twitter",
             "category": "oauth",
@@ -34,8 +32,7 @@ class TwitterModel(PostModel):
             "url": self.get_url(status["id"], status["user"]["name"]),
             "title": status["text"],
             "content": self.replace_url(content),
-            "create_time": str(format_time(
-                status["created_at"], '%a %b %d %H:%M:%S +0000 %Y', site["timezone"])),
+            "create_time": format_timestr(status["created_at"]),
             "origin_data": json.dumps(status)
         })
 

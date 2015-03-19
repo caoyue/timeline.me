@@ -66,12 +66,13 @@ class ChartModel(BaseModel):
 
     def get_cache(self, type, source_list, year=None):
         import json
-        from lib.timehelper import now
+        from lib.timehelper import now, datediff
 
         name = "chart_cache_%s_%s" % (type, year if year else "all")
         value = self.get_config_time(name)
+        tnow = now().replace(tzinfo=None)
 
-        if value and (year and year != now().year or not abs(now().day - value["create_time"].day)):
+        if value and (year and year != str(tnow.year) or abs(datediff(value["create_time"], tnow)) <= 1):
             return value["value"]
         else:
             data = self.get_count(type, source_list, year)

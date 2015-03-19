@@ -3,7 +3,7 @@
 
 
 import datetime
-from dateutil import parser, tz
+from dateutil import parser, tz, rrule
 from config import site
 
 
@@ -51,3 +51,7 @@ def past_days(timeobj=None):
     return [("%s-%s" % (y, format_time(timeobj, format="%m-%d")),
              "%s-%s" % (y, format_day_ago(timeobj=timeobj, days=1, format="%m-%d")))
             for y in years]
+
+
+def datediff(start, end):
+    return rrule.rrule(rrule.DAILY, dtstart=start, until=end).count()

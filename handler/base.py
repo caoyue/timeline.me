@@ -8,6 +8,7 @@ from model.post import PostModel
 from model.rss import RssModel
 from model.twitter import TwitterModel
 from model.weibo import WeiboModel
+from model.moments import MomentsModel
 from model.chart import ChartModel
 
 from oauth.twitter import TwitterOauth
@@ -30,6 +31,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.rss = RssModel(self.db)
         self.twitter = TwitterModel(self.db)
         self.weibo = WeiboModel(self.db)
+        self.moments = MomentsModel(self.db)
         self.chart = ChartModel(self.db)
 
         self.weibo_oauth = WeiboOauth(api=self.config.oauth["weibo"])

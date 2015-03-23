@@ -51,8 +51,7 @@ class PostModel(BaseModel):
     def replace_url(self, content):
         """replace link text to html"""
 
-        pattern = re.compile(
-            """[a-zA-Z]+:\/\/[a-zA-Z0-9.]+\.[a-zA-Z0-9.\/]+""")
+        pattern = re.compile(r'https?://[^\s<>"]+|www\.[^\s<>"]+')
         matchs = pattern.findall(content)
         if matchs:
             for m in matchs:
@@ -71,19 +70,7 @@ class PostModel(BaseModel):
         return False
 
     def status_to_post(self, status):
-        import hashlib
-        import lib.timehelper as th
-
-        return Post({
-            "source": "moments",
-            "category": "moments",
-            "origin_id": hashlib.md5(status).hexdigest().upper(),
-            "url": "",
-            "title": status,
-            "content": status,
-            "create_time": th.format_now(),
-            "origin_data": status
-        })
+        return status
 
     # db
 

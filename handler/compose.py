@@ -60,7 +60,7 @@ class ComposeHandler(BaseHandler):
         # timeline.me
         if checked["moments"]:
             try:
-                self.posts.save_post(self.posts.status_to_post(status))
+                self.moments.compose(status)
             except Exception, e:
                 message += " * update timeline.me status failed: %s <br/>" % e
             else:

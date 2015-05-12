@@ -32,6 +32,7 @@ class RssModel(PostModel):
         print ">> [%s]Rss Sync Start ......" % now()
 
         try:
+            feedparser.RESOLVE_RELATIVE_URIS = 0
             for k, v in dict.items():
                 feeds = feedparser.parse(v)
                 for entry in feeds.entries:

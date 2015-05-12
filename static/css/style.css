@@ -10,7 +10,7 @@ body {
     color: rgba(45, 65, 80, 0.9);
     background-color: rgba(222, 230, 237, 0.06);
     font-size: 16px;
-    font-family: 'Segoe UI',Verdana,Arial,'Hiragino Sans GB','Microsoft YaHei';
+    font-family: 'Segoe UI', Verdana, Arial,'Hiragino Sans GB','Microsoft YaHei', sans-serif;
 }
 
 ::selection {
@@ -81,7 +81,7 @@ a:hover {
 }
 
 code, pre, blockquote {
-    font-family: "Deja Vu Sans Mono",Consolas,Monaco,"Courier New",Courier,monospace;
+    font-family: "Deja Vu Sans Mono", Consolas, Monaco, "Courier New", Courier, 'Hiragino Sans GB','Microsoft YaHei';
     padding: 1px 10px;
     line-height: 1.8;
     background: none repeat scroll 0 0 #F5F5F5;
@@ -264,6 +264,25 @@ table tr:nth-child(2n) {
     width: 61%;
 }
 
+.footnotes ol{
+  color:gray;
+  font-size: 14px;
+  padding-left: 0;
+  list-style: none;
+}
+
+a[rel="footnote"]:before{
+  content:"[";
+}
+a[rel="footnote"]:after{
+  content:"]";
+}
+
+/* for gist */
+.gist table td, .gist table td {
+  border: none;
+}
+
 /* update */
 .update {
     padding-left: 40px;
@@ -404,7 +423,7 @@ mark , .match {
 
 /* code highlight */
 .hll { background-color: #ffffcc }
-.c { color: #60a0b0; font-style: italic } /* Comment */
+.c { color: rgba(55,55,55,0.5); } /* Comment */
 /*.err { border: 1px solid #FF0000 } /* Error */
 .k { color: #007020; font-weight: bold } /* Keyword */
 .o { color: #666666 } /* Operator */

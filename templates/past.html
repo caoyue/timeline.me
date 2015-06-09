@@ -10,7 +10,7 @@
             <div class="entry">
                 <div class='title'>
                     {% for source in post.source.strip("|").split("|") %}
-                    <span class="info"><a href="/{{ source }}">{{ source }}</a></span>
+                    <span class="tag"><a href="/{{ source }}">{{ source }}</a></span>
                     {% endfor %}
                     <a href="{{ post.url }}">{{ post.title }}</a>
                 </div>

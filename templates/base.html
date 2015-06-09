@@ -3,6 +3,7 @@
 <head>
 	<title>{% block title %} {% endblock %}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel='alternate' type='application/rss+xml' title='atom 1.0' href='/feed' />
 	<link rel="icon" type="image/png" href="/static/img/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
@@ -16,16 +17,16 @@
 		</div>
 		<div class="left">
 			<ul class="list">
-				<li><a href="/" title="Home" {{ "class='cur'" if cur == "timeline" else "" }}>timeline</a></li>
+				<li {{ "class='cur'" if cur == "timeline" else "" }}><a href="/" title="Home">timeline</a></li>
 				{% for s in source %}
-				<li><a href="/{{ s }}" {{ "class='cur'" if title == s else "" }}>{{ s }}</a></li>
+				<li {{ "class='cur'" if title == s else "" }}><a href="/{{ s }}">{{ s }}</a></li>
 				{% endfor %}
-				<li><a href="/past" {{ "class='cur'" if title == "past" else "" }}>past</a></li>
-				<li><a href="/chart" {{ "class='cur'" if title == "chart" else "" }}>chart</a></li>
+				<li {{ "class='cur'" if title == "past" else "" }}><a href="/past">past</a></li>
+				<li {{ "class='cur'" if title == "chart" else "" }}><a href="/chart">chart</a></li>
 				{% if current_user %}
-				<li><a href="/admin" {{ "class='cur'" if title == "admin" else "" }}>admin</a></li>
+				<li {{ "class='cur'" if title == "admin" else "" }}><a href="/admin">admin</a></li>
 				{% else %}
-				<li><a href="/signin" {{ "class='cur'" if title == "sign in" else "" }}>signin</a></li>
+				<li {{ "class='cur'" if title == "sign in" else "" }}><a href="/signin">signin</a></li>
 				{% endif %}
 				{% for l in links %}
 				<li><a href="{{ l['link'] }}" target="_blank">{{ l['name'] }}</a></li>

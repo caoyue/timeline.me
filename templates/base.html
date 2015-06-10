@@ -1,46 +1,51 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>{% block title %} {% endblock %}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel='alternate' type='application/rss+xml' title='atom 1.0' href='/feed' />
-	<link rel="icon" type="image/png" href="/static/img/favicon.ico">
-	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
-  	{% block script %} {% endblock %}
+    <title>{% block title %} {% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0">
+    <link rel='alternate' type='application/rss+xml' title='atom 1.0' href='/feed' />
+    <link rel="apple-touch-icon" sizes="192x192" href="/static/img/icon.png">
+    <link rel="icon" type="image/png" href="/static/img/favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" href="/static/img/icon.png" sizes="192x192">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-TileImage" content="/static/img/icon.png">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    {% block script %} {% endblock %}
 </head>
 <body>
-	<div class="wrap">
-		<div class="header">
-			<a href="/">{{ site["title"] }}</a>
-			<span>{{ site["description"] }}</span>
-		</div>
-		<div class="left">
-			<ul class="list">
-				<li {{ "class='cur'" if cur == "timeline" else "" }}><a href="/" title="Home">timeline</a></li>
-				{% for s in source %}
-				<li {{ "class='cur'" if title == s else "" }}><a href="/{{ s }}">{{ s }}</a></li>
-				{% endfor %}
-				<li {{ "class='cur'" if title == "past" else "" }}><a href="/past">past</a></li>
-				<li {{ "class='cur'" if title == "chart" else "" }}><a href="/chart">chart</a></li>
-				{% if current_user %}
-				<li {{ "class='cur'" if title == "admin" else "" }}><a href="/admin">admin</a></li>
-				{% else %}
-				<li {{ "class='cur'" if title == "sign in" else "" }}><a href="/signin">signin</a></li>
-				{% endif %}
-				{% for l in links %}
-				<li><a href="{{ l['link'] }}" target="_blank">{{ l['name'] }}</a></li>
-				{% endfor %}
-			</ul>
-		</div>
-		<div class="right">
-			{% block content %}
-    		{% endblock %}
-		</div>
+    <div class="wrap">
+        <div class="header">
+            <a href="/">{{ site["title"] }}</a>
+            <span>{{ site["description"] }}</span>
+        </div>
+        <div class="left">
+            <ul class="list">
+                <li {{ "class='cur'" if cur == "timeline" else "" }}><a href="/" title="Home">timeline</a></li>
+                {% for s in source %}
+                <li {{ "class='cur'" if title == s else "" }}><a href="/{{ s }}">{{ s }}</a></li>
+                {% endfor %}
+                <li {{ "class='cur'" if title == "past" else "" }}><a href="/past">past</a></li>
+                <li {{ "class='cur'" if title == "chart" else "" }}><a href="/chart">chart</a></li>
+                {% if current_user %}
+                <li {{ "class='cur'" if title == "admin" else "" }}><a href="/admin">admin</a></li>
+                {% else %}
+                <li {{ "class='cur'" if title == "sign in" else "" }}><a href="/signin">signin</a></li>
+                {% endif %}
+                {% for l in links %}
+                <li><a href="{{ l['link'] }}" target="_blank">{{ l['name'] }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="right">
+            {% block content %}
+            {% endblock %}
+        </div>
 
-		<div class="footer">
-			©2015 <a href="{{ site['domain'] }}">{{ site["title"] }}</a>. designed by <a href="http://caoyue.me" target="_blank">caoyue</a>. project <a href="https://github.com/caoyue/timeline.me" target="_blank">timeline.me</a>
-		</div>
-	</div>
+        <div class="footer">
+            ©2015 <a href="{{ site['domain'] }}">{{ site["title"] }}</a>. designed by <a href="http://caoyue.me" target="_blank">caoyue</a>. project <a href="https://github.com/caoyue/timeline.me" target="_blank">timeline.me</a>
+        </div>
+    </div>
 </body>
 </html>

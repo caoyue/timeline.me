@@ -312,7 +312,7 @@ a[rel="footnote"]:after{
 }
 
 .tag a:hover {
-    cursor: pointer;
+    background-color: rgba(37, 187, 196, 0.6);
 }
 
 /* update */
@@ -418,19 +418,20 @@ a[rel="footnote"]:after{
         margin-right:15px;
         width:88px;
         text-align: center;
-    }
-
-    .left li {
-        background-color: rgba(20, 145, 152, .4);
-        color: white;
+        background-color: rgba(245, 245, 245, 0.2);
     }
 
     .left li a {
-        color: white;
+        color: rgba(37, 187, 196, 0.5);
+        font-size: 20px;
     }
 
     .left li:hover {
         background-color: rgba(37, 187, 196, 0.6);
+    }
+
+    .left li a:hover {
+        color: white;
     }
 
     .social {
@@ -439,6 +440,10 @@ a[rel="footnote"]:after{
 
     .cur {
         background-color: rgba(37, 187, 196, 0.6) !important;
+    }
+
+    .cur a {
+        color: white !important;
     }
 
     .right {

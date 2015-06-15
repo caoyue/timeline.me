@@ -2,21 +2,28 @@
 {% block title %}{{ site["title"] }} / admin {% endblock %}
 
 {% block content %}
-    <ul class="listing list">
-        <li class="listing-item">
-            <a href="/user">WHO AM I</a>
-        </li>
-        <li class="listing-item">
-            <a href="/compose">compose</a>
-        </li>
-        <li class="listing-item">
-            <a href="/twitter/sync">twitter sync</a>
-        </li>
-        <li class="listing-item">
-            <a href="/weibo/sync">weibo sync</a>
-        </li>
-        <li class="listing-item">
-            <a href="/rss/sync">rss sync</a>
-        </li>
-    </ul>
+<div class="content">
+    <div class="entry">
+        <ul class="list">
+            <li class="listing-item">
+                <h4><a href="/admin/user">who am I</a></h4>
+            </li>
+            <li class="listing-item">
+                <h4><a href="/admin/compose">compose</a></h4>
+            </li>
+            <li class="listing-item">
+                <h4><a href="/admin/custom">custom</a></h4>
+            </li>
+            <li class="listing-item">
+                <h4><a href="/twitter/sync">twitter sync</a></h4>
+            </li>
+            <li class="listing-item">
+                <h4><a href="/weibo/sync">weibo sync</a></h4>
+            </li>
+            <li class="listing-item">
+                <h4><a href="/rss/sync">rss sync</a></h4>
+            </li>
+        </ul>
+    </div>
+</div>
 {% endblock %}

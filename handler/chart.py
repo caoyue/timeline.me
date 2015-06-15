@@ -11,7 +11,7 @@ class ChartHandler(BaseHandler):
         from lib.timehelper import now
 
         y = now().year
-        year_list = reversed(range(y - 3, y + 1))
+        year_list = range(y, y - 4, -1)
 
         if year:
             i = int(year)

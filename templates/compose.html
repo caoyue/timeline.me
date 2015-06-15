@@ -3,31 +3,31 @@
 
 {% block content %}
 <div class="content">
-    <form action="" method="post" class="update">
-        {% if message %}
-        <p class="tips">{{ message }}</p>
-        {% endif %}
-        <p>
-            <textarea rows="5" cols="60" name="status">{{ status | e }}</textarea>
-        </p>
-        <p>
-            <input type="checkbox" name="twitter" id="twitter"
-            {{ "checked='checked'" if checked and checked["twitter"] else "" }} />
-            <label for="twitter">twitter</label>&nbsp;&nbsp;&nbsp;
-            <input type="checkbox" name="weibo" id="weibo"
-            {{ "checked='checked'" if checked and checked["weibo"] else "" }} />
-            <label for="weibo">weibo</label>&nbsp;&nbsp;&nbsp;
-            <input type="checkbox" name="moments" id="moments"
-            {{ "checked='checked'" if checked and checked["moments"] else "" }} />
-            <label for="moments">timeline.me</label>
-        </p>
-        {{ xsrf_form_html() }}
-        <p>
-            <input type="submit" value="compose" class="button" />
-            {% if error %}
-            <span class="error">{{ error }}</span>
+    <div class="entry">
+        <form action="" method="post" class="update">
+            {% if message %}
+            <div class="entry tips">{{ message }}</div>
             {% endif %}
-        </p>
-    </form>
+            <div><textarea name="status">{{ status | e }}</textarea></div>
+            <div>
+                <ul class="vlist">
+                    {% for s in ["twitter", "weibo", "moments"] %}
+                    <li>
+                        <input type="checkbox" name="compose" id="{{ s }}"
+                        {{ "checked='checked'" if s in checked else ""  }} value="{{ s }}" />
+                        <label for="{{ s }}">{{ s }}</label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                {{ xsrf_form_html() }}
+                <input type="submit" value="compose" class="button" />
+                {% if error %}
+                <span class="error">{{ error }}</span>
+                {% endif %}
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

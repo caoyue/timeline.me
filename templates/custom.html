@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}{{ site["title"] }} / module {% endblock %}
+
+{% block content %}
+<div class="content">
+    <form action="" method="post" class="update">
+        <ul class="list">
+            {% for s in all %}
+            <li class="listing-item">
+                <h4><label for="{{ s }}">{{ s }}</label>
+                <input type="checkbox" name="source" id="{{ s }}"
+                {{ "checked='checked'" if s in custom else ""  }} value="{{ s }}" />
+                </h4>
+            </li>
+            {% endfor %}
+        </ul>
+        {{ xsrf_form_html() }}
+        <p>
+            <input type="submit" value="custom" class="button" />
+        </p>
+    </form>
+</div>
+{% endblock %}

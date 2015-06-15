@@ -98,6 +98,8 @@ pre {
 }
 
 textarea {
+    width: 80%;
+    height: 100px;
     padding: 5px;
     border: rgba(37, 187, 196, 0.3) solid 1px;
     color: rgba(0,0,0,.6);
@@ -194,9 +196,12 @@ table tr:nth-child(2n) {
     padding-left: 30%;
 }
 
+.left li {
+    padding: 5px 3px;
+}
+
 .list li {
     margin: 0 0 5px 0;
-    padding: 5px 3px;
     list-style: none;
 }
 
@@ -298,6 +303,21 @@ a[rel="footnote"]:after{
 
 
 /* timeline */
+.vlist {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+}
+
+.vlist li {
+    display: inline-block;
+    padding: 6px 15px;
+}
+
+.cur {
+    font-weight: bold;
+}
+
 .tag {
     margin: 10px 0;
 }
@@ -315,7 +335,6 @@ a[rel="footnote"]:after{
     background-color: rgba(37, 187, 196, 0.6);
 }
 
-/* update */
 .update {
     padding-left: 40px;
 }
@@ -343,6 +362,10 @@ a[rel="footnote"]:after{
     padding-left: 8px;
     color: white;
     background-color: rgba(20, 145, 152, 0.4);
+}
+
+label {
+    margin-right: 20px;
 }
 
 /* past */
@@ -380,11 +403,6 @@ a[rel="footnote"]:after{
     line-height: 31px;
     float: right;
     padding-right: 5px;
-}
-
-/* chart */
-.chart {
-    padding-bottom: 60px;
 }
 
 /* timeline end */
@@ -439,6 +457,7 @@ a[rel="footnote"]:after{
     }
 
     .cur {
+        font-weight: normal;
         background-color: rgba(37, 187, 196, 0.6) !important;
     }
 

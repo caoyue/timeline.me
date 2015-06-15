@@ -3,10 +3,12 @@
 
 {% block content %}
     <div class="entry">
-        <span class="tag"><a href="/chart">All</a></span>
-        {% for y in year_list %}
-        <span class="tag"><a href="/chart/{{ y }}">{{ y }}</a></span>
-        {% endfor %}
+        <ul class="vlist">
+            <li {{ "class='cur'" if not year else "" }}><a href="/chart">All</a></li>
+            {% for y in year_list %}
+            <li {{ "class='cur'" if year == (y | string) else "" }}><a href="/chart/{{ y }}">{{ y }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
@@ -138,8 +140,8 @@
             });
         });
     </script>
-    <div id="chart_hour" class="chart"></div>
-    <div id="chart_month" class="chart"></div>
-    <div id="chart_source" class="chart"></div>
+    <div id="chart_hour" class="entry"></div>
+    <div id="chart_month" class="entry"></div>
+    <div id="chart_source" class="entry"></div>
 
 {% endblock %}

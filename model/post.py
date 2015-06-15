@@ -74,16 +74,34 @@ class PostModel(BaseModel):
 
     # db
 
+    def get_index_source(self):
+        return self.get_config("custom_index_source")
+
+    def set_index_source(self, values):
+        return self.replace_config("custom_index_source", values)
+
     def get_posts_count(self, source=None):
+        w = None
+        s = self.get_index_source()
+        if source == "INDEX" and s:
+            w = "source in ('%s')" % "','".join(s)
+        else:
+            w = "source = '%s'" % source if source else None
         return self.count(
             "posts",
-            where="source='%s'" % source if source else None
+            where=w
         )
 
     def get_posts(self, page=1, pagesize=10, source=None, orderby='create_time'):
+        w = None
+        s = self.get_index_source()
+        if source == "INDEX" and s:
+            w = "source in ('%s')" % "','".join(s)
+        else:
+            w = "source = '%s'" % source if source else None
         rows = self.query(
             table="posts",
-            where="source = '%s'" % source if source else None,
+            where=w,
             orderby=orderby,
             page=page,
             pagesize=pagesize

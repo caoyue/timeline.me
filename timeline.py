@@ -20,7 +20,7 @@ import handler.post
 import handler.rss
 import handler.weibo
 import handler.twitter
-import handler.compose
+import handler.admin
 import handler.chart
 
 from lib.db import Commander, connect
@@ -46,9 +46,6 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", handler.index.IndexHandler),
             (r"/timeline/(\d+)", handler.index.IndexHandler),
-            (r"/user", handler.index.UserHandler),
-            (r"/signin", handler.index.SigninHandler),
-            (r"/signout", handler.index.SignoutHandler),
             (r"/weibo/signin", handler.weibo.SigninHandler),
             (r"/weibo/callback", handler.weibo.CallbackHandler),
             (r"/weibo/sync", handler.weibo.SyncHandler),
@@ -59,11 +56,15 @@ class Application(tornado.web.Application):
             (r"/rss/sync", handler.rss.SyncHandler),
             (r"/past", handler.post.PastHandler),
             (r"/past/([0-9]{4}-[0-9]{2}-[0-9]{2})", handler.post.PastHandler),
-            (r"/ping", handler.index.PingHandler),
-            (r"/admin", handler.index.AdminHandler),
-            (r"/compose", handler.compose.ComposeHandler),
             (r"/chart", handler.chart.ChartHandler),
             (r"/chart/([1,2][0-9]{3})", handler.chart.ChartHandler),
+            (r"/ping", handler.index.PingHandler),
+            (r"/admin", handler.admin.AdminHandler),
+            (r"/signin", handler.admin.SigninHandler),
+            (r"/signout", handler.admin.SignoutHandler),
+            (r"/admin/user", handler.admin.UserHandler),
+            (r"/admin/compose", handler.admin.ComposeHandler),
+            (r"/admin/custom", handler.admin.CustomHandler),
             (r"/([^/]+)", handler.post.SourceHandler),
             (r"/([^/]+)/(\d+)", handler.post.SourceHandler),
             (r".*", handler.index.NotFoundHandler)
@@ -78,7 +79,7 @@ class Application(tornado.web.Application):
 def main():
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application())
-    http_server.listen(options.port if options.port != 80 else 8888)
+    http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":

@@ -25,7 +25,9 @@ class UserHandler(BaseHandler):
 class SigninHandler(BaseHandler):
 
     def get(self):
-        self.render("signin.html", title="sign in")
+        accounts = self.binded_accounts
+        self.render(
+            "signin.html", accounts=accounts if accounts else self.config.oauth, title="sign in")
 
 
 class SignoutHandler(BaseHandler):
@@ -36,11 +38,38 @@ class SignoutHandler(BaseHandler):
         self.redirect("/", permanent=False)
 
 
+class CustomHandler(BaseHandler):
+
+    @tornado.web.authenticated
+    def get(self):
+        c = self.posts.get_index_source()
+        self.render("custom.html", all=self.source,
+                    custom=c if c else [], title="custom")
+
+    @tornado.web.authenticated
+    def post(self):
+        r = self.get_arguments('source')
+        self.posts.set_index_source(r)
+        return self.render("custom.html", all=self.source, custom=r, title="custom")
+
+
+class AccountHandler(BaseHandler):
+
+    @tornado.web.authenticated
+    def get(self):
+        accounts = {
+            "weibo": self.weibo.get_access_token(),
+            "twitter": self.twitter.get_access_token()
+        }
+        return self.render(
+            "account.html", accounts=accounts, all=self.config.oauth, title="accounts")
+
+
 class ComposeHandler(BaseHandler):
 
-    # @tornado.web.authenticated
+    @tornado.web.authenticated
     def get(self):
-        self.render("compose.html")
+        self.render("compose.html", title="compose")
 
     @tornado.web.authenticated
     def post(self):
@@ -54,7 +83,7 @@ class ComposeHandler(BaseHandler):
 
         # twitter
         if "twitter" in checked:
-            access_token = self.twitter.get_config("twitter")
+            access_token = self.twitter.get_access_token()
             if access_token:
                 try:
                     self.twitter_oauth.set_access_token(access_token)
@@ -69,7 +98,7 @@ class ComposeHandler(BaseHandler):
         # weibo
 
         if "weibo" in checked:
-            access_token = self.weibo.get_config("weibo")
+            access_token = self.weibo.get_access_token()
             if access_token:
                 try:
                     self.weibo_oauth.set_access_token(access_token)
@@ -90,19 +119,4 @@ class ComposeHandler(BaseHandler):
             else:
                 message += " * update timeline.me status success!"
 
-        return self.render("compose.html", status=status, message=message, checked=checked)
-
-
-class CustomHandler(BaseHandler):
-
-    # @tornado.web.authenticated
-    def get(self):
-        c = self.posts.get_index_source()
-        self.render("custom.html", all=self.source,
-                    custom=c if c else [])
-
-    # @tornado.web.authenticated
-    def post(self):
-        r = self.get_arguments('source')
-        self.posts.set_index_source(r)
-        return self.render("custom.html", all=self.source, custom=r)
+        return self.render("compose.html", status=status, message=message, checked=checked, title="compose")

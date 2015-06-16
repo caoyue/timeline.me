@@ -83,7 +83,7 @@ class PostModel(BaseModel):
     def get_posts_count(self, source=None):
         w = None
         s = self.get_index_source()
-        if source == "INDEX" and s:
+        if source == "timeline" and s:
             w = "source in ('%s')" % "','".join(s)
         else:
             w = "source = '%s'" % source if source else None
@@ -95,7 +95,7 @@ class PostModel(BaseModel):
     def get_posts(self, page=1, pagesize=10, source=None, orderby='create_time'):
         w = None
         s = self.get_index_source()
-        if source == "INDEX" and s:
+        if source == "timeline" and s:
             w = "source in ('%s')" % "','".join(s)
         else:
             w = "source = '%s'" % source if source else None

@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% block title %}{{ site["title"] }} / admin {% endblock %}
 
 {% block content %}
 <div class="content">
@@ -7,6 +6,9 @@
         <ul class="list">
             <li class="listing-item">
                 <h4><a href="/admin/user">who am I</a></h4>
+            </li>
+            <li class="listing-item">
+                <h4><a href="/admin/account">accounts</a></h4>
             </li>
             <li class="listing-item">
                 <h4><a href="/admin/compose">compose</a></h4>
@@ -22,6 +24,9 @@
             </li>
             <li class="listing-item">
                 <h4><a href="/rss/sync">rss sync</a></h4>
+            </li>
+            <li class="listing-item">
+                <h4><a href="/signout">sign out</a></h4>
             </li>
         </ul>
     </div>

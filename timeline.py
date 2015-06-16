@@ -45,11 +45,12 @@ class Application(tornado.web.Application):
 
         handlers = [
             (r"/", handler.index.IndexHandler),
-            (r"/timeline/(\d+)", handler.index.IndexHandler),
             (r"/weibo/signin", handler.weibo.SigninHandler),
+            (r"/weibo/bind", handler.weibo.BindHandler),
             (r"/weibo/callback", handler.weibo.CallbackHandler),
             (r"/weibo/sync", handler.weibo.SyncHandler),
             (r"/twitter/signin", handler.twitter.SigninHandler),
+            (r"/twitter/bind", handler.twitter.BindHandler),
             (r"/twitter/callback", handler.twitter.CallbackHandler),
             (r"/twitter/sync", handler.twitter.SyncHandler),
             (r"/feed", handler.rss.FeedHandler),
@@ -65,8 +66,9 @@ class Application(tornado.web.Application):
             (r"/admin/user", handler.admin.UserHandler),
             (r"/admin/compose", handler.admin.ComposeHandler),
             (r"/admin/custom", handler.admin.CustomHandler),
-            (r"/([^/]+)", handler.post.SourceHandler),
-            (r"/([^/]+)/(\d+)", handler.post.SourceHandler),
+            (r"/admin/account", handler.admin.AccountHandler),
+            (r"/([^/]+)", handler.index.IndexHandler),
+            (r"/([^/]+)/(\d+)", handler.index.IndexHandler),
             (r".*", handler.index.NotFoundHandler)
         ]
 

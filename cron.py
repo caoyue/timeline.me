@@ -23,7 +23,7 @@ class Twitter(object):
     @classmethod
     def sync(self):
         twitter = TwitterModel(db)
-        access_token = twitter.get_config("twitter")
+        access_token = twitter.get_access_token()
         twitter_oauth = TwitterOauth(config.oauth["twitter"], access_token)
         twitter.sync(twitter_oauth)
 
@@ -33,7 +33,7 @@ class Weibo(object):
     @classmethod
     def sync(self):
         weibo = WeiboModel(db)
-        access_token = weibo.get_config("weibo")
+        access_token = weibo.get_access_token()
         weibo_oauth = WeiboOauth(config.oauth["weibo"], access_token)
         weibo.sync(weibo_oauth)
 

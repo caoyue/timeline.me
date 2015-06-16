@@ -42,9 +42,6 @@ oauth = {
         "consumer_key": "",
         "consumer_secret": "",
         "redirect_uri": site["domain"] + "/twitter/callback",
-        "request_token_url": "https://api.twitter.com/oauth/request_token",
-        "authorize_url ": "https://api.twitter.com/oauth/authorize",
-        "access_token_url": "https://api.twitter.com/oauth/access_token"
     }
 }
 

@@ -2,14 +2,14 @@ timeline.me
 ==========================
 
 ### About
-- ```timeline.me``` is a project lets you backup your timeline from multiple source, such as twitter, weibo, and your rss feeds ...
+- ```timeline.me``` is a project let you backup your timeline, such as twitter, weibo, and rss feeds ...
 - a [demo](http://i.caoyue.me)
 
 ### features
 - sync your timeline
-- update status, support twitter, weibo and "your own twitter" (something like [moments](http://i.caoyue.me/moments))
-- this day in history posts
-- simple charts about your data, like [this](http://i.caoyue.me/chart)
+- update status, support twitter, weibo and "your own twitter" ([moments](http://i.caoyue.me/moments))
+- this day in history posts ([past](http://i.caoyue.me/past))
+- simple charts about your timeline ([chart](http://i.caoyue.me/chart))
 
 ### How to
 1. install requirments
@@ -43,6 +43,13 @@ timeline.me
     - supervisor
         * supervisor config example is available in ```/deploy/supervisor.conf```
 
-6. sync your timeline
+6. sign in
+    - http://your-domain/signin
+    - sign in with your twitter/weibo/...
+    - bind other accounts (http://your-domain/admin/accounts)
+
+7. sync your timeline
     - use cron
         * cron example is available in ```/deploy/cron```
+    - web
+        * http://your-domain/admin

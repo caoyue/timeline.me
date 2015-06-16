@@ -3,21 +3,6 @@
 
 
 from handler.base import BaseHandler
-from lib.pager import Pager
-
-
-class SourceHandler(BaseHandler):
-
-    def get(self, source, page=None):
-        if source not in self.source:
-            self.raise_error(404)
-
-        _p = int(page) if page else 1
-        pagesize = self.config.site["pagesize"]
-        posts = self.posts.get_posts(page=_p, pagesize=pagesize, source=source)
-        pager = Pager(self.posts.get_posts_count(
-            source), pagesize, _p, "/%s/" % source)
-        self.render("index.html", posts=posts, pager=pager, title=source)
 
 
 class PastHandler(BaseHandler):

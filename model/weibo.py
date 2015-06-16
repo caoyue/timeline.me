@@ -2,16 +2,28 @@
 # -*- coding: utf-8 -*-
 
 
-from model.post import Post, PostModel
+from model.post import Post
+from model.oauth import OauthModel
 from lib.timehelper import format_now as now, format_timestr
 
 
-class WeiboModel(PostModel):
+class WeiboModel(OauthModel):
 
     def __init__(self, db):
         super(WeiboModel, self).__init__(db)
 
     # function
+
+    def save_access_token(self, access_token):
+        super(WeiboModel, self).save_access_token(
+            "weibo", {
+                "access_token": access_token.access_token,
+                "expires_in": access_token.expires_in,
+                "uid": access_token.uid
+            })
+
+    def get_access_token(self):
+        return super(WeiboModel, self).get_access_token("weibo")
 
     def get_url(self, uid, mid):
         """calculates url by uid and mid"""

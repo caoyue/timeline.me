@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}{{ site["title"] }} / {{ title }}{% endblock %}
 
 {% block content %}
     <ul class="listing list">
+        {% for a in accounts %}
         <li class="listing-item">
-            <h4><a href="/twitter/signin">sign in with twitter</a></h4>
+            <h4><a href="/{{ a }}/signin">sign in with {{ a }}</a></h4>
         </li>
-        <li class="listing-item">
-            <h4><a href="/weibo/signin">sign in with weibo</a></h4>
-        </li>
+        {% endfor %}
     </ul>
 {% endblock %}

@@ -4,16 +4,38 @@
 
 import json
 
-from model.post import Post, PostModel
+from model.post import Post
+from model.oauth import OauthModel
 from lib.timehelper import format_now as now, format_timestr
 
 
-class TwitterModel(PostModel):
+class TwitterModel(OauthModel):
 
     def __init__(self, db):
         super(TwitterModel, self).__init__(db)
 
     # function
+
+    def save_access_token(self, access_token, uid):
+        super(TwitterModel, self).save_access_token(
+            "twitter", {
+                "access_token": access_token["access_token"],
+                "access_token_secret": access_token["access_token_secret"],
+                "uid": uid
+            })
+
+    def get_access_token(self):
+        return super(TwitterModel, self).get_access_token("twitter")
+
+    def save_request_token(self, request_token):
+        super(TwitterModel, self).save_request_token(
+            "twitter", {
+                "oauth_token": request_token["oauth_token"],
+                "oauth_token_secret": request_token["oauth_token_secret"]
+            })
+
+    def get_request_token(self):
+        return super(TwitterModel, self).get_request_token("twitter")
 
     def get_url(self, status_id, name):
         return "http://twitter.com/%s/status/%s" % (name, status_id)

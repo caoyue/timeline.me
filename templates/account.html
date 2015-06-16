@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="entry">
+        <ul class="list">
+            {% for x in all %}
+            <li class="listing-item">
+                <h4>
+                {% if x in accounts and accounts[x] %}
+                {{ x }}: {{ accounts[x].uid }}
+                {% else %}
+                <a href="/{{ x }}/bind" title="click to bind {{ x }}">{{ x }}: Not Bind</a>
+                {% endif %}
+                </h4>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

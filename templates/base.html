@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>{% block title %} {% endblock %}</title>
+    <title>{{ site["title"] }}{{ (" / " + title) if title else ""}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0">
     <link rel='alternate' type='application/rss+xml' title='atom 1.0' href='/feed' />
@@ -22,7 +22,7 @@
         </div>
         <div class="left">
             <ul class="list">
-                <li {{ "class='cur'" if cur == "timeline" else "" }}><a href="/" title="Home">timeline</a></li>
+                <li {{ "class='cur'" if title == "timeline" else "" }}><a href="/" title="Home">timeline</a></li>
                 {% for s in source %}
                 <li {{ "class='cur'" if title == s else "" }}><a href="/{{ s }}">{{ s }}</a></li>
                 {% endfor %}

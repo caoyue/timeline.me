@@ -10,7 +10,21 @@ from handler.base import BaseHandler
 class SigninHandler(BaseHandler):
 
     def get(self):
-        self.redirect(self.weibo_oauth.get_authorize_url(), permanent=False)
+        accounts = self.binded_accounts
+        if not accounts or "weibo" in accounts:
+            self.redirect(
+                self.weibo_oauth.get_authorize_url(), permanent=False)
+        else:
+            self.write("bind your weibo account first!")
+            return
+
+
+class BindHandler(BaseHandler):
+
+    @tornado.web.authenticated
+    def get(self):
+        self.redirect(
+            self.weibo_oauth.get_authorize_url(), permanent=False)
 
 
 class CallbackHandler(BaseHandler):
@@ -26,18 +40,13 @@ class CallbackHandler(BaseHandler):
             self.write("Weibo Oauth Failed!")
             return
 
-        exists_token = self.weibo.get_config("weibo")
+        exists_token = self.weibo.get_access_token()
 
         if exists_token and access_token.uid != exists_token["uid"]:
             self.raise_error(403)
             return
 
-        self.weibo.replace_config(
-            "weibo", {
-                "access_token": access_token.access_token,
-                "expires_in": access_token.expires_in,
-                "uid": access_token.uid
-            })
+        self.weibo.save_access_token(access_token)
 
         self.signin(access_token.uid, "weibo")
 
@@ -48,7 +57,7 @@ class SyncHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        access_token = self.weibo.get_config("weibo")
+        access_token = self.weibo.get_access_token()
         self.weibo_oauth.set_access_token(access_token)
         self.weibo.sync(self.weibo_oauth)
         self.write("Done!")

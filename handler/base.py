@@ -6,6 +6,7 @@ import tornado.web
 
 from model.post import PostModel
 from model.rss import RssModel
+from model.oauth import OauthModel
 from model.twitter import TwitterModel
 from model.weibo import WeiboModel
 from model.moments import MomentsModel
@@ -29,6 +30,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.config = config
         self.posts = PostModel(self.db)
         self.rss = RssModel(self.db)
+        self.oauth = OauthModel(self.db)
         self.twitter = TwitterModel(self.db)
         self.weibo = WeiboModel(self.db)
         self.moments = MomentsModel(self.db)
@@ -41,6 +43,10 @@ class BaseHandler(tornado.web.RequestHandler):
     @property
     def source(self):
         return self.config.feeds.keys() + self.config.oauth.keys() + ["moments"]
+
+    @property
+    def binded_accounts(self):
+        return self.oauth.binded_accounts(self.config.oauth)
 
     # override
 

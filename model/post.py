@@ -164,3 +164,9 @@ class PostModel(BaseModel):
                 values=post.dict,
                 where="origin_id = '%s'" % post.origin_id
             )
+
+    def delete_post(self, id):
+        self.delete(
+            table="posts",
+            where="id=%s" % id
+        )

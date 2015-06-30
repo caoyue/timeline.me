@@ -27,6 +27,11 @@
 	</div>
 	<div class="tag">
 		<span>posted on {{ post.create_time }}</span>
+		{% if current_user %}
+		<span><a onclick="if (confirm('delete?')){
+			location.href = '/post/delete/{{ post.id }}';
+		}">delete</a></span>
+		{% endif %}
 	</div>
 </div>
 {% endif %}

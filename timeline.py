@@ -60,6 +60,7 @@ class Application(tornado.web.Application):
             (r"/chart", handler.chart.ChartHandler),
             (r"/chart/([1,2][0-9]{3})", handler.chart.ChartHandler),
             (r"/ping", handler.index.PingHandler),
+            (r"/post/delete/([1-9]\d+)", handler.admin.DeleteHandler),
             (r"/admin", handler.admin.AdminHandler),
             (r"/signin", handler.admin.SigninHandler),
             (r"/signout", handler.admin.SignoutHandler),

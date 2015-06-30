@@ -120,3 +120,11 @@ class ComposeHandler(BaseHandler):
                 message += " * update timeline.me status success!"
 
         return self.render("compose.html", status=status, message=message, checked=checked, title="compose")
+
+
+class DeleteHandler(BaseHandler):
+
+    @tornado.web.authenticated
+    def get(self, id):
+        self.posts.delete_post(id)
+        self.redirect("/", permanent=False)

@@ -7,7 +7,7 @@
             {% if message %}
             <div class="entry tips">{{ message }}</div>
             {% endif %}
-            <div><textarea name="status">{{ status | e }}</textarea></div>
+            <div><textarea class="minput" name="status">{{ status | e }}</textarea></div>
             <div>
                 <ul class="vlist">
                     {% for s in ["twitter", "weibo", "moments"] %}

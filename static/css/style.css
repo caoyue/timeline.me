@@ -365,6 +365,11 @@ label {
     margin-right: 20px;
 }
 
+.minput{
+    width: 80%;
+    height: 120px;
+}
+
 /* past */
 .past_title {
     font-size: 24px;
@@ -528,11 +533,11 @@ label {
 .mo { color: #40a070; } /* Literal.Number.Oct */
 .sb { color: #4070a0; } /* Literal.String.Backtick */
 .sc { color: #4070a0; } /* Literal.String.Char */
-.sd { color: #4070a0; font-style: italic; } /* Literal.String.Doc */
+.sd { color: #4070a0; } /* Literal.String.Doc */
 .s2 { color: #4070a0; } /* Literal.String.Double */
 .se { color: #4070a0; font-weight: bold; } /* Literal.String.Escape */
 .sh { color: #4070a0; } /* Literal.String.Heredoc */
-.si { color: #70a0d0; font-style: italic; } /* Literal.String.Interpol */
+.si { color: #70a0d0; } /* Literal.String.Interpol */
 .sx { color: #c65d09; } /* Literal.String.Other */
 .sr { color: #235388; } /* Literal.String.Regex */
 .s1 { color: #4070a0; } /* Literal.String.Single */

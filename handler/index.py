@@ -17,9 +17,20 @@ class IndexHandler(BaseHandler):
         pagesize = self.config.site["pagesize"]
         posts = self.posts.get_posts(
             page=_p, pagesize=pagesize, source=source)
+
+        new_posts = []
+        for post in posts:
+            post.source += "|"
+            post.duplicate = False
+            for new in new_posts:
+                if post.is_duplicate(new):
+                    new.source += post.source + "|"
+                    post.duplicate = True
+            new_posts.append(post)
+
         pager = Pager(
             self.posts.get_posts_count(source=source), pagesize, _p, "/%s/" % source)
-        self.render("index.html", posts=posts, pager=pager, title=source)
+        self.render("index.html", posts=new_posts, pager=pager, title=source)
 
 
 class PingHandler(BaseHandler):

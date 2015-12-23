@@ -17,6 +17,27 @@ class Post(object):
 
     __str__ = __repr__
 
+    def _pure_title(self):
+        if self.title:
+            content = self.title
+            pattern = re.compile(
+                """[a-zA-Z]+:\/\/[a-zA-Z0-9.]+\.[a-zA-Z0-9.\/]+""")
+            matchs = pattern.findall(content)
+            if matchs:
+                for m in matchs:
+                    content = content.replace(
+                        m, "")
+            return content.strip()
+        return self.title
+
+    def is_duplicate(self, compare):
+        if self.category == "oauth" \
+            and compare.category == "oauth" \
+            and abs(self.create_time.day - compare.create_time.day) == 0 \
+                and self._pure_title() == compare._pure_title():
+            return True
+        return False
+
     @property
     def dict(self):
         return self.__dict__

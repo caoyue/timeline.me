@@ -17,11 +17,11 @@ class OauthModel(PostModel):
     def get_access_token(self, name):
         return self.get_config(name)
 
-    def save_request_token(self, name, values):
-        self.replace_config("%s_request_token" % name, values)
+    # def save_request_token(self, name, values):
+    #     self.replace_config("%s_request_token" % name, values)
 
-    def get_request_token(self, name):
-        return self.get_config("%s_request_token" % name)
+    # def get_request_token(self, name):
+    #     return self.get_config("%s_request_token" % name)
 
     def binded_accounts(self, oauth):
         l = []

@@ -36,13 +36,12 @@ class BaseHandler(tornado.web.RequestHandler):
         self.moments = MomentsModel(self.db)
         self.chart = ChartModel(self.db)
 
-        self.weibo_oauth = WeiboOauth(api=self.config.oauth["weibo"])
-        self.twitter_oauth = TwitterOauth(
-            api=self.config.oauth["twitter"])
+        self.weibo_oauth = WeiboOauth()
+        self.twitter_oauth = TwitterOauth()
 
     @property
     def source(self):
-        return self.config.feeds.keys() + self.config.oauth.keys() + ["moments"]
+        return self.config.feeds.keys() + self.config.oauth + ["moments"]
 
     @property
     def binded_accounts(self):

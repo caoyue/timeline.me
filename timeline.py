@@ -77,6 +77,7 @@ class Application(tornado.web.Application):
 
         self.db = connect(config.mysql)
         self.cmd = Commander(self.db)
+        self.data = {}
 
 
 def main():

@@ -30,20 +30,10 @@ feeds = {
 }
 
 # oauth
-oauth = {
-    "weibo": {
-        "app_name": "weibo",
-        "app_key": "",
-        "app_secret": "",
-        "redirect_uri": site["domain"] + "/weibo/callback"
-    },
-    "twitter": {
-        "app_name": "twitter",
-        "consumer_key": "",
-        "consumer_secret": "",
-        "redirect_uri": site["domain"] + "/twitter/callback",
-    }
-}
+oauth = [
+    "weibo",
+    "twitter"
+]
 
 # sidebar links
 links = [

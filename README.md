@@ -7,7 +7,7 @@ timeline.me
 
 ### features
 - sync your timeline
-- update status, support twitter, weibo and "your own twitter" ([moments](http://i.caoyue.me/moments))
+- update status, support twitter, weibo and "your own timeline" ([moments](http://i.caoyue.me/moments))
 - this day in history posts ([past](http://i.caoyue.me/past))
 - simple charts about your timeline ([chart](http://i.caoyue.me/chart))
 
@@ -30,6 +30,7 @@ timeline.me
 
 3. set config
     * rename ```config.example.py``` to ```config.py``` and set your configs
+    * rename ```oauth2py.example.json``` to ```oauth2py.json``` and set your oauth keys
 
 4. nginx
     * nginx config example is available in ```/deploy/timeline.conf```

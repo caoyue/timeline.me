@@ -2,7 +2,7 @@ mysql-python
 tornado
 torndb
 jinja2
-tweepy
+oauth2py
 feedparser
 python-dateutil
 supervisor

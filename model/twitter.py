@@ -27,16 +27,6 @@ class TwitterModel(OauthModel):
     def get_access_token(self):
         return super(TwitterModel, self).get_access_token("twitter")
 
-    def save_request_token(self, request_token):
-        super(TwitterModel, self).save_request_token(
-            "twitter", {
-                "oauth_token": request_token["oauth_token"],
-                "oauth_token_secret": request_token["oauth_token_secret"]
-            })
-
-    def get_request_token(self):
-        return super(TwitterModel, self).get_request_token("twitter")
-
     def get_url(self, status_id, name):
         return "http://twitter.com/%s/status/%s" % (name, status_id)
 

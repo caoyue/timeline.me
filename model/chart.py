@@ -10,7 +10,7 @@ class ChartModel(BaseModel):
     def __init__(self, db):
         super(ChartModel, self).__init__(db)
 
-    def get_hour_count(self,  source_list, year=None):
+    def get_hour_count(self, source_list, year=None):
         """ group by hour """
 
         sql = ""

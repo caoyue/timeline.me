@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
+import json
 from model.post import Post
 from model.oauth import OauthModel
 from lib.timehelper import format_now as now, format_timestr
@@ -14,12 +14,12 @@ class WeiboModel(OauthModel):
 
     # function
 
-    def save_access_token(self, access_token):
+    def save_access_token(self, access_token, uid):
         super(WeiboModel, self).save_access_token(
             "weibo", {
-                "access_token": access_token.access_token,
-                "expires_in": access_token.expires_in,
-                "uid": access_token.uid
+                "access_token": access_token['access_token'],
+                "expires_in": access_token['expires_in'],
+                "uid": uid
             })
 
     def get_access_token(self):
@@ -44,40 +44,42 @@ class WeiboModel(OauthModel):
 
     def status_to_post(self, status, source=None):
         def not_deleted(status):
-            if hasattr(status, "deleted") and status.deleted == "1":
+            if hasattr(status, "deleted") and status['deleted'] == "1":
                 return False
             return True
-        content = self.replace_url(status.text)
+
+        content = self.replace_url(status['text'])
         # contains pics
-        if not_deleted(status) and status.pic_urls:
-            for pic in status.pic_urls:
+        if not_deleted(status) and status['pic_urls']:
+            for pic in status['pic_urls']:
                 content += """  <a href="%s" target="_blank">pic</a>""" % pic[
                     "thumbnail_pic"].replace("thumbnail", "large")
 
         # contains retweet
         if "retweeted_status" in status:
             # tweet deleted
-            if not_deleted(status.retweeted_status):
+            if not_deleted(status['retweeted_status']):
                 retweet_content = self.replace_url(
-                    status.retweeted_status.text)
-                if status.retweeted_status.pic_urls:
-                    for pic in status.retweeted_status.pic_urls:
+                    status['retweeted_status']['text'])
+                if status['retweeted_status']['pic_urls']:
+                    for pic in status['retweeted_status']['pic_urls']:
                         retweet_content += """  <a href="%s" target="_blank">pic</a>""" % pic[
                             "thumbnail_pic"].replace("thumbnail", "large")
                 content += " <blockquote>@%s:%s</blockquote>" % (
-                    status.retweeted_status.user.screen_name, retweet_content)
+                    status['retweeted_status']['user']['screen_name'], retweet_content)
             else:
-                content += "<blockquote>%s</blockquote>" % status.retweeted_status.text
+                content += "<blockquote>%s</blockquote>" % status[
+                    'retweeted_status']['text']
 
         return Post({
             "source": "weibo",
             "category": "oauth",
-            "origin_id": str(status.id),
-            "url": self.get_url(status.user.id, status.mid),
-            "title": status.text,
+            "origin_id": str(status['id']),
+            "url": self.get_url(status['user']['id'], status['mid']),
+            "title": status['text'],
             "content": content,
-            "create_time": format_timestr(status.created_at),
-            "origin_data": status
+            "create_time": format_timestr(status['created_at']),
+            "origin_data": json.dumps(status)
         })
 
     def sync(self, client):
@@ -91,10 +93,11 @@ class WeiboModel(OauthModel):
             if last_post:
                 since_id = last_post.origin_id
 
+            print ">> [%s]Getting weibo since %s ..." % (now(), since_id)
             status = client.get_user_timeline(since_id=since_id)
-            print ">> [%s]Get %s statuses, saving ..." % (now(), len(status.statuses))
+            print ">> [%s]Get %s statuses, saving ..." % (now(), len(status['statuses']))
 
-            for s in status.statuses:
+            for s in status['statuses']:
                 self.save_post(self.status_to_post(s))
         except Exception, e:
             print e
@@ -116,13 +119,13 @@ class WeiboModel(OauthModel):
             while True:
                 status = client.get_user_timeline_by_page(count=100, page=i)
 
-                if not status.statuses:
+                if not status['statuses']:
                     break
 
-                for s in status.statuses:
+                for s in status['statuses']:
                     self.save_post(self.status_to_post(s))
 
-                count += len(status.statuses)
+                count += len(status['statuses'])
                 i += 1
         except Exception, e:
             print e

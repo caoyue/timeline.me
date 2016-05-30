@@ -3,13 +3,13 @@ timeline.me
 
 ### About
 - ```timeline.me``` is a project let you backup your timeline, such as twitter, weibo, and rss feeds ...
-- a [demo](http://i.caoyue.me)
+- a [demo](https://i.caoyue.me)
 
 ### features
 - sync your timeline
-- update status, support twitter, weibo and "your own timeline" ([moments](http://i.caoyue.me/moments))
-- this day in history posts ([past](http://i.caoyue.me/past))
-- simple charts about your timeline ([chart](http://i.caoyue.me/chart))
+- update status, support twitter, weibo and "your own tweets" ([moments](https://i.caoyue.me/moments))
+- this day in history posts ([past](https://i.caoyue.me/past))
+- simple charts about your timeline ([chart](https://i.caoyue.me/chart))
 
 ### How to
 1. install requirments
@@ -24,7 +24,7 @@ timeline.me
         ```shell
         mysql -u USERNAME -p < deploy/init.sql
         ```
-    * support emoji in MySQL
+    * emoji support
         + MySQL server v5.5.3+
         + set ```CHARSET``` to ```utf8mb4```
 
@@ -47,10 +47,10 @@ timeline.me
 6. sign in
     - http://your-domain/signin
     - sign in with your twitter/weibo/...
-    - bind other accounts (http://your-domain/admin/accounts)
+    - bind other accounts (your-domain/admin/accounts)
 
 7. sync your timeline
     - use cron
         * cron example is available in ```/deploy/cron```
     - web
-        * http://your-domain/admin
+        * your-domain/admin

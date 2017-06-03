@@ -15,12 +15,12 @@ class ChartModel(BaseModel):
 
         sql = ""
         if year:
-            sql = """SELECT count(id) as count,DATE_FORMAT(create_time,'%%H') as hour,source FROM posts WHERE DATE_FORMAT(create_time,'%%Y') = """ + \
-                year + """ GROUP BY source,DATE_FORMAT(create_time,'%%H')"""
+            sql = """SELECT count(id) as count,DATE_FORMAT(create_time,'%H') as hour,source FROM posts WHERE DATE_FORMAT(create_time,'%Y') = """ + \
+                year + """ GROUP BY source,DATE_FORMAT(create_time,'%H')"""
         else:
-            sql = """SELECT count(id) as count,DATE_FORMAT(create_time,'%%H') as hour,source FROM posts GROUP BY source,DATE_FORMAT(create_time,'%%H')"""
+            sql = """SELECT count(id) as count,DATE_FORMAT(create_time,'%H') as hour,source FROM posts GROUP BY source,DATE_FORMAT(create_time,'%H')"""
 
-        rows = self.db.query(sql)
+        rows = self.excute_sql(sql)
 
         d = {}
         for s in source_list:
@@ -35,12 +35,12 @@ class ChartModel(BaseModel):
 
         sql = ""
         if year:
-            sql = """SELECT count(id) as count, DATE_FORMAT(create_time,'%%m') as month, source FROM posts WHERE DATE_FORMAT(create_time,'%%Y') = """ + \
-                year + """ GROUP BY source,DATE_FORMAT(create_time,'%%m')"""
+            sql = """SELECT count(id) as count, DATE_FORMAT(create_time,'%m') as month, source FROM posts WHERE DATE_FORMAT(create_time,'%Y') = """ + \
+                year + """ GROUP BY source,DATE_FORMAT(create_time,'%m')"""
         else:
-            sql = """SELECT count(id) as count, DATE_FORMAT(create_time,'%%m') as month, source FROM posts GROUP BY source,DATE_FORMAT(create_time,'%%m')"""
+            sql = """SELECT count(id) as count, DATE_FORMAT(create_time,'%m') as month, source FROM posts GROUP BY source,DATE_FORMAT(create_time,'%m')"""
 
-        rows = self.db.query(sql)
+        rows = self.excute_sql(sql)
 
         d = {}
         for s in source_list:
@@ -54,12 +54,12 @@ class ChartModel(BaseModel):
 
         sql = ""
         if year:
-            sql = """SELECT source,count(id) as count FROM posts WHERE DATE_FORMAT(create_time,'%%Y') = """ + \
+            sql = """SELECT source,count(id) as count FROM posts WHERE DATE_FORMAT(create_time,'%Y') = """ + \
                 year + """ GROUP BY source"""
         else:
             sql = """SELECT source,count(id) as count FROM posts GROUP BY source"""
 
-        return self.db.query(sql)
+        return self.excute_sql(sql)
 
     def get_count(self, type, source_list, year=None):
         return getattr(self, "get_%s_count" % type)(source_list, year)

@@ -10,7 +10,7 @@ from lib.db import Commander
 class BaseModel(Commander):
 
     def __init__(self, db):
-        self.db = db
+        self.connection = db
         super(BaseModel, self).__init__()
 
     # function

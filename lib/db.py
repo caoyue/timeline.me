@@ -2,24 +2,36 @@
 # -*- coding: utf-8 -*-
 
 
-import torndb
+import pymysql.cursors
 
 
 def connect(config):
-    return torndb.Connection(
+    return pymysql.connect(
         host=config["host"],
-        database=config["database"],
         user=config["user"],
         password=config["password"],
-        charset='utf8mb4'
+        db=config["database"],
+        charset='utf8mb4',
+        cursorclass=pymysql.cursors.DictCursor
     )
 
 
 class Commander(object):
 
-    def __init__(self, db=None):
-        if db:
-            self.db = db
+    def __init__(self, connection=None):
+        if connection:
+            self.connection = connection
+
+    def _excute(self, sql, params):
+        if type(params) is list:
+            params = tuple(params)
+
+        try:
+            with self.connection.cursor() as cursor:
+                cursor.execute(sql, *params)
+            self.connection.commit()
+        except Exception, e:
+            print e
 
     # CRUD
 
@@ -40,9 +52,22 @@ class Commander(object):
         )
         return sql
 
+    def excute_sql(self, sql):
+        result = []
+        try:
+            with self.connection.cursor() as cursor:
+                cursor.execute(sql)
+                result = cursor.fetchall()
+        except Exception, e:
+            print e
+        return result
+
     def query(self, table, fields=["*"], where=None, orderby=None,
               desc=True, page=None, pagesize=None):
-        return self.db.query(self._query_sql(table, fields, where, orderby, desc, page, pagesize))
+        sql = self._query_sql(
+            table, fields, where, orderby, desc, page, pagesize)
+        print sql
+        return self.excute_sql(sql)
 
     def get(self, table, fields=["*"], where=None, orderby=None, desc=True):
         """Returns the singular row."""
@@ -60,7 +85,7 @@ class Commander(object):
             ", ".join(["%s"] * len(values.keys()))
         )
         params = values.values()
-        return self.db.execute(sql, *params)
+        self._excute(sql, params)
 
     def replace(self, table, values):
         sql = """REPLACE INTO %s (%s) VALUES (%s)""" % (
@@ -69,14 +94,17 @@ class Commander(object):
             ", ".join(["%s"] * len(values.keys()))
         )
         params = values.values()
-        return self.db.execute(sql, *params)
+        print "params:"
+        print params
+        self._excute(sql, params)
 
     def update(self, table, values, where=None):
         sql = """UPDATE %s SET %s %s """ % (
             table, self._concat_dict(values), "WHERE %s" % where if where else "")
         params = values.values()
-        return self.db.execute(sql, *params)
+        self._excute(sql, params)
 
     def delete(self, table, where):
-        sql = """DELETE FROM %s WHERE %s""" % (table, where)
-        return self.db.execute(sql)
+        sql = """DELETE FROM %s WHERE %s"""
+        params = (table, where)
+        self._excute(sql, params)

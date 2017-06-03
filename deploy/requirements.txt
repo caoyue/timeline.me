@@ -1,8 +1,8 @@
-mysql-python
-tornado
-torndb
-jinja2
-oauth2py
-feedparser
-python-dateutil
-supervisor
+feedparser==5.2.1
+Jinja2==2.8
+oauth2py==1.1.4
+PyMySQL==0.7.11
+python-dateutil==2.6.0
+requests==2.2.1
+requests-oauthlib==0.7.0
+tornado==4.4.2

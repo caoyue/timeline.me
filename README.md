@@ -54,3 +54,17 @@ timeline.me
         * cron example is available in ```/deploy/cron```
     - web
         * your-domain/admin
+
+### docker
+- build
+
+    ```bash
+    docker build -t timeline .
+    ```
+- run
+
+    `${MYSQL_SERVER}` is your mysql container
+
+    ```bash
+    docker run --name timeline_server -p 8000:80 --link ${MYSQL_SERVER}:mysql_host -d timeline
+    ```

@@ -30,11 +30,32 @@ class Post(object):
             return content.strip()
         return self.title
 
+    def _edit_distance(self, str1, str2):
+        m, n = len(str1), len(str2)
+        ans = [[0 for i in range(n + 1)] for j in range(m + 1)]
+        for i in range(m + 1):
+            ans[i][n] = m - i
+        for i in range(n + 1):
+            ans[m][i] = n - i
+        m -= 1
+        n -= 1
+        while m >= 0:
+            t = n
+            while t >= 0:
+                if str1[m] == str2[t]:
+                    ans[m][t] = ans[m + 1][t + 1]
+                else:
+                    ans[m][t] = min(ans[m][t + 1], ans[m + 1]
+                                    [t], ans[m + 1][t + 1]) + 1
+                t -= 1
+            m -= 1
+        return ans[0][0]
+
     def is_duplicate(self, compare):
         if self.category == "oauth" \
-            and compare.category == "oauth" \
-            and abs(self.create_time.day - compare.create_time.day) == 0 \
-                and self._pure_title() == compare._pure_title():
+                and compare.category == "oauth" \
+                and abs(self.create_time.day - compare.create_time.day) == 0 \
+                and self._edit_distance(self.title, compare.title) <= 5:
             return True
         return False
 

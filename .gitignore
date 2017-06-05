@@ -46,6 +46,9 @@ target/
 # virtualenv
 venv
 
+#vscode
+.vscode/
+
 # config
 config.py
 oauth2py.json

@@ -28,7 +28,7 @@ class Commander(object):
 
         try:
             with self.connection.cursor() as cursor:
-                cursor.execute(sql, *params)
+                cursor.execute(sql, params)
             self.connection.commit()
         except Exception, e:
             print e
@@ -66,7 +66,6 @@ class Commander(object):
               desc=True, page=None, pagesize=None):
         sql = self._query_sql(
             table, fields, where, orderby, desc, page, pagesize)
-        print sql
         return self.excute_sql(sql)
 
     def get(self, table, fields=["*"], where=None, orderby=None, desc=True):
@@ -94,8 +93,6 @@ class Commander(object):
             ", ".join(["%s"] * len(values.keys()))
         )
         params = values.values()
-        print "params:"
-        print params
         self._excute(sql, params)
 
     def update(self, table, values, where=None):

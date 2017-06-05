@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
 
 from model.post import Post, PostModel
 from lib.timehelper import format_now as now, format_timestr
@@ -21,7 +22,7 @@ class RssModel(PostModel):
             "title": rss.title,
             "content": rss.summary,
             "create_time": format_timestr(rss.updated),
-            "origin_data": rss
+            "origin_data": json.dumps(rss)
         })
 
     def sync(self, dict):

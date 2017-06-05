@@ -85,7 +85,7 @@ class WeiboModel(OauthModel):
     def sync(self, client):
         """sync tweets"""
 
-        print ">> [%s]Weibo Sync Start ...... " % now()
+        print(">> [%s]Weibo Sync Start ...... " % now())
 
         try:
             since_id = None
@@ -93,25 +93,25 @@ class WeiboModel(OauthModel):
             if last_post:
                 since_id = last_post.origin_id
 
-            print ">> [%s]Getting weibo since %s ..." % (now(), since_id)
+            print(">> [%s]Getting weibo since %s ..." % (now(), since_id))
             status = client.get_user_timeline(since_id=since_id)
-            print ">> [%s]Get %s statuses, saving ..." % (now(), len(status['statuses']))
+            print(">> [%s]Get %s statuses, saving ..." % (now(), len(status['statuses'])))
 
             for s in status['statuses']:
                 self.save_post(self.status_to_post(s))
-        except Exception, e:
-            print e
-            print ">> Error!"
+        except Exception as e:
+            print(e)
+            print(">> Error!")
 
-        print ">> [%s]Weibo Sync End." % now()
-        print "---------------"
+        print(">> [%s]Weibo Sync End." % now())
+        print("---------------")
 
     def sync_all(self, client):
         """Get all tweets
         maybe takes a long time if you have many tweets
         """
 
-        print ">> [%s]Weibo Sync Start ...... " % now()
+        print(">> [%s]Weibo Sync Start ...... " % now())
 
         try:
             i = 1
@@ -127,10 +127,10 @@ class WeiboModel(OauthModel):
 
                 count += len(status['statuses'])
                 i += 1
-        except Exception, e:
-            print e
-            print ">> Error!"
+        except Exception as e:
+            print(e)
+            print(">> Error!")
 
-        print ">> [%s]Total weibo count %s" % (now(), count)
-        print ">> [%s]Weibo Sync End." % now()
-        print "---------------"
+        print(">> [%s]Total weibo count %s" % (now(), count))
+        print(">> [%s]Weibo Sync End." % now())
+        print("---------------")

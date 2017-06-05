@@ -30,17 +30,17 @@ class RssModel(PostModel):
 
         import feedparser
 
-        print ">> [%s]Rss Sync Start ......" % now()
+        print(">> [%s]Rss Sync Start ......" % now())
 
         try:
             feedparser.RESOLVE_RELATIVE_URIS = 0
-            for k, v in dict.items():
+            for k, v in list(dict.items()):
                 feeds = feedparser.parse(v)
                 for entry in feeds.entries:
                     self.save_post(self.status_to_post(entry, k))
-        except Exception, e:
-            print e
-            print ">> Error!"
+        except Exception as e:
+            print(e)
+            print(">> Error!")
 
-        print ">> [%s]Rss Sync End." % now()
-        print "---------------"
+        print(">> [%s]Rss Sync End." % now())
+        print("---------------")

@@ -47,7 +47,7 @@ def format_day_ago(timeobj=None, days=0, format="%Y-%m-%d"):
 
 def past_days(timeobj=None):
     timeobj = to_local(timeobj) if timeobj else now()
-    years = range(timeobj.year - 1, 2005, -1)
+    years = list(range(timeobj.year - 1, 2005, -1))
     return [("%s-%s" % (y, format_time(timeobj, format="%m-%d")),
              "%s-%s" % (y, format_day_ago(timeobj=timeobj, days=1, format="%m-%d")))
             for y in years]

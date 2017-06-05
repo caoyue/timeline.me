@@ -38,7 +38,7 @@ class CallbackHandler(BaseHandler):
                 'code': code
             })
 
-        except Exception, e:
+        except Exception as e:
             self.write("Weibo Oauth Failed: {0}".format(e))
             return
 

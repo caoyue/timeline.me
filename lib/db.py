@@ -30,13 +30,13 @@ class Commander(object):
             with self.connection.cursor() as cursor:
                 cursor.execute(sql, params)
             self.connection.commit()
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
 
     # CRUD
 
     def _concat_dict(self, params):
-        return ",".join(["%s=%%s" % k for k in params.keys()])
+        return ",".join(["%s=%%s" % k for k in list(params.keys())])
 
     def _query_sql(self, table, fields=["*"], where=None, orderby=None,
                    desc=True, page=None, pagesize=None):
@@ -58,8 +58,8 @@ class Commander(object):
             with self.connection.cursor() as cursor:
                 cursor.execute(sql)
                 result = cursor.fetchall()
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
         return result
 
     def query(self, table, fields=["*"], where=None, orderby=None,
@@ -80,25 +80,25 @@ class Commander(object):
     def save(self, table, values):
         sql = """INSERT INTO %s (%s) VALUES (%s)""" % (
             table,
-            ", ".join(values.keys()),
-            ", ".join(["%s"] * len(values.keys()))
+            ", ".join(list(values.keys())),
+            ", ".join(["%s"] * len(list(values.keys())))
         )
-        params = values.values()
+        params = list(values.values())
         self._excute(sql, params)
 
     def replace(self, table, values):
         sql = """REPLACE INTO %s (%s) VALUES (%s)""" % (
             table,
-            ", ".join(values.keys()),
-            ", ".join(["%s"] * len(values.keys()))
+            ", ".join(list(values.keys())),
+            ", ".join(["%s"] * len(list(values.keys())))
         )
-        params = values.values()
+        params = list(values.values())
         self._excute(sql, params)
 
     def update(self, table, values, where=None):
         sql = """UPDATE %s SET %s %s """ % (
             table, self._concat_dict(values), "WHERE %s" % where if where else "")
-        params = values.values()
+        params = list(values.values())
         self._excute(sql, params)
 
     def delete(self, table, where):

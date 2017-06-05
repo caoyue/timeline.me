@@ -5,6 +5,10 @@ timeline.me
 - ```timeline.me``` is a project let you backup your timeline, such as twitter, weibo, and rss feeds ...
 - a [demo](https://i.caoyue.me)
 
+### platform
+- python 3.3+
+- python 2.7+
+    + [branch python2](https://github.com/caoyue/timeline.me/tree/python2)
 ### features
 - sync your timeline
 - update status, support twitter, weibo and "your own tweets" ([moments](https://i.caoyue.me/moments))

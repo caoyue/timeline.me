@@ -51,7 +51,7 @@ class TwitterModel(OauthModel):
     def sync(self, client):
         """sync tweets"""
 
-        print ">> [%s]Twitter Sync Start ...... " % now()
+        print(">> [%s]Twitter Sync Start ...... " % now())
 
         try:
             since_id = None
@@ -59,25 +59,25 @@ class TwitterModel(OauthModel):
             if last_post:
                 since_id = last_post.origin_id
 
-            print ">> [%s]Getting tweets since %s ..." % (now(), since_id)
+            print(">> [%s]Getting tweets since %s ..." % (now(), since_id))
             status = client.get_user_timeline(since_id=since_id)
 
-            print ">> [%s]Got %s tweets, saving..." % (now(), len(status))
+            print(">> [%s]Got %s tweets, saving..." % (now(), len(status)))
             for s in status:
                 self.save_post(self.status_to_post(s))
-        except Exception, e:
-            print e
-            print ">> Error!"
+        except Exception as e:
+            print(e)
+            print(">> Error!")
 
-        print ">> [%s]Twitter Sync End." % now()
-        print "---------------"
+        print(">> [%s]Twitter Sync End." % now())
+        print("---------------")
 
     def sync_all(self, client):
         """Get all tweets
         maybe takes a long time if you have many tweets
         """
 
-        print ">> [%s]Twitter Sync Start ...... " % now()
+        print(">> [%s]Twitter Sync Start ...... " % now())
 
         try:
             alltweets = []
@@ -87,19 +87,19 @@ class TwitterModel(OauthModel):
             oldest = alltweets[-1]["id"] - 1
 
             while len(new_tweets) > 0:
-                print ">> [%s]Getting tweets since %s ..." % (now(), oldest)
+                print(">> [%s]Getting tweets since %s ..." % (now(), oldest))
 
                 new_tweets = client.get_user_timeline(count=200, max_id=oldest)
                 alltweets.extend(new_tweets)
                 oldest = alltweets[-1]["id"] - 1
-                print ">> Got %s tweets, saving..." % (len(alltweets))
+                print(">> Got %s tweets, saving..." % (len(alltweets)))
 
             for t in alltweets:
                 self.save_post(self.status_to_post(t))
-        except Exception, e:
-            print e
-            print ">> Error!"
+        except Exception as e:
+            print(e)
+            print(">> Error!")
 
-        print ">> [%s]Total tweets count : %s." % (now(), len(alltweets))
-        print ">> [%s]Twitter Sync End." % now()
-        print "---------------"
+        print(">> [%s]Total tweets count : %s." % (now(), len(alltweets)))
+        print(">> [%s]Twitter Sync End." % now())
+        print("---------------")

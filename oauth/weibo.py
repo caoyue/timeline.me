@@ -19,7 +19,7 @@ class WeiboOauth(Oauth):
         return self._client.access_resource(
             'GET',
             url='https://api.weibo.com/2/statuses/user_timeline.json',
-            params=dict((k, v) for k, v in params.iteritems() if v)
+            params=dict((k, v) for k, v in params.items() if v)
         )
 
     def get_user_timeline_by_page(self, count=100, page=1):

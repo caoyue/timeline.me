@@ -88,7 +88,7 @@ class ComposeHandler(BaseHandler):
                 try:
                     self.twitter_oauth.set_access_token(access_token)
                     self.twitter_oauth.update_status(status)
-                except Exception, e:
+                except Exception as e:
                     message += " * update twitter status failed: %s <br/>" % e
                 else:
                     message += " * update twitter status success!<br/>"
@@ -103,7 +103,7 @@ class ComposeHandler(BaseHandler):
                 try:
                     self.weibo_oauth.set_access_token(access_token)
                     self.weibo_oauth.update_status(status)
-                except Exception, e:
+                except Exception as e:
                     message += " * update weibo status failed: %s <br/>" % e
                 else:
                     message += " * update weibo status success!"
@@ -114,7 +114,7 @@ class ComposeHandler(BaseHandler):
         if "moments" in checked:
             try:
                 self.moments.compose(status)
-            except Exception, e:
+            except Exception as e:
                 message += " * update timeline.me status failed: %s <br/>" % e
             else:
                 message += " * update timeline.me status success!"

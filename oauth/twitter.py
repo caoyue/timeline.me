@@ -25,7 +25,7 @@ class TwitterOauth(Oauth):
         return self._client.access_resource(
             'GET',
             url='https://api.twitter.com/1.1/statuses/user_timeline.json',
-            params=dict((k, v) for k, v in params.iteritems() if v)
+            params=dict((k, v) for k, v in params.items() if v)
         )
 
     def update_status(self, status):

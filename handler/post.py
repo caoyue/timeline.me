@@ -13,7 +13,7 @@ class PastHandler(BaseHandler):
         if t:
             try:
                 t = th.parse_timestr(timestr=t)
-            except Exception, e:
+            except Exception as e:
                 self.write("Not a valid date!")
                 return
         else:

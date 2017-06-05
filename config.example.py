@@ -14,9 +14,9 @@ mysql = {
 # site
 site = {
     "domain": "http://example.me",
-    "title": u"site title",
-    "description": u"site description",
-    "author": u"",
+    "title": "site title",
+    "description": "site description",
+    "author": "",
     "pagesize": 10,
     "tzinfo": 'Asia/Shanghai'
 }

@@ -41,7 +41,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     @property
     def source(self):
-        return self.config.feeds.keys() + self.config.oauth + ["moments"]
+        return list(self.config.feeds.keys()) + self.config.oauth + ["moments"]
 
     @property
     def binded_accounts(self):

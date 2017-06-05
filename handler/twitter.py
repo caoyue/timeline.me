@@ -42,7 +42,7 @@ class CallbackHandler(BaseHandler):
                 'oauth_verifier': oauth_verifier
             }, request_token)
             self.application.data['request_token'] = {}
-        except Exception, e:
+        except Exception as e:
             self.write("Twitter Oauth Failed: {0}".format(e))
             return
 

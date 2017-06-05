@@ -24,7 +24,7 @@ class ChartModel(BaseModel):
 
         d = {}
         for s in source_list:
-            d[s] = ["0" for x in xrange(0, 24)]
+            d[s] = ["0" for x in range(0, 24)]
 
         for r in rows:
             d[r["source"]][int(r["hour"])] = str(r["count"])
@@ -44,7 +44,7 @@ class ChartModel(BaseModel):
 
         d = {}
         for s in source_list:
-            d[s] = ["0" for x in xrange(0, 12)]
+            d[s] = ["0" for x in range(0, 12)]
 
         for r in rows:
             d[r["source"]][int(r["month"]) - 1] = str(r["count"])

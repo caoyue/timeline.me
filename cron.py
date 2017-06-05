@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-
 from lib.db import connect, Commander
 from model.rss import RssModel
 from model.twitter import TwitterModel

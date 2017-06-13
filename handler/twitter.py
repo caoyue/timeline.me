@@ -67,5 +67,5 @@ class SyncHandler(BaseHandler):
     def get(self):
         access_token = self.twitter.get_access_token()
         self.twitter_oauth.set_access_token(access_token)
-        self.twitter.sync_all(self.twitter_oauth)
+        self.twitter.sync(self.twitter_oauth)
         self.write("Done!")

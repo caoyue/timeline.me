@@ -5,6 +5,7 @@ import json
 
 from model.post import Post, PostModel
 from lib.timehelper import format_now as now, format_timestr
+from lib.date_encoder import DateEncoder
 
 
 class RssModel(PostModel):
@@ -13,7 +14,7 @@ class RssModel(PostModel):
         super(RssModel, self).__init__(db)
 
     def status_to_post(self, rss, source=None):
-
+        rss.updated = format_timestr(rss.updated)
         return Post({
             "source": source,
             "category": "rss",
@@ -21,8 +22,8 @@ class RssModel(PostModel):
             "url": rss.link,
             "title": rss.title,
             "content": rss.summary,
-            "create_time": format_timestr(rss.updated),
-            "origin_data": json.dumps(rss)
+            "create_time": rss.updated,
+            "origin_data": json.dumps(rss, cls=DateEncoder)
         })
 
     def sync(self, dict):

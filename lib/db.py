@@ -11,6 +11,7 @@ def connect(config):
         user=config["user"],
         password=config["password"],
         db=config["database"],
+        autocommit=True,
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )

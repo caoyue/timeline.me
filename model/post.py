@@ -116,19 +116,16 @@ class PostModel(BaseModel):
 
     # db
 
-    def get_index_source(self):
-        return self.get_config("custom_index_source")
+    def get_visible_source(self):
+        return self.get_config("signin_visible_source")
 
-    def set_index_source(self, values):
-        return self.replace_config("custom_index_source", values)
+    def set_visible_source(self, values):
+        return self.replace_config("signin_visible_source", values)
 
     def get_posts_count(self, source=None):
         w = None
-        s = self.get_index_source()
-        if source == "timeline" and s:
-            w = "source in ('%s')" % "','".join(s)
-        else:
-            w = "source = '%s'" % source if source else None
+        if source:
+            w = "source in ('%s')" % "','".join(source)
         return self.count(
             "posts",
             where=w
@@ -136,11 +133,8 @@ class PostModel(BaseModel):
 
     def get_posts(self, page=1, pagesize=10, source=None, orderby='create_time'):
         w = None
-        s = self.get_index_source()
-        if source == "timeline" and s:
-            w = "source in ('%s')" % "','".join(s)
-        else:
-            w = "source = '%s'" % source if source else None
+        if source:
+            w = "source in ('%s')" % "','".join(source)
         rows = self.query(
             table="posts",
             where=w,
@@ -166,19 +160,20 @@ class PostModel(BaseModel):
         )
         return self._row_to_post(row)
 
-    def get_post_by_date(self, start, end):
+    def get_post_by_date(self, start, end, source):
         rows = self.query(
             table="posts",
-            where="create_time >= '%s' AND create_time <= '%s'" % (start, end),
+            where="create_time >= '%s' AND create_time <= '%s' and source in ('%s')" % (
+                start, end, "','".join(source)),
             orderby="create_time"
         )
         return self._rows_to_posts(rows)
 
-    def get_history_today(self, time_obj):
+    def get_history_today(self, time_obj, source):
         import lib.timehelper as th
 
         dates = th.past_days(time_obj)
-        posts_list = [self.get_post_by_date(d[0], d[1]) for d in dates]
+        posts_list = [self.get_post_by_date(d[0], d[1], source) for d in dates]
 
         p = {}
         for posts in posts_list:

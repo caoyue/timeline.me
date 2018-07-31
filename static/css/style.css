@@ -344,6 +344,7 @@ a[rel="footnote"]:after{
     border: none;
     background-color: rgba(20, 145, 152, 0.4);
     padding: 3px;
+    min-width: 45px;
 }
 
 .button:hover {

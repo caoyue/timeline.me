@@ -44,6 +44,14 @@ class BaseHandler(tornado.web.RequestHandler):
         return list(self.config.feeds.keys()) + self.config.oauth + ["moments"]
 
     @property
+    def visible_source(self):
+        source = self.source
+        if not self.current_user:
+            visible_source = self.posts.get_visible_source()
+            source = list(set(self.source) - set(visible_source))
+        return source
+
+    @property
     def binded_accounts(self):
         return self.oauth.binded_accounts(self.config.oauth)
 

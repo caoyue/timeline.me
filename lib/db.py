@@ -103,6 +103,5 @@ class Commander(object):
         self._excute(sql, params)
 
     def delete(self, table, where):
-        sql = """DELETE FROM %s WHERE %s"""
-        params = (table, where)
-        self._excute(sql, params)
+        sql = """DELETE FROM %s %s""" % (table, "WHERE %s" % where if where else "")
+        self._excute(sql, None)

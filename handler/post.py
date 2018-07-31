@@ -20,6 +20,7 @@ class PastHandler(BaseHandler):
             t = th.now()
         yesterday = th.format_day_ago(timeobj=t, days=-1)
         tomorrow = th.format_day_ago(timeobj=t, days=1)
-        p = self.posts.get_history_today(t)
+
+        p = self.posts.get_history_today(t, self.visible_source)
         self.render(
             "past.html", posts_dict=p, yesterday=yesterday, tomorrow=tomorrow, title="past")

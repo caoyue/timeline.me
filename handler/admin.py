@@ -38,19 +38,19 @@ class SignoutHandler(BaseHandler):
         self.redirect("/", permanent=False)
 
 
-class CustomHandler(BaseHandler):
+class VisibleHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        c = self.posts.get_index_source()
-        self.render("custom.html", all=self.source,
-                    custom=c if c else [], title="custom")
+        c = self.posts.get_visible_source()
+        self.render("visible.html", all=self.source,
+                    custom=c if c else [], title="visible")
 
     @tornado.web.authenticated
     def post(self):
         r = self.get_arguments('source')
-        self.posts.set_index_source(r)
-        return self.render("custom.html", all=self.source, custom=r, title="custom")
+        self.posts.set_visible_source(r)
+        return self.render("visible.html", all=self.source, custom=r, title="visible")
 
 
 class AccountHandler(BaseHandler):

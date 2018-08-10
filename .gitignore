@@ -49,6 +49,7 @@ venv
 #vscode
 .vscode/
 
-# config
+#config
 config.py
 oauth2py.json
+docker-compose.debug.yml

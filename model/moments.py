@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
-import json
-
 from model.post import Post, PostModel
 from lib.timehelper import format_now as now
 
@@ -21,7 +18,7 @@ class MomentsModel(PostModel):
         return Post({
             "source": "moments",
             "category": "moments",
-            "origin_id": "moments:%s" % hashlib.md5(status).hexdigest(),
+            "origin_id": "moments:%s" % hashlib.md5(status.encode('utf-8')).hexdigest(),
             "url": "",
             "title": status,
             "content": self.replace_url(status),

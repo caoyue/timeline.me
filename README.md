@@ -72,3 +72,10 @@ timeline.me
     ```bash
     docker run --name timeline_server -p 8000:80 --link ${MYSQL_SERVER}:mysql_host -v /develop/timeline.me:/app -d timeline
     ```
+    
+### docker compose
+- use docker compose
+    
+    ```bash
+    docker-compose up -d
+    ```

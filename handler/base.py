@@ -48,7 +48,9 @@ class BaseHandler(tornado.web.RequestHandler):
         source = self.source
         if not self.current_user:
             visible_source = self.posts.get_visible_source()
-            source = list(set(self.source) - set(visible_source))
+            if visible_source:
+                source = list(set(self.source) - set(visible_source))
+
         return source
 
     @property

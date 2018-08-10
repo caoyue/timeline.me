@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `configs` (
     `value` text,
     `create_time` datetime NOT NULL,
     PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 
 CREATE TABLE IF NOT EXISTS `posts` (

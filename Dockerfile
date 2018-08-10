@@ -1,6 +1,5 @@
-FROM python:3.6.1-slim
-MAINTAINER caoyue
-
+FROM python:3.7.0-slim
+LABEL maintainer="caoyue"
 WORKDIR /app
 ADD deploy/requirements.txt requirements.txt
 RUN pip install -r requirements.txt

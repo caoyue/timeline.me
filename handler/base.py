@@ -95,7 +95,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def _extract_cookie(self, cookie):
         if not cookie:
             return None
-        user = cookie.split("||")
+        user = cookie.decode().split("||")
         if user and len(user) == 2:
             return {"uid": user[0], "signin_type": user[1]}
         return None

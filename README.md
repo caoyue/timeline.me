@@ -32,7 +32,7 @@ timeline.me
         + MySQL server v5.5.3+
         + set ```CHARSET``` to ```utf8mb4```
 
-3. set config
+3. modify config files
     * rename ```config.example.py``` to ```config.py``` and set your configs
     * rename ```oauth2py.example.json``` to ```oauth2py.json``` and set your oauth keys
 
@@ -59,21 +59,10 @@ timeline.me
     - web
         * your-domain/admin
 
-### docker
-- build
-
-    ```bash
-    docker build -t timeline .
-    ```
-- run
-
-    `${MYSQL_SERVER}` is your mysql container
-
-    ```bash
-    docker run --name timeline_server -p 8000:80 --link ${MYSQL_SERVER}:mysql_host -v /develop/timeline.me:/app -d timeline
-    ```
     
-### docker compose
+### deploy with docker
+- modify config files
+- modify docker compose file with your db config
 - use docker compose
     
     ```bash

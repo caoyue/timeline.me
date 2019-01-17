@@ -76,7 +76,11 @@ class Commander(object):
         return rows[0] if rows else None
 
     def count(self, table, where=None):
-        return self.get(table, ["count(*)"], where)["count(*)"]
+        r = self.get(table, ["count(*)"], where)
+        if r:
+            return r["count(*)"]
+        else:
+            return 0
 
     def save(self, table, values):
         sql = """INSERT INTO %s (%s) VALUES (%s)""" % (
@@ -103,5 +107,6 @@ class Commander(object):
         self._excute(sql, params)
 
     def delete(self, table, where):
-        sql = """DELETE FROM %s %s""" % (table, "WHERE %s" % where if where else "")
+        sql = """DELETE FROM %s %s""" % (
+            table, "WHERE %s" % where if where else "")
         self._excute(sql, None)

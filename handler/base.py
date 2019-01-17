@@ -83,6 +83,10 @@ class BaseHandler(tornado.web.RequestHandler):
         template_vars["current_user"] = self.current_user
         template_vars["request"] = self.request
         template_vars["request_handler"] = self
+
+        from datetime import datetime
+        template_vars["year"] = datetime.utcnow().year
+
         template = self.jinja2.get_template(template_name)
         return template.render(**template_vars)
 
